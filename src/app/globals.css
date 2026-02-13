@@ -1,0 +1,247 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Tailwind v4 theme tokens ───────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+/* ════════════════════════════════════════════════════════
+   LIGHT THEME — MicroRealismo
+   background: #F4F4EF (papel/off-white)
+   card:       #FFFFFF
+   muted:      #F1F1EC
+   foreground: #272725
+   border:     #D6D2C8
+   primary:    #902828 (bordô)
+   secondary:  #BFAE8A (gold suave)
+   radius:     14px
+   ════════════════════════════════════════════════════════ */
+:root {
+  --radius: 0.875rem;
+  /* 14px */
+
+  --background: #F4F4EF;
+  --foreground: #272725;
+
+  --card: #FFFFFF;
+  --card-foreground: #272725;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #272725;
+
+  --primary: #902828;
+  --primary-foreground: #FAFAF8;
+
+  --secondary: #BFAE8A;
+  --secondary-foreground: #272725;
+
+  --muted: #F1F1EC;
+  --muted-foreground: #6B6961;
+
+  --accent: #F1F1EC;
+  --accent-foreground: #272725;
+
+  --destructive: #C93B3B;
+
+  --border: #D6D2C8;
+  --input: #D6D2C8;
+  --ring: #902828;
+
+  --success: #3D8B5A;
+  --warning: #C98A2E;
+
+  /* Chart palette — warm editorial */
+  --chart-1: #902828;
+  --chart-2: #BFAE8A;
+  --chart-3: #6B8F71;
+  --chart-4: #D4A853;
+  --chart-5: #7E6B8F;
+
+  /* Sidebar */
+  --sidebar: #FAFAF8;
+  --sidebar-foreground: #272725;
+  --sidebar-primary: #902828;
+  --sidebar-primary-foreground: #FAFAF8;
+  --sidebar-accent: #F1F1EC;
+  --sidebar-accent-foreground: #272725;
+  --sidebar-border: #D6D2C8;
+  --sidebar-ring: #902828;
+}
+
+/* ════════════════════════════════════════════════════════
+   DARK THEME — CriativosADS
+   background: #121212
+   card:       #1E1F22
+   foreground: #EDEBE6
+   border:     #2C2D30
+   primary:    #B89050 / #C0A060 (gold)
+   secondary:  #381820 (bordô profundo)
+   glow:       rgba(184,144,80,.25)
+   ════════════════════════════════════════════════════════ */
+.dark {
+  --background: #121212;
+  --foreground: #EDEBE6;
+
+  --card: #1E1F22;
+  --card-foreground: #EDEBE6;
+
+  --popover: #1E1F22;
+  --popover-foreground: #EDEBE6;
+
+  --primary: #B89050;
+  --primary-foreground: #121212;
+
+  --secondary: #5f1015;
+  --secondary-foreground: #EDEBE6;
+
+  --muted: #2C2D30;
+  --muted-foreground: #9A978F;
+
+  --accent: #2C2D30;
+  --accent-foreground: #EDEBE6;
+
+  --destructive: #E05555;
+
+  --border: #2C2D30;
+  --input: #2C2D30;
+  --ring: #B89050;
+
+  --success: #5BAF7A;
+  --warning: #D4A853;
+
+  /* Chart palette — gold + wine dark */
+  --chart-1: #B89050;
+  --chart-2: #5f1015;
+  --chart-3: #7ABEAA;
+  --chart-4: #C0A060;
+  --chart-5: #8B2030;
+
+  /* Sidebar */
+  --sidebar: #181818;
+  --sidebar-foreground: #EDEBE6;
+  --sidebar-primary: #B89050;
+  --sidebar-primary-foreground: #121212;
+  --sidebar-accent: #2C2D30;
+  --sidebar-accent-foreground: #EDEBE6;
+  --sidebar-border: #2C2D30;
+  --sidebar-ring: #B89050;
+}
+
+/* ── Base layer ─────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+  }
+}
+
+/* ── Brand utilities ────────────────────────────────── */
+@layer components {
+
+  /* Premium card with border + shadow */
+  .frame-card {
+    @apply rounded-xl border border-border bg-card p-5 shadow-sm;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .frame-card:hover {
+    @apply shadow-md;
+  }
+
+  /* Soft divider */
+  .divider-soft {
+    @apply h-px w-full bg-border/60;
+  }
+
+  /* CTA pill button */
+  .cta-pill {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold transition-all;
+    background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 80%, var(--secondary)));
+    color: var(--primary-foreground);
+  }
+
+  .cta-pill:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  /* Glow effect for dark theme CTAs */
+  :is(.dark) .cta-pill {
+    box-shadow: 0 0 20px rgba(184, 144, 80, 0.25), 0 0 40px rgba(184, 144, 80, 0.1);
+  }
+
+  :is(.dark) .cta-pill:hover {
+    box-shadow: 0 0 24px rgba(184, 144, 80, 0.35), 0 0 48px rgba(184, 144, 80, 0.15);
+  }
+
+  /* KPI positive/negative indicators */
+  .kpi-positive {
+    @apply text-success;
+  }
+
+  .kpi-negative {
+    @apply text-destructive;
+  }
+}
