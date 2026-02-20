@@ -1,26 +1,27 @@
 "use client";
 
-import {
-    AreaChart,
-    Area,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip as RechartsTooltip,
-    ResponsiveContainer,
-    Legend,
-} from "recharts";
+import { CHART_HEIGHT } from "@/shared/lib/constants";
+import { formatCurrency, formatDate } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
 import type { ChartSeries } from "@/types/dashboard";
-import { formatDate, formatCurrency } from "@/shared/lib/formatters";
-import { CHART_HEIGHT } from "@/shared/lib/constants";
+import {
+    Area,
+    AreaChart,
+    CartesianGrid,
+    Legend,
+    Tooltip as RechartsTooltip,
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
+} from "recharts";
 
 interface FinancialChartProps {
     series: ChartSeries[];
     loading?: boolean;
+    className?: string;
 }
 
-export function FinancialChart({ series, loading }: FinancialChartProps) {
+export function FinancialChart({ series, loading, className }: FinancialChartProps) {
     const mergedData = series[0]?.data.map((point, index) => {
         const entry: Record<string, string | number> = { date: point.date };
         series.forEach((s) => {
@@ -34,6 +35,7 @@ export function FinancialChart({ series, loading }: FinancialChartProps) {
             title="Financeiro"
             subtitle="Receita vs Custo"
             loading={loading}
+            className={className}
             actions={[
                 { label: "Exportar CSV", onClick: () => { } },
                 { label: "Ver relatório", onClick: () => { } },

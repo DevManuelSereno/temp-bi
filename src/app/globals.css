@@ -33,6 +33,13 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
+  --color-state-selected: var(--state-selected);
+  --color-state-selected-foreground: var(--state-selected-foreground);
+  --color-state-associated: var(--state-associated);
+  --color-state-associated-foreground: var(--state-associated-foreground);
+  --color-state-excluded: var(--state-excluded);
+  --color-state-excluded-foreground: var(--state-excluded-foreground);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -115,6 +122,14 @@
   --sidebar-accent-foreground: #272725;
   --sidebar-border: #D6D2C8;
   --sidebar-ring: #902828;
+
+  /* Associative states */
+  --state-selected: #2E7D32;
+  --state-selected-foreground: #FFFFFF;
+  --state-associated: #FFFFFF;
+  --state-associated-foreground: #272725;
+  --state-excluded: #D6D2C8;
+  --state-excluded-foreground: #9A978F;
 }
 
 /* ════════════════════════════════════════════════════════
@@ -174,6 +189,14 @@
   --sidebar-accent-foreground: #EDEBE6;
   --sidebar-border: #2C2D30;
   --sidebar-ring: #B89050;
+
+  /* Associative states */
+  --state-selected: #4CAF50;
+  --state-selected-foreground: #121212;
+  --state-associated: #1E1F22;
+  --state-associated-foreground: #EDEBE6;
+  --state-excluded: #2C2D30;
+  --state-excluded-foreground: #555555;
 }
 
 /* ── Base layer ─────────────────────────────────────── */
@@ -243,5 +266,39 @@
 
   .kpi-negative {
     @apply text-destructive;
+  }
+
+  /* ── Associative filter chips ───────────────────── */
+  .filter-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium cursor-pointer select-none;
+    @apply border transition-all duration-150;
+  }
+
+  .filter-chip-selected {
+    background-color: var(--state-selected);
+    color: var(--state-selected-foreground);
+    border-color: var(--state-selected);
+  }
+
+  .filter-chip-selected:hover {
+    filter: brightness(1.1);
+  }
+
+  .filter-chip-associated {
+    background-color: var(--state-associated);
+    color: var(--state-associated-foreground);
+    border-color: var(--border);
+  }
+
+  .filter-chip-associated:hover {
+    border-color: var(--primary);
+  }
+
+  .filter-chip-excluded {
+    background-color: var(--state-excluded);
+    color: var(--state-excluded-foreground);
+    border-color: transparent;
+    opacity: 0.6;
+    cursor: default;
   }
 }

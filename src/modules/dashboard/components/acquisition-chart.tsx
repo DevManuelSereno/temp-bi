@@ -1,19 +1,19 @@
 "use client";
 
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip as RechartsTooltip,
-    ResponsiveContainer,
-    Legend,
-} from "recharts";
+import { CHART_HEIGHT } from "@/shared/lib/constants";
+import { formatCompact, formatDate } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
 import type { ChartSeries } from "@/types/dashboard";
-import { formatDate, formatCompact } from "@/shared/lib/formatters";
-import { CHART_HEIGHT } from "@/shared/lib/constants";
+import {
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    Tooltip as RechartsTooltip,
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
+} from "recharts";
 
 const CHART_COLORS = [
     "var(--chart-1)",
@@ -26,9 +26,10 @@ const CHART_COLORS = [
 interface AcquisitionChartProps {
     series: ChartSeries[];
     loading?: boolean;
+    className?: string;
 }
 
-export function AcquisitionChart({ series, loading }: AcquisitionChartProps) {
+export function AcquisitionChart({ series, loading, className }: AcquisitionChartProps) {
     // Merge all series into a single data array for Recharts
     const mergedData = series[0]?.data.map((point, index) => {
         const entry: Record<string, string | number> = { date: point.date };
@@ -43,6 +44,7 @@ export function AcquisitionChart({ series, loading }: AcquisitionChartProps) {
             title="Aquisição"
             subtitle="Leads por canal de origem"
             loading={loading}
+            className={className}
             actions={[
                 { label: "Exportar CSV", onClick: () => { } },
                 { label: "Ver detalhes", onClick: () => { } },

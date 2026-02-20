@@ -73,3 +73,18 @@ export type AsyncState<T> =
     | { status: "loading" }
     | { status: "success"; data: T }
     | { status: "error"; error: string };
+
+/* ── Data Record (flat normalized for associative engine) ── */
+
+export interface DataRecord {
+    date: string;
+    channel: string;
+    unit: string;
+    leads: number;
+    qualified: number;
+    appointments: number;
+    showed: number;
+    conversions: number;
+    revenue: number;
+    cost: number;
+}

@@ -1,10 +1,11 @@
 import type {
-    KPI,
     ChartSeries,
-    FunnelStage,
-    TopItem,
-    Insight,
     DataFreshness,
+    DataRecord,
+    FunnelStage,
+    Insight,
+    KPI,
+    TopItem,
 } from "@/types/dashboard";
 
 /* ══════════════════════════════════════════════════════
@@ -270,3 +271,57 @@ export const MOCK_FRESHNESS: DataFreshness = {
     status: "fresh",
     source: "Mock Data Provider",
 };
+
+/* ── Flat DataRecords (for associative engine) ─────── */
+
+interface ComboWeight {
+    channel: string;
+    unit: string;
+    leadBase: number;
+    revPerConversion: number;
+    costRatio: number;
+}
+
+const COMBO_WEIGHTS: ComboWeight[] = [
+    { channel: "Google Ads", unit: "SP Centro", leadBase: 42, revPerConversion: 380, costRatio: 0.60 },
+    { channel: "Google Ads", unit: "SP Sul", leadBase: 30, revPerConversion: 340, costRatio: 0.63 },
+    { channel: "Google Ads", unit: "RJ Barra", leadBase: 36, revPerConversion: 360, costRatio: 0.61 },
+    { channel: "Meta Ads", unit: "SP Centro", leadBase: 38, revPerConversion: 350, costRatio: 0.65 },
+    { channel: "Meta Ads", unit: "RJ Barra", leadBase: 25, revPerConversion: 320, costRatio: 0.68 },
+    /* Meta Ads + SP Sul is absent → associative exclusion */
+    { channel: "Orgânico", unit: "SP Centro", leadBase: 22, revPerConversion: 400, costRatio: 0.52 },
+    { channel: "Orgânico", unit: "SP Sul", leadBase: 16, revPerConversion: 380, costRatio: 0.55 },
+    { channel: "Orgânico", unit: "RJ Barra", leadBase: 18, revPerConversion: 390, costRatio: 0.54 },
+];
+
+const RECORD_DATES = [
+    "2025-01-06", "2025-01-13", "2025-01-20",
+    "2025-01-27", "2025-02-03", "2025-02-10", "2025-02-17",
+];
+
+function buildMockRecords(): DataRecord[] {
+    const records: DataRecord[] = [];
+    for (let wi = 0; wi < RECORD_DATES.length; wi++) {
+        const date = RECORD_DATES[wi];
+        const growthFactor = 1 + wi * 0.025;
+        for (let ci = 0; ci < COMBO_WEIGHTS.length; ci++) {
+            const c = COMBO_WEIGHTS[ci];
+            const jitter = ((wi * 7 + ci * 3) % 11) - 5;
+            const leads = Math.round(c.leadBase * growthFactor + jitter);
+            const qualified = Math.round(leads * 0.70);
+            const appointments = Math.round(qualified * 0.72);
+            const showed = Math.round(appointments * 0.735);
+            const conversions = Math.round(showed * 0.61);
+            const revenue = Math.round(conversions * c.revPerConversion);
+            const cost = Math.round(revenue * c.costRatio);
+            records.push({
+                date, channel: c.channel, unit: c.unit,
+                leads, qualified, appointments, showed, conversions,
+                revenue, cost,
+            });
+        }
+    }
+    return records;
+}
+
+export const MOCK_DATA_RECORDS: DataRecord[] = buildMockRecords();

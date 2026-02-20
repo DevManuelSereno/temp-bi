@@ -1,21 +1,23 @@
-import type {
-    KPI,
-    ChartSeries,
-    FunnelStage,
-    TopItem,
-    Insight,
-    DataFreshness,
-} from "@/types/dashboard";
 import {
-    MOCK_KPIS,
     MOCK_ACQUISITION_SERIES,
-    MOCK_FUNNEL_STAGES,
+    MOCK_DATA_RECORDS,
     MOCK_FINANCIAL_SERIES,
-    MOCK_TOP_ITEMS,
-    MOCK_INSIGHTS,
     MOCK_FRESHNESS,
+    MOCK_FUNNEL_STAGES,
+    MOCK_INSIGHTS,
+    MOCK_KPIS,
+    MOCK_TOP_ITEMS,
 } from "@/modules/dashboard/mock/data";
 import { MOCK_DELAY_MS } from "@/shared/lib/constants";
+import type {
+    ChartSeries,
+    DataFreshness,
+    DataRecord,
+    FunnelStage,
+    Insight,
+    KPI,
+    TopItem,
+} from "@/types/dashboard";
 
 /* ── Simulated async delay ─────────────────────────── */
 function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
@@ -61,4 +63,9 @@ export async function getInsights(): Promise<Insight[]> {
 export async function getDataFreshness(): Promise<DataFreshness> {
     await delay(200);
     return MOCK_FRESHNESS;
+}
+
+export async function getDataRecords(): Promise<DataRecord[]> {
+    await delay();
+    return MOCK_DATA_RECORDS;
 }

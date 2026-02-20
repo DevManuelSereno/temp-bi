@@ -1,23 +1,24 @@
 "use client";
 
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { formatVariation, formatPercent } from "@/shared/lib/formatters";
 import { SPARKLINE_HEIGHT, SPARKLINE_WIDTH } from "@/shared/lib/constants";
+import { formatPercent, formatVariation } from "@/shared/lib/formatters";
 import type { KPI } from "@/types/dashboard";
+import { Minus, TrendingDown, TrendingUp } from "lucide-react";
 
-interface KPIStatCardProps {
-    kpi: KPI;
-    loading?: boolean;
+type KPIStatCardProps = {
     className?: string;
     onClick?: () => void;
-}
+} & (
+        | { kpi: KPI; loading?: false }
+        | { kpi?: undefined; loading: true }
+    );
 
 /* ── Mini Sparkline (SVG) ───────────────────────────── */
 function Sparkline({

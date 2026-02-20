@@ -1,108 +1,54 @@
 "use client";
 
-import { Calendar, Building2, User, Radio } from "lucide-react";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { PERIOD_OPTIONS } from "@/shared/lib/constants";
-import type { FilterState } from "@/types/dashboard";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAssociativeFilters } from "@/shared/engine/hooks";
+import { AssociativeFilter } from "@/shared/ui/associative-filter";
+import { Filter, X } from "lucide-react";
 
 interface FilterBarProps {
-    filters: FilterState;
-    onFilterChange: (filters: FilterState) => void;
     className?: string;
 }
 
-const UNITS = [
-    { value: "all", label: "Todas as Unidades" },
-    { value: "sp-centro", label: "SP Centro" },
-    { value: "sp-sul", label: "SP Sul" },
-    { value: "rj-barra", label: "RJ Barra" },
-];
+export function FilterBar({ className }: FilterBarProps) {
+    const { dimensions, hasActiveFilters, toggleValue, clearDimension, clearAll } =
+        useAssociativeFilters();
 
-const CHANNELS = [
-    { value: "all", label: "Todos os Canais" },
-    { value: "google", label: "Google Ads" },
-    { value: "meta", label: "Meta Ads" },
-    { value: "organic", label: "Orgânico" },
-];
-
-export function FilterBar({
-    filters,
-    onFilterChange,
-    className,
-}: FilterBarProps) {
     return (
         <div
             className={cn(
-                "flex flex-wrap items-center gap-2",
+                "frame-card flex flex-wrap items-center gap-x-6 gap-y-3 py-3 px-4",
                 className
             )}
         >
-            {/* Period */}
-            <Select
-                value={filters.period}
-                onValueChange={(v) =>
-                    onFilterChange({ ...filters, period: v as FilterState["period"] })
-                }
-            >
-                <SelectTrigger className="w-[140px] h-9 text-xs bg-card border-border">
-                    <Calendar className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    {PERIOD_OPTIONS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                            {opt.label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+            <div className="flex items-center gap-2 text-muted-foreground">
+                <Filter className="h-4 w-4" aria-hidden="true" />
+                <span className="text-xs font-semibold uppercase tracking-wider">
+                    Filtros
+                </span>
+            </div>
 
-            {/* Unit */}
-            <Select
-                value={filters.unit ?? "all"}
-                onValueChange={(v) =>
-                    onFilterChange({ ...filters, unit: v === "all" ? undefined : v })
-                }
-            >
-                <SelectTrigger className="w-[170px] h-9 text-xs bg-card border-border">
-                    <Building2 className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    {UNITS.map((u) => (
-                        <SelectItem key={u.value} value={u.value}>
-                            {u.label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+            {dimensions.map((dim) => (
+                <AssociativeFilter
+                    key={dim.id}
+                    dimension={dim}
+                    onToggle={(valueId) => toggleValue(dim.id, valueId)}
+                    onClear={() => clearDimension(dim.id)}
+                />
+            ))}
 
-            {/* Channel */}
-            <Select
-                value={filters.channel ?? "all"}
-                onValueChange={(v) =>
-                    onFilterChange({ ...filters, channel: v === "all" ? undefined : v })
-                }
-            >
-                <SelectTrigger className="w-[150px] h-9 text-xs bg-card border-border">
-                    <Radio className="mr-1.5 h-3.5 w-3.5 text-muted-foreground" />
-                    <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                    {CHANNELS.map((c) => (
-                        <SelectItem key={c.value} value={c.value}>
-                            {c.label}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+            {hasActiveFilters && (
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearAll}
+                    className="ml-auto h-7 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+                    aria-label="Limpar todos os filtros"
+                >
+                    <X className="h-3.5 w-3.5" aria-hidden="true" />
+                    Limpar
+                </Button>
+            )}
         </div>
     );
 }

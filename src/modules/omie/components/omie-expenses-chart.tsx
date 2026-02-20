@@ -1,9 +1,9 @@
 "use client";
 
 import { CHART_HEIGHT } from "@/shared/lib/constants";
-import { formatCompact, formatPercent } from "@/shared/lib/formatters";
+import { formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { FunnelStage } from "@/types/dashboard";
+import type { OmieExpenseCategory } from "@/types/omie";
 import {
     Bar,
     BarChart,
@@ -15,34 +15,35 @@ import {
     YAxis,
 } from "recharts";
 
-const FUNNEL_COLORS = [
+const BAR_COLORS = [
     "var(--chart-1)",
     "var(--chart-2)",
     "var(--chart-3)",
     "var(--chart-4)",
     "var(--chart-5)",
+    "var(--chart-1)",
 ];
 
-interface FunnelChartProps {
-    stages: FunnelStage[];
+interface OmieExpensesChartProps {
+    data: OmieExpenseCategory[];
     loading?: boolean;
     className?: string;
 }
 
-export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
+export function OmieExpensesChart({ data, loading, className }: OmieExpensesChartProps) {
     return (
         <ChartCard
-            title="Funil de Conversão"
-            subtitle="Da captação à conversão"
+            title="Despesas por Categoria"
+            subtitle="Distribuição do mês atual"
             loading={loading}
             className={className}
             actions={[{ label: "Ver detalhes", onClick: () => { } }]}
         >
             <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart
-                    data={stages}
+                    data={data}
                     layout="vertical"
-                    margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                 >
                     <CartesianGrid
                         strokeDasharray="3 3"
@@ -52,7 +53,7 @@ export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
                     />
                     <XAxis
                         type="number"
-                        tickFormatter={(v) => formatCompact(v as number)}
+                        tickFormatter={(v) => formatCurrency(v as number).replace("R$\u00a0", "")}
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
@@ -73,21 +74,14 @@ export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
                             fontSize: 12,
                             color: "var(--card-foreground)",
                         }}
-                        formatter={(value, _name, props) => {
-                            const stage = (props as unknown as { payload: FunnelStage }).payload;
-                            return [
-                                `${formatCompact(Number(value ?? 0))} (${formatPercent(stage.percent)})`,
-                                "Volume",
-                            ];
-                        }}
+                        formatter={(value, _name, entry) => [
+                            `${formatCurrency(Number(value ?? 0))} (${entry.payload.percent}%)`,
+                            "",
+                        ]}
                     />
-                    <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={28}>
-                        {stages.map((_, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={FUNNEL_COLORS[index % FUNNEL_COLORS.length]}
-                                opacity={1 - index * 0.12}
-                            />
+                    <Bar dataKey="value" name="Valor" radius={[0, 4, 4, 0]}>
+                        {data.map((_, i) => (
+                            <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />
                         ))}
                     </Bar>
                 </BarChart>

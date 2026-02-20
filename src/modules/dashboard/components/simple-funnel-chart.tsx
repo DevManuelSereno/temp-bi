@@ -1,9 +1,8 @@
 "use client";
 
 import { CHART_HEIGHT } from "@/shared/lib/constants";
-import { formatCompact, formatPercent } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { FunnelStage } from "@/types/dashboard";
+import type { GHLPipelineStage } from "@/types/ghl";
 import {
     Bar,
     BarChart,
@@ -15,7 +14,7 @@ import {
     YAxis,
 } from "recharts";
 
-const FUNNEL_COLORS = [
+const STAGE_COLORS = [
     "var(--chart-1)",
     "var(--chart-2)",
     "var(--chart-3)",
@@ -23,47 +22,37 @@ const FUNNEL_COLORS = [
     "var(--chart-5)",
 ];
 
-interface FunnelChartProps {
-    stages: FunnelStage[];
+interface SimpleFunnelChartProps {
+    stages: GHLPipelineStage[];
     loading?: boolean;
     className?: string;
 }
 
-export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
+export function SimpleFunnelChart({ stages, loading, className }: SimpleFunnelChartProps) {
     return (
         <ChartCard
-            title="Funil de Conversão"
-            subtitle="Da captação à conversão"
+            title="Funil Comercial"
+            subtitle="Pipeline consolidado — GHL"
             loading={loading}
             className={className}
-            actions={[{ label: "Ver detalhes", onClick: () => { } }]}
         >
             <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-                <BarChart
-                    data={stages}
-                    layout="vertical"
-                    margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
-                >
+                <BarChart data={stages} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
                     <CartesianGrid
                         strokeDasharray="3 3"
                         stroke="var(--border)"
                         opacity={0.5}
-                        horizontal={false}
                     />
                     <XAxis
-                        type="number"
-                        tickFormatter={(v) => formatCompact(v as number)}
+                        dataKey="label"
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                        axisLine={false}
+                        axisLine={{ stroke: "var(--border)" }}
                         tickLine={false}
                     />
                     <YAxis
-                        type="category"
-                        dataKey="label"
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
-                        width={90}
                     />
                     <RechartsTooltip
                         contentStyle={{
@@ -73,21 +62,14 @@ export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
                             fontSize: 12,
                             color: "var(--card-foreground)",
                         }}
-                        formatter={(value, _name, props) => {
-                            const stage = (props as unknown as { payload: FunnelStage }).payload;
-                            return [
-                                `${formatCompact(Number(value ?? 0))} (${formatPercent(stage.percent)})`,
-                                "Volume",
-                            ];
-                        }}
+                        formatter={(value, _name, entry) => [
+                            `${value} (${entry.payload.percent}%)`,
+                            "",
+                        ]}
                     />
-                    <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={28}>
-                        {stages.map((_, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={FUNNEL_COLORS[index % FUNNEL_COLORS.length]}
-                                opacity={1 - index * 0.12}
-                            />
+                    <Bar dataKey="value" name="Volume" radius={[4, 4, 0, 0]}>
+                        {stages.map((_, i) => (
+                            <Cell key={i} fill={STAGE_COLORS[i % STAGE_COLORS.length]} />
                         ))}
                     </Bar>
                 </BarChart>

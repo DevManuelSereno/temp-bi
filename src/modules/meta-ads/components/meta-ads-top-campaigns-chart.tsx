@@ -1,9 +1,9 @@
 "use client";
 
 import { CHART_HEIGHT } from "@/shared/lib/constants";
-import { formatCompact, formatPercent } from "@/shared/lib/formatters";
+import { formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { FunnelStage } from "@/types/dashboard";
+import type { MetaAdsCampaign } from "@/types/meta-ads";
 import {
     Bar,
     BarChart,
@@ -15,34 +15,36 @@ import {
     YAxis,
 } from "recharts";
 
-const FUNNEL_COLORS = [
+const BAR_COLORS = [
     "var(--chart-1)",
     "var(--chart-2)",
     "var(--chart-3)",
     "var(--chart-4)",
     "var(--chart-5)",
+    "var(--chart-1)",
 ];
 
-interface FunnelChartProps {
-    stages: FunnelStage[];
+interface MetaAdsTopCampaignsChartProps {
+    campaigns: MetaAdsCampaign[];
     loading?: boolean;
     className?: string;
 }
 
-export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
+export function MetaAdsTopCampaignsChart({ campaigns, loading, className }: MetaAdsTopCampaignsChartProps) {
+    const sorted = [...campaigns].sort((a, b) => b.leads - a.leads);
+
     return (
         <ChartCard
-            title="Funil de Conversão"
-            subtitle="Da captação à conversão"
+            title="Top Campanhas"
+            subtitle="Leads gerados por campanha"
             loading={loading}
             className={className}
-            actions={[{ label: "Ver detalhes", onClick: () => { } }]}
         >
             <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart
-                    data={stages}
+                    data={sorted}
                     layout="vertical"
-                    margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
+                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                 >
                     <CartesianGrid
                         strokeDasharray="3 3"
@@ -52,18 +54,17 @@ export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
                     />
                     <XAxis
                         type="number"
-                        tickFormatter={(v) => formatCompact(v as number)}
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
                     />
                     <YAxis
                         type="category"
-                        dataKey="label"
-                        tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+                        dataKey="name"
+                        tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
-                        width={90}
+                        width={140}
                     />
                     <RechartsTooltip
                         contentStyle={{
@@ -73,21 +74,14 @@ export function FunnelChart({ stages, loading, className }: FunnelChartProps) {
                             fontSize: 12,
                             color: "var(--card-foreground)",
                         }}
-                        formatter={(value, _name, props) => {
-                            const stage = (props as unknown as { payload: FunnelStage }).payload;
-                            return [
-                                `${formatCompact(Number(value ?? 0))} (${formatPercent(stage.percent)})`,
-                                "Volume",
-                            ];
-                        }}
+                        formatter={(value, _name, entry) => [
+                            `${value} leads · CPL ${formatCurrency(entry.payload.cpl)}`,
+                            "",
+                        ]}
                     />
-                    <Bar dataKey="value" radius={[0, 6, 6, 0]} barSize={28}>
-                        {stages.map((_, index) => (
-                            <Cell
-                                key={`cell-${index}`}
-                                fill={FUNNEL_COLORS[index % FUNNEL_COLORS.length]}
-                                opacity={1 - index * 0.12}
-                            />
+                    <Bar dataKey="leads" name="Leads" radius={[0, 4, 4, 0]}>
+                        {sorted.map((_, i) => (
+                            <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />
                         ))}
                     </Bar>
                 </BarChart>

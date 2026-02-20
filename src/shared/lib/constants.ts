@@ -1,3 +1,5 @@
+import type { DimensionDefinition } from "@/types/associative";
+
 /* ── App-wide constants ──────────────────────────────── */
 
 export const APP_NAME = "Capone Club - Intel Hub";
@@ -32,3 +34,12 @@ export const PERIOD_OPTIONS = [
     { value: "30d", label: "30 dias" },
     { value: "90d", label: "90 dias" },
 ] as const;
+
+/** Associative engine dimension definitions */
+export const DIMENSION_DEFINITIONS: DimensionDefinition[] = [
+    { id: "channel", label: "Canal", field: "channel" },
+    { id: "unit", label: "Unidade", field: "unit" },
+] as const;
+
+/** Capacity per unit per week (for occupancy KPI) */
+export const CAPACITY_PER_UNIT_PER_WEEK = 50;

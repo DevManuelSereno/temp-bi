@@ -1,7 +1,10 @@
 import {
-    LayoutDashboard,
     BarChart3,
+    LayoutDashboard,
+    Megaphone,
     Settings,
+    Users,
+    Wallet,
     type LucideIcon,
 } from "lucide-react";
 
@@ -26,9 +29,29 @@ export const NAV_ITEMS: NavItem[] = [
         description: "Dashboard completo com gráficos e análises",
     },
     {
+        label: "Omie",
+        href: "/omie",
+        icon: Wallet,
+        description: "Visão financeira e operacional do Omie",
+    },
+    {
+        label: "GHL",
+        href: "/ghl",
+        icon: Users,
+        description: "CRM, pipeline e performance comercial",
+    },
+    {
+        label: "Meta Ads",
+        href: "/meta-ads",
+        icon: Megaphone,
+        description: "Performance de mídia paga e campanhas",
+    },
+    {
         label: "Configurações",
         href: "/settings",
         icon: Settings,
         description: "Tema, preferências e personalização",
     },
 ];
+
+
