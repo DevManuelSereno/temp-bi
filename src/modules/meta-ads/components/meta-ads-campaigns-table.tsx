@@ -2,19 +2,19 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { formatCurrency, formatPercent } from "@/shared/lib/formatters";
+import { formatCurrency } from "@/shared/lib/formatters";
 import type { MetaAdsCampaign } from "@/types/meta-ads";
 
-const STATUS_LABELS: Record<MetaAdsCampaign["status"], string> = {
+const STATUS_LABEL: Record<MetaAdsCampaign["status"], string> = {
     active: "Ativa",
     paused: "Pausada",
-    completed: "Finalizada",
+    learning: "Aprendizado",
 };
 
 const STATUS_BADGE: Record<MetaAdsCampaign["status"], string> = {
-    active: "bg-success/15 text-success",
-    paused: "bg-warning/15 text-warning",
-    completed: "bg-muted text-muted-foreground",
+    active: "bg-emerald-500/10 text-emerald-500",
+    paused: "bg-yellow-500/10 text-yellow-500",
+    learning: "bg-blue-500/10 text-blue-500",
 };
 
 interface MetaAdsCampaignsTableProps {
@@ -81,7 +81,7 @@ export function MetaAdsCampaignsTable({
                                     STATUS_BADGE[c.status]
                                 )}
                             >
-                                {STATUS_LABELS[c.status]}
+                                {STATUS_LABEL[c.status]}
                             </span>
                         </span>
                         <span className="md:col-span-2 text-sm text-card-foreground text-right">
@@ -93,9 +93,7 @@ export function MetaAdsCampaignsTable({
                         <span className="md:col-span-2 text-sm text-muted-foreground text-right">
                             {formatCurrency(c.cpl)}
                         </span>
-                        <span className="md:col-span-1 text-sm text-muted-foreground text-right">
-                            {formatPercent(c.ctr)}
-                        </span>
+                        {/* Removed CTR column as per instruction */}
                         <span className={cn(
                             "md:col-span-2 text-sm font-semibold text-right",
                             c.roas >= 4 ? "kpi-positive" : c.roas < 2 ? "kpi-negative" : "text-card-foreground"

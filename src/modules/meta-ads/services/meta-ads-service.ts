@@ -1,12 +1,14 @@
 import {
     MOCK_META_ADS_CAMPAIGNS,
     MOCK_META_ADS_KPIS,
+    MOCK_META_ADS_LEAD_TYPES,
     MOCK_META_ADS_SERIES,
 } from "@/modules/meta-ads/mock/data";
 import { MOCK_DELAY_MS } from "@/shared/lib/constants";
 import type {
     MetaAdsCampaign,
     MetaAdsKPI,
+    MetaAdsLeadTypeBreakdown,
     MetaAdsTimePoint,
 } from "@/types/meta-ads";
 
@@ -32,6 +34,11 @@ export async function getMetaAdsTimeSeries(): Promise<MetaAdsTimePoint[]> {
 }
 
 export async function getMetaAdsCampaigns(): Promise<MetaAdsCampaign[]> {
-    await delay();
+    await new Promise((resolve) => setTimeout(resolve, 1500));
     return MOCK_META_ADS_CAMPAIGNS;
+}
+
+export async function getMetaAdsLeadTypes(): Promise<MetaAdsLeadTypeBreakdown[]> {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return MOCK_META_ADS_LEAD_TYPES;
 }

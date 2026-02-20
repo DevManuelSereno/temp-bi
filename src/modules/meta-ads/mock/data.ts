@@ -2,6 +2,7 @@ import { formatCompact, formatCurrency, formatPercent } from "@/shared/lib/forma
 import type {
     MetaAdsCampaign,
     MetaAdsKPI,
+    MetaAdsLeadTypeBreakdown,
     MetaAdsTimePoint,
 } from "@/types/meta-ads";
 
@@ -22,15 +23,25 @@ export const MOCK_META_ADS_SERIES: MetaAdsTimePoint[] = [
     { date: "Sem 08", spend: 5600, leads: 98, impressions: 56400, clicks: 1692 },
 ];
 
+/* ── Lead Types ──────────────────────────────────────── */
+
+export const MOCK_META_ADS_LEAD_TYPES: MetaAdsLeadTypeBreakdown[] = [
+    { type: "WhatsApp", leads: 850 },
+    { type: "Formulário Site", leads: 420 },
+    { type: "Direct Instagram", leads: 230 },
+    { type: "Ligações", leads: 150 },
+    { type: "Messenger", leads: 80 },
+];
+
 /* ── Campaigns ───────────────────────────────────────── */
 
 export const MOCK_META_ADS_CAMPAIGNS: MetaAdsCampaign[] = [
-    { id: "c1", name: "Captação — Presencial SP", status: "active", spend: 12400, leads: 186, cpl: 66.67, ctr: 3.2, roas: 4.8 },
-    { id: "c2", name: "Remarketing — Visitantes Site", status: "active", spend: 8200, leads: 124, cpl: 66.13, ctr: 4.1, roas: 5.2 },
-    { id: "c3", name: "Lookalike — Alunos Premium", status: "active", spend: 9800, leads: 142, cpl: 69.01, ctr: 2.8, roas: 3.9 },
-    { id: "c4", name: "Branding — Institucional", status: "paused", spend: 3200, leads: 28, cpl: 114.29, ctr: 1.5, roas: 1.2 },
-    { id: "c5", name: "Lançamento — Plano Anual", status: "completed", spend: 5600, leads: 98, cpl: 57.14, ctr: 3.8, roas: 6.1 },
-    { id: "c6", name: "Captação — Online Nacional", status: "active", spend: 3900, leads: 52, cpl: 75.0, ctr: 2.4, roas: 3.1 },
+    { id: "cm-01", name: "[Leads] Conversão - WhatsApp", status: "active", spend: 12500, leads: 450, cpl: 27.77, roas: 8.5 },
+    { id: "cm-02", name: "[Branding] Alcance - Institucional", status: "active", spend: 4200, leads: 50, cpl: 84.00, roas: 3.2 },
+    { id: "cm-03", name: "[Promo] Oferta Relâmpago", status: "paused", spend: 3100, leads: 85, cpl: 36.47, roas: 5.4 },
+    { id: "cm-04", name: "[Retargeting] Carrinho Abandonado", status: "learning", spend: 1800, leads: 42, cpl: 42.85, roas: 12.1 },
+    { id: "cm-05", name: "[Leads] Quiz Interativo", status: "paused", spend: 950, leads: 38, cpl: 25.00, roas: 4.1 },
+    { id: "cm-06", name: "[Video] Depoimentos Clientes", status: "active", spend: 2100, leads: 25, cpl: 84.00, roas: 2.8 },
 ];
 
 /* ── KPIs ─────────────────────────────────────────────── */

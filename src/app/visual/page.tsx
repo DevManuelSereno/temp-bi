@@ -3,12 +3,12 @@
 import { AcquisitionChart } from "@/modules/dashboard/components/acquisition-chart";
 import { FinancialChart } from "@/modules/dashboard/components/financial-chart";
 import { FunnelChart } from "@/modules/dashboard/components/funnel-chart";
-import { InsightsList } from "@/modules/dashboard/components/insights-list";
 import { TopItemsTable } from "@/modules/dashboard/components/top-items-table";
+{/* ── Insights (Removed) ─────────────────────── */ }
+
 import {
     getDataFreshness,
     getDataRecords,
-    getInsights,
     getTopItems,
 } from "@/modules/dashboard/services/dashboard-service";
 import { AssociativeProvider } from "@/shared/engine/associative-context";
@@ -18,7 +18,7 @@ import { DataFreshnessBadge } from "@/shared/ui/data-freshness-badge";
 import { FilterBar } from "@/shared/ui/filter-bar";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { SectionHeader } from "@/shared/ui/section-header";
-import type { DataFreshness as DataFreshnessType, Insight, TopItem } from "@/types/dashboard";
+import type { DataFreshness as DataFreshnessType, TopItem } from "@/types/dashboard";
 import { useCallback } from "react";
 
 function VisualContent() {
@@ -27,15 +27,12 @@ function VisualContent() {
     const { stages, loading: funnelLoading } = useFilteredFunnel();
 
     const { state: topState } = useAsyncData<TopItem[]>(useCallback(() => getTopItems(), []));
-    const { state: insightState } = useAsyncData<Insight[]>(useCallback(() => getInsights(), []));
     const { state: freshState } = useAsyncData<DataFreshnessType>(
         useCallback(() => getDataFreshness(), [])
     );
 
     const topLoading = topState.status === "loading";
     const topItems = topState.status === "success" ? topState.data : [];
-    const insightLoading = insightState.status === "loading";
-    const insights = insightState.status === "success" ? insightState.data : [];
     const freshness = freshState.status === "success" ? freshState.data : undefined;
 
     return (
@@ -69,9 +66,6 @@ function VisualContent() {
                 <FunnelChart stages={stages} loading={funnelLoading} />
                 <TopItemsTable items={topItems} loading={topLoading} />
             </div>
-
-            {/* ── Insights ───────────────────────────────── */}
-            <InsightsList insights={insights} loading={insightLoading} />
         </div>
     );
 }

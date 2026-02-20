@@ -26,10 +26,14 @@ export interface MetaAdsTimePoint {
 export interface MetaAdsCampaign {
     id: string;
     name: string;
-    status: "active" | "paused" | "completed";
-    spend: number;
     leads: number;
+    spend: number;
     cpl: number;
-    ctr: number;
     roas: number;
+    status: "active" | "learning" | "paused"; // simplified
+}
+
+export interface MetaAdsLeadTypeBreakdown {
+    type: string;
+    leads: number;
 }

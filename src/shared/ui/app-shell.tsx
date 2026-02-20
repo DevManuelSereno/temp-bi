@@ -78,7 +78,7 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
                 </Avatar>
                 {!collapsed && (
                     <div className="flex flex-col min-w-0">
-                        <span className="text-sm font-medium truncate">Icaro Leal</span>
+                        <span className="text-sm font-medium truncate">Capone Club</span>
                         <span className="text-xs text-muted-foreground truncate">Admin</span>
                     </div>
                 )}
