@@ -9,12 +9,7 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/shared/config/navigation";
 import { SIDEBAR_NAME } from "@/shared/lib/constants";
 import { ThemeToggle } from "@/shared/theme/theme-toggle";
-import {
-    ArrowBigLeftDash,
-    ArrowBigRightDash,
-    Bell,
-    PanelLeft,
-} from "lucide-react";
+import { ArrowFatLineLeft, ArrowFatLineRight, Bell, List } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -97,14 +92,14 @@ function Topbar({ onMobileMenuOpen }: { onMobileMenuOpen: () => void }) {
                 onClick={onMobileMenuOpen}
                 aria-label="Abrir menu"
             >
-                <PanelLeft className="h-5 w-5" />
+                <List weight="bold" className="h-5 w-5" />
             </Button>
 
             <div className="flex-1" />
 
             {/* Actions */}
             <Button variant="ghost" size="icon" className="h-9 w-9 relative cursor-pointer" aria-label="Notificações">
-                <Bell className="h-4 w-4" />
+                <Bell weight="bold" className="h-4 w-4" />
                 <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-primary" />
             </Button>
 
@@ -140,9 +135,9 @@ export function AppShell({ children }: AppShellProps) {
                     aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
                 >
                     {collapsed ? (
-                        <ArrowBigRightDash className="h-4 w-4" />
+                        <ArrowFatLineRight weight="fill" className="h-4 w-4" />
                     ) : (
-                        <ArrowBigLeftDash className="h-4 w-4" />
+                        <ArrowFatLineLeft weight="fill" className="h-4 w-4" />
                     )}
                 </Button>
             </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, CheckCircle, AlertTriangle, XCircle } from "lucide-react";
+import { Clock, CheckCircle, Warning, XCircle } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import {
     Tooltip,
@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
         className: "text-success border-success/30",
     },
     stale: {
-        icon: AlertTriangle,
+        icon: Warning,
         label: "Dados podem estar desatualizados",
         variant: "outline" as const,
         className: "text-warning border-warning/30",
@@ -55,8 +55,8 @@ export function DataFreshnessBadge({
                         className
                     )}
                 >
-                    <Icon className="h-3 w-3" aria-hidden="true" />
-                    <Clock className="h-3 w-3" aria-hidden="true" />
+                    <Icon weight="bold" className="h-3 w-3" aria-hidden="true" />
+                    <Clock weight="bold" className="h-3 w-3" aria-hidden="true" />
                     <span>{formatRelativeTime(freshness.lastUpdated)}</span>
                 </Badge>
             </TooltipTrigger>

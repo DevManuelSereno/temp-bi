@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { SPARKLINE_HEIGHT, SPARKLINE_WIDTH } from "@/shared/lib/constants";
 import { formatPercent, formatVariation } from "@/shared/lib/formatters";
 import type { KPI } from "@/types/dashboard";
-import { ArrowDown, ArrowUp, Minus, TrendingDown, TrendingUp } from "lucide-react";
+import { ArrowDown, ArrowUp, Minus, TrendDown, TrendUp } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 
 type KPIStatCardProps = {
@@ -93,18 +93,18 @@ function Sparkline({
 /* ── Trend Arrow (mobile substitute for sparkline) ──── */
 function TrendArrow({ trend }: { trend: KPI["trend"] }) {
     if (trend === "up") {
-        return <ArrowUp className="h-4 w-4 text-success" aria-hidden="true" />;
+        return <ArrowUp weight="bold" className="h-4 w-4 text-success" aria-hidden="true" />;
     }
     if (trend === "down") {
-        return <ArrowDown className="h-4 w-4 text-destructive" aria-hidden="true" />;
+        return <ArrowDown weight="bold" className="h-4 w-4 text-destructive" aria-hidden="true" />;
     }
-    return <Minus className="h-4 w-4 text-muted-foreground" aria-hidden="true" />;
+    return <Minus weight="bold" className="h-4 w-4 text-muted-foreground" aria-hidden="true" />;
 }
 
 /* ── Trend Icon ─────────────────────────────────────── */
 function TrendIcon({ trend }: { trend: KPI["trend"] }) {
     const Icon =
-        trend === "up" ? TrendingUp : trend === "down" ? TrendingDown : Minus;
+        trend === "up" ? TrendUp : trend === "down" ? TrendDown : Minus;
     return (
         <Icon
             className={cn(

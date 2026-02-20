@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { TrendUp, TrendDown, Minus } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatVariation } from "@/shared/lib/formatters";
@@ -86,11 +86,11 @@ export function TopItemsTable({ items, loading }: TopItemsTableProps) {
                                 )}
                             >
                                 {item.change >= 0 ? (
-                                    <TrendingUp className="h-3 w-3" />
+                                    <TrendUp weight="bold" className="h-3 w-3" />
                                 ) : item.change < 0 ? (
-                                    <TrendingDown className="h-3 w-3" />
+                                    <TrendDown weight="bold" className="h-3 w-3" />
                                 ) : (
-                                    <Minus className="h-3 w-3" />
+                                    <Minus weight="bold" className="h-3 w-3" />
                                 )}
                                 {formatVariation(item.change)}
                             </Badge>

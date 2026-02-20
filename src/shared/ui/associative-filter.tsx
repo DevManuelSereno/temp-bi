@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { Dimension } from "@/types/associative";
-import { X } from "lucide-react";
+import { X } from "@phosphor-icons/react";
 
 interface AssociativeFilterProps {
     dimension: Dimension;
@@ -52,7 +52,7 @@ export function AssociativeFilter({
                         onClick={onClear}
                         className="ml-1 rounded-full p-0.5 text-muted-foreground hover:text-foreground transition-colors"
                     >
-                        <X className="h-3.5 w-3.5" aria-hidden="true" />
+                        <X weight="bold" className="h-3.5 w-3.5" aria-hidden="true" />
                     </button>
                 )}
             </div>

@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/shared/lib/formatters";
-import { AlertCircle, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Info, Warning, CheckCircle } from "@phosphor-icons/react";
 
 interface RevenueTargetCounterProps {
     current: number;
@@ -39,7 +39,7 @@ export function RevenueTargetCounter({
     };
 
     const tone = getTone(current);
-    const Icon = tone === "success" ? CheckCircle2 : (tone === "warning" ? AlertTriangle : AlertCircle);
+    const Icon = tone === "success" ? CheckCircle : (tone === "warning" ? Warning : Info);
 
     // Status text color needs to map to text- classes
     const textColor = tone === "destructive" ? "text-destructive" :

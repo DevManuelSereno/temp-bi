@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, Lightbulb, Info, ArrowRight } from "lucide-react";
+import { Warning, Lightbulb, Info, ArrowRight } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatRelativeTime } from "@/shared/lib/formatters";
@@ -13,13 +13,13 @@ interface InsightsListProps {
 
 const SEVERITY_CONFIG = {
     critical: {
-        icon: AlertTriangle,
+        icon: Warning,
         badgeClass: "bg-destructive/10 text-destructive border-destructive/20",
         dotClass: "bg-destructive",
         label: "Crítico",
     },
     warning: {
-        icon: AlertTriangle,
+        icon: Warning,
         badgeClass: "bg-warning/10 text-warning border-warning/20",
         dotClass: "bg-warning",
         label: "Atenção",
@@ -33,7 +33,7 @@ const SEVERITY_CONFIG = {
 } as const;
 
 const TYPE_ICON = {
-    alert: AlertTriangle,
+    alert: Warning,
     opportunity: Lightbulb,
     info: Info,
 } as const;
@@ -83,7 +83,7 @@ export function InsightsList({ insights, loading }: InsightsListProps) {
                                     severity.badgeClass
                                 )}
                             >
-                                <TypeIcon className="h-4 w-4" aria-hidden="true" />
+                                <TypeIcon weight="duotone" className="h-4 w-4" aria-hidden="true" />
                             </div>
 
                             {/* Content */}
@@ -114,7 +114,7 @@ export function InsightsList({ insights, loading }: InsightsListProps) {
                                             className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline"
                                         >
                                             {insight.actionLabel}
-                                            <ArrowRight className="h-3 w-3" />
+                                            <ArrowRight weight="bold" className="h-3 w-3" />
                                         </button>
                                     )}
                                 </div>

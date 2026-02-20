@@ -1,4 +1,4 @@
-import { FileQuestion, AlertCircle, RefreshCw } from "lucide-react";
+import { Question, Info, ArrowsClockwise } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -21,7 +21,7 @@ export function EmptyState({
                 className
             )}
         >
-            <FileQuestion className="h-10 w-10 text-muted-foreground/50" />
+            <Question weight="duotone" className="h-10 w-10 text-muted-foreground/50" />
             <div className="flex flex-col gap-1">
                 <h4 className="font-serif text-sm font-semibold text-card-foreground">
                     {title}
@@ -55,7 +55,7 @@ export function ErrorState({
                 className
             )}
         >
-            <AlertCircle className="h-10 w-10 text-destructive/60" />
+            <Info weight="duotone" className="h-10 w-10 text-destructive/60" />
             <div className="flex flex-col gap-1">
                 <h4 className="font-serif text-sm font-semibold text-card-foreground">
                     {title}
@@ -66,7 +66,7 @@ export function ErrorState({
             </div>
             {onRetry && (
                 <Button variant="outline" size="sm" onClick={onRetry} className="mt-1">
-                    <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
+                    <ArrowsClockwise weight="bold" className="mr-1.5 h-3.5 w-3.5" />
                     Tentar novamente
                 </Button>
             )}

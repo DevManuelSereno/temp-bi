@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { Insight } from "@/types/dashboard";
 import {
-    AlertTriangle,
+    Warning,
     ArrowRight,
     Info,
-    TrendingUp,
-    Zap,
-} from "lucide-react";
+    TrendUp,
+    Lightning,
+} from "@phosphor-icons/react";
 
 interface InsightCardProps {
     insight: Insight;
@@ -18,13 +18,13 @@ interface InsightCardProps {
 
 const SEVERITY_CONFIG = {
     critical: {
-        icon: AlertTriangle,
+        icon: Warning,
         badge: "Crítico",
         badgeClass: "bg-destructive/10 text-destructive border-destructive/20",
         iconClass: "text-destructive",
     },
     warning: {
-        icon: Zap,
+        icon: Lightning,
         badge: "Atenção",
         badgeClass: "bg-warning/10 text-warning border-warning/20",
         iconClass: "text-warning",
@@ -36,7 +36,7 @@ const SEVERITY_CONFIG = {
         iconClass: "text-primary",
     },
     positive: {
-        icon: TrendingUp,
+        icon: TrendUp,
         badge: "Positivo",
         badgeClass: "bg-success/10 text-success border-success/20",
         iconClass: "text-success",
@@ -60,7 +60,7 @@ export function InsightCard({ insight, className }: InsightCardProps) {
                     config.iconClass
                 )}
             >
-                <Icon className="h-4 w-4" aria-hidden="true" />
+                <Icon weight="duotone" className="h-4 w-4" aria-hidden="true" />
             </div>
 
             <div className="flex-1 min-w-0">
@@ -90,7 +90,7 @@ export function InsightCard({ insight, className }: InsightCardProps) {
                 aria-label={`Ver detalhes de ${insight.title}`}
                 className="mt-1 shrink-0 rounded-md p-1 text-muted-foreground hover:text-foreground transition-colors"
             >
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                <ArrowRight weight="bold" className="h-3.5 w-3.5" aria-hidden="true" />
             </button>
         </div>
     );

@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Monitor, Sun, Moon, Palette, Eye } from "lucide-react";
+import { Monitor, Sun, Moon, Palette, Eye } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -53,7 +53,7 @@ export default function SettingsPage() {
             <section className="frame-card flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-                        <Palette className="h-4 w-4 text-primary" />
+                        <Palette weight="duotone" className="h-4 w-4 text-primary" />
                     </div>
                     <div>
                         <h2 className="font-serif text-base font-semibold">Tema Visual</h2>
@@ -81,7 +81,7 @@ export default function SettingsPage() {
                                 aria-pressed={isActive}
                             >
                                 <div className="flex items-center gap-2">
-                                    <opt.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
+                                    <opt.icon weight="bold" className={cn("h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")} />
                                     <span className="text-sm font-semibold">{opt.label}</span>
                                 </div>
                                 <p className="text-xs text-muted-foreground leading-relaxed">
@@ -99,7 +99,7 @@ export default function SettingsPage() {
             <section className="frame-card flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-                        <Eye className="h-4 w-4 text-primary" />
+                        <Eye weight="duotone" className="h-4 w-4 text-primary" />
                     </div>
                     <div>
                         <h2 className="font-serif text-base font-semibold">Visualização</h2>

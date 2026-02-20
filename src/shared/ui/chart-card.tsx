@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { MoreHorizontal } from "lucide-react";
+import { DotsThree } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -74,7 +74,7 @@ export function ChartCard({
                                     className="h-8 w-8 text-muted-foreground"
                                     aria-label="Ações do gráfico"
                                 >
-                                    <MoreHorizontal className="h-4 w-4" />
+                                    <DotsThree weight="bold" className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">

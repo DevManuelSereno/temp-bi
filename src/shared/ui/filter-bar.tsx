@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAssociativeFilters } from "@/shared/engine/hooks";
 import { AssociativeFilter } from "@/shared/ui/associative-filter";
-import { Filter, X } from "lucide-react";
+import { Funnel, X } from "@phosphor-icons/react";
 
 interface FilterBarProps {
     className?: string;
@@ -22,7 +22,7 @@ export function FilterBar({ className }: FilterBarProps) {
             )}
         >
             <div className="flex items-center gap-2 text-muted-foreground">
-                <Filter className="h-4 w-4" aria-hidden="true" />
+                <Funnel weight="bold" className="h-4 w-4" aria-hidden="true" />
                 <span className="text-xs font-semibold uppercase tracking-wider">
                     Filtros
                 </span>
@@ -45,7 +45,7 @@ export function FilterBar({ className }: FilterBarProps) {
                     className="ml-auto h-7 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
                     aria-label="Limpar todos os filtros"
                 >
-                    <X className="h-3.5 w-3.5" aria-hidden="true" />
+                    <X weight="bold" className="h-3.5 w-3.5" aria-hidden="true" />
                     Limpar
                 </Button>
             )}

@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
+import { CalendarBlank } from "@phosphor-icons/react";
 import type { DateRange } from "react-day-picker";
 
 /* ── Types ─────────────────────────────────────────── */
@@ -43,7 +43,7 @@ export function DatePickerWithRange({
                         className
                     )}
                 >
-                    <CalendarIcon className="size-3.5 shrink-0" />
+                    <CalendarBlank weight="regular" className="size-3.5 shrink-0" />
                     <span className="truncate">{label}</span>
                 </Button>
             </PopoverTrigger>

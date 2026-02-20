@@ -19,7 +19,7 @@ import type { FunnelStage, Insight, KPI, TopItem } from "@/types/dashboard";
 import type { CRMKPI, CRMPipelineStage } from "@/types/crm";
 import type { MetaAdsKPI, MetaAdsLeadTypeBreakdown } from "@/types/meta-ads";
 import type { OmieKPI, OmieMonthlyPoint } from "@/types/omie";
-import { AlertCircle, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Info, Warning, CheckCircle } from "@phosphor-icons/react";
 import { useCallback } from "react";
 
 /* ── KPI IDs to pick from each source ────────────────── */
@@ -157,7 +157,7 @@ export default function DashboardPage() {
         const leadsDiff = LEADS_TARGET - currentLeads;
         const leadsIsMet = leadsDiff <= 0;
         const leadsTone = getLeadsTone(currentLeads);
-        const LeadsIcon = leadsTone === "success" ? CheckCircle2 : (leadsTone === "warning" ? AlertTriangle : AlertCircle);
+        const LeadsIcon = leadsTone === "success" ? CheckCircle : (leadsTone === "warning" ? Warning : Info);
         const leadsTextColor = leadsTone === "destructive" ? "text-destructive" : leadsTone === "warning" ? "text-warning" : "text-success";
         return (
           <div className="frame-card flex flex-col justify-center gap-2 py-4 px-6 relative overflow-hidden w-full">
@@ -168,7 +168,7 @@ export default function DashboardPage() {
                   Meta de Leads (Mês)
                 </span>
                 <div className="flex items-center gap-2 mt-1">
-                  <LeadsIcon className={cn("h-5 w-5", leadsTextColor)} />
+                  <LeadsIcon weight="fill" className={cn("h-5 w-5", leadsTextColor)} />
                   <h2 className={cn("text-xl font-bold font-serif tracking-tight max-sm:text-base break-words", leadsTextColor)}>
                     {leadsIsMet
                       ? `Meta batida ✅ +${formatCompact(Math.abs(leadsDiff))} acima da meta`

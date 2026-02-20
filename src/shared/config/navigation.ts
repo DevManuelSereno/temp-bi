@@ -1,16 +1,16 @@
 import {
-    LayoutDashboard,
+    SquaresFour,
     Megaphone,
-    Settings,
+    Gear,
     Users,
     Wallet,
-    type LucideIcon
-} from "lucide-react";
+    type Icon
+} from "@phosphor-icons/react";
 
 export interface NavItem {
     label: string;
     href: string;
-    icon: LucideIcon;
+    icon: Icon;
     description?: string;
 }
 
@@ -18,7 +18,7 @@ export const NAV_ITEMS: NavItem[] = [
     {
         label: "Visão Geral",
         href: "/",
-        icon: LayoutDashboard,
+        icon: SquaresFour,
         description: "Resumo executivo e KPIs principais",
     },
 
@@ -43,7 +43,7 @@ export const NAV_ITEMS: NavItem[] = [
     {
         label: "Configurações",
         href: "/settings",
-        icon: Settings,
+        icon: Gear,
         description: "Tema, preferências e personalização",
     },
 ];

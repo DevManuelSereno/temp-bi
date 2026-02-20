@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatDate } from "@/shared/lib/formatters";
 import type { OmieTransaction } from "@/types/omie";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "@phosphor-icons/react";
 
 interface OmieTransactionsTableProps {
     transactions: OmieTransaction[];
@@ -58,9 +58,9 @@ export function OmieTransactionsTable({
                                 )}
                             >
                                 {tx.type === "receita" ? (
-                                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                                    <ArrowUpRight weight="bold" className="h-4 w-4" aria-hidden="true" />
                                 ) : (
-                                    <ArrowDownRight className="h-4 w-4" aria-hidden="true" />
+                                    <ArrowDownRight weight="bold" className="h-4 w-4" aria-hidden="true" />
                                 )}
                             </div>
                             <div className="min-w-0">
