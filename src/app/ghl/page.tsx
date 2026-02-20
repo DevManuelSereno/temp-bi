@@ -1,6 +1,12 @@
 "use client";
 
-import { getDataRecords } from "@/modules/dashboard/services/dashboard-service";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { GHLOpportunitiesTable } from "@/modules/ghl/components/ghl-opportunities-table";
 import { GHLPipelineChart } from "@/modules/ghl/components/ghl-pipeline-chart";
 import { GHLWeeklyChart } from "@/modules/ghl/components/ghl-weekly-chart";
@@ -10,15 +16,41 @@ import {
     getGHLSummary,
     getGHLWeeklySeries,
 } from "@/modules/ghl/services/ghl-service";
-import { AssociativeProvider } from "@/shared/engine/associative-context";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
-import { FilterBar } from "@/shared/ui/filter-bar";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
+import {
+    DEFAULT_FILTERS,
+    PageFilters,
+    type PageFiltersState,
+} from "@/shared/ui/page-filters";
 import { SectionHeader } from "@/shared/ui/section-header";
 import type { GHLKPI, GHLOpportunity, GHLPipelineStage, GHLWeeklyPoint } from "@/types/ghl";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-function GHLContent() {
+/* ── Mock options ─────────────────────────────────── */
+const STATUS_LEAD_OPTIONS = [
+    { label: "Todos os status", value: "all" },
+    { label: "Novo", value: "novo" },
+    { label: "Em contato", value: "em_contato" },
+    { label: "Qualificado", value: "qualificado" },
+    { label: "Proposta enviada", value: "proposta" },
+    { label: "Ganho", value: "ganho" },
+    { label: "Perdido", value: "perdido" },
+];
+
+const RESPONSAVEL_OPTIONS = [
+    { label: "Todos os responsáveis", value: "all" },
+    { label: "Ana Paula", value: "ana_paula" },
+    { label: "Carlos Lima", value: "carlos_lima" },
+    { label: "Fernanda Rocha", value: "fernanda_rocha" },
+    { label: "Marcos Vinicius", value: "marcos_vinicius" },
+];
+
+export default function GHLPage() {
+    const [filters, setFilters] = useState<PageFiltersState>(DEFAULT_FILTERS);
+    const [statusLead, setStatusLead] = useState("all");
+    const [responsavel, setResponsavel] = useState("all");
+
     const { state: kpiState } = useAsyncData<GHLKPI[]>(useCallback(() => getGHLSummary(), []));
     const { state: pipelineState } = useAsyncData<GHLPipelineStage[]>(useCallback(() => getGHLPipeline(), []));
     const { state: weeklyState } = useAsyncData<GHLWeeklyPoint[]>(useCallback(() => getGHLWeeklySeries(), []));
@@ -26,13 +58,10 @@ function GHLContent() {
 
     const kpiLoading = kpiState.status === "loading";
     const kpis = kpiState.status === "success" ? kpiState.data : [];
-
     const pipelineLoading = pipelineState.status === "loading";
     const pipeline = pipelineState.status === "success" ? pipelineState.data : [];
-
     const weeklyLoading = weeklyState.status === "loading";
     const weekly = weeklyState.status === "success" ? weeklyState.data : [];
-
     const opLoading = opState.status === "loading";
     const opportunities = opState.status === "success" ? opState.data : [];
 
@@ -45,7 +74,39 @@ function GHLContent() {
             />
 
             {/* ── Filtros ────────────────────────────────── */}
-            <FilterBar />
+            <PageFilters
+                filters={filters}
+                onFiltersChange={setFilters}
+                extra={
+                    <>
+                        <Select value={statusLead} onValueChange={setStatusLead}>
+                            <SelectTrigger className="h-7 w-[170px] text-xs">
+                                <SelectValue placeholder="Status do lead" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {STATUS_LEAD_OPTIONS.map((o) => (
+                                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                                        {o.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+
+                        <Select value={responsavel} onValueChange={setResponsavel}>
+                            <SelectTrigger className="h-7 w-[170px] text-xs">
+                                <SelectValue placeholder="Responsável" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {RESPONSAVEL_OPTIONS.map((o) => (
+                                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                                        {o.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </>
+                }
+            />
 
             {/* ── KPI Row ────────────────────────────────── */}
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">
@@ -84,15 +145,5 @@ function GHLContent() {
                 loading={opLoading}
             />
         </div>
-    );
-}
-
-export default function GHLPage() {
-    const fetcher = useCallback(() => getDataRecords(), []);
-
-    return (
-        <AssociativeProvider fetcher={fetcher}>
-            <GHLContent />
-        </AssociativeProvider>
     );
 }
