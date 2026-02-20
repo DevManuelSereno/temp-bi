@@ -10,10 +10,10 @@ import { NAV_ITEMS } from "@/shared/config/navigation";
 import { SIDEBAR_NAME } from "@/shared/lib/constants";
 import { ThemeToggle } from "@/shared/theme/theme-toggle";
 import {
+    ArrowBigLeftDash,
+    ArrowBigRightDash,
     Bell,
     PanelLeft,
-    PanelLeftClose,
-    PanelLeftOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -140,9 +140,9 @@ export function AppShell({ children }: AppShellProps) {
                     aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
                 >
                     {collapsed ? (
-                        <PanelLeftOpen className="h-3.5 w-3.5" />
+                        <ArrowBigRightDash className="h-4 w-4" />
                     ) : (
-                        <PanelLeftClose className="h-3.5 w-3.5" />
+                        <ArrowBigLeftDash className="h-4 w-4" />
                     )}
                 </Button>
             </div>
