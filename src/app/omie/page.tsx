@@ -1,5 +1,6 @@
 "use client";
 
+import { getDataRecords } from "@/modules/dashboard/services/dashboard-service";
 import { OmieExpensesChart } from "@/modules/omie/components/omie-expenses-chart";
 import { OmieRevenueChart } from "@/modules/omie/components/omie-revenue-chart";
 import { OmieTransactionsTable } from "@/modules/omie/components/omie-transactions-table";
@@ -9,13 +10,15 @@ import {
     getOmieSummary,
     getOmieTransactions,
 } from "@/modules/omie/services/omie-service";
+import { AssociativeProvider } from "@/shared/engine/associative-context";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
+import { FilterBar } from "@/shared/ui/filter-bar";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { SectionHeader } from "@/shared/ui/section-header";
 import type { OmieExpenseCategory, OmieKPI, OmieMonthlyPoint, OmieTransaction } from "@/types/omie";
 import { useCallback } from "react";
 
-export default function OmiePage() {
+function OmieContent() {
     const { state: kpiState } = useAsyncData<OmieKPI[]>(useCallback(() => getOmieSummary(), []));
     const { state: seriesState } = useAsyncData<OmieMonthlyPoint[]>(useCallback(() => getOmieMonthlySeries(), []));
     const { state: expensesState } = useAsyncData<OmieExpenseCategory[]>(useCallback(() => getOmieExpensesByCategory(), []));
@@ -40,6 +43,9 @@ export default function OmiePage() {
                 title="Omie — Financeiro"
                 subtitle="Visão consolidada de receitas, despesas e resultados"
             />
+
+            {/* ── Filtros ────────────────────────────────── */}
+            <FilterBar />
 
             {/* ── KPI Row ────────────────────────────────── */}
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">
@@ -78,5 +84,15 @@ export default function OmiePage() {
                 loading={txLoading}
             />
         </div>
+    );
+}
+
+export default function OmiePage() {
+    const fetcher = useCallback(() => getDataRecords(), []);
+
+    return (
+        <AssociativeProvider fetcher={fetcher}>
+            <OmieContent />
+        </AssociativeProvider>
     );
 }

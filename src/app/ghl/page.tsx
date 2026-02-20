@@ -1,5 +1,6 @@
 "use client";
 
+import { getDataRecords } from "@/modules/dashboard/services/dashboard-service";
 import { GHLOpportunitiesTable } from "@/modules/ghl/components/ghl-opportunities-table";
 import { GHLPipelineChart } from "@/modules/ghl/components/ghl-pipeline-chart";
 import { GHLWeeklyChart } from "@/modules/ghl/components/ghl-weekly-chart";
@@ -9,13 +10,15 @@ import {
     getGHLSummary,
     getGHLWeeklySeries,
 } from "@/modules/ghl/services/ghl-service";
+import { AssociativeProvider } from "@/shared/engine/associative-context";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
+import { FilterBar } from "@/shared/ui/filter-bar";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { SectionHeader } from "@/shared/ui/section-header";
 import type { GHLKPI, GHLOpportunity, GHLPipelineStage, GHLWeeklyPoint } from "@/types/ghl";
 import { useCallback } from "react";
 
-export default function GHLPage() {
+function GHLContent() {
     const { state: kpiState } = useAsyncData<GHLKPI[]>(useCallback(() => getGHLSummary(), []));
     const { state: pipelineState } = useAsyncData<GHLPipelineStage[]>(useCallback(() => getGHLPipeline(), []));
     const { state: weeklyState } = useAsyncData<GHLWeeklyPoint[]>(useCallback(() => getGHLWeeklySeries(), []));
@@ -40,6 +43,9 @@ export default function GHLPage() {
                 title="GHL — Pipeline Comercial"
                 subtitle="CRM, funil de vendas e performance da equipe"
             />
+
+            {/* ── Filtros ────────────────────────────────── */}
+            <FilterBar />
 
             {/* ── KPI Row ────────────────────────────────── */}
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">
@@ -78,5 +84,15 @@ export default function GHLPage() {
                 loading={opLoading}
             />
         </div>
+    );
+}
+
+export default function GHLPage() {
+    const fetcher = useCallback(() => getDataRecords(), []);
+
+    return (
+        <AssociativeProvider fetcher={fetcher}>
+            <GHLContent />
+        </AssociativeProvider>
     );
 }

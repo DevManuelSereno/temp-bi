@@ -1,11 +1,10 @@
 import {
-    BarChart3,
     LayoutDashboard,
     Megaphone,
     Settings,
     Users,
     Wallet,
-    type LucideIcon,
+    type LucideIcon
 } from "lucide-react";
 
 export interface NavItem {
@@ -22,12 +21,7 @@ export const NAV_ITEMS: NavItem[] = [
         icon: LayoutDashboard,
         description: "Resumo executivo e KPIs principais",
     },
-    {
-        label: "Painel Visual",
-        href: "/visual",
-        icon: BarChart3,
-        description: "Dashboard completo com gráficos e análises",
-    },
+
     {
         label: "Omie",
         href: "/omie",

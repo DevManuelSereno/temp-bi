@@ -1,21 +1,25 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { FunnelChart } from "@/modules/dashboard/components/funnel-chart";
 import { InsightsList } from "@/modules/dashboard/components/insights-list";
-import { SimpleFunnelChart } from "@/modules/dashboard/components/simple-funnel-chart";
-import { getInsights } from "@/modules/dashboard/services/dashboard-service";
+import { TopItemsTable } from "@/modules/dashboard/components/top-items-table";
+import { getInsights, getTopItems } from "@/modules/dashboard/services/dashboard-service";
 import { getGHLPipeline, getGHLSummary } from "@/modules/ghl/services/ghl-service";
 import { LeadTypesPieChart } from "@/modules/meta-ads/components/lead-types-pie-chart";
 import { getMetaAdsLeadTypes, getMetaAdsSummary } from "@/modules/meta-ads/services/meta-ads-service";
 import { OmieRevenueChart } from "@/modules/omie/components/omie-revenue-chart";
 import { getOmieMonthlySeries, getOmieSummary } from "@/modules/omie/services/omie-service";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
+import { formatCompact } from "@/shared/lib/formatters";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { RevenueTargetCounter } from "@/shared/ui/revenue-target-counter";
 import { SectionHeader } from "@/shared/ui/section-header";
-import type { Insight, KPI } from "@/types/dashboard";
+import type { FunnelStage, Insight, KPI, TopItem } from "@/types/dashboard";
 import type { GHLKPI, GHLPipelineStage } from "@/types/ghl";
 import type { MetaAdsKPI, MetaAdsLeadTypeBreakdown } from "@/types/meta-ads";
 import type { OmieKPI, OmieMonthlyPoint } from "@/types/omie";
+import { AlertCircle, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { useCallback } from "react";
 
 /* ── KPI IDs to pick from each source ────────────────── */
@@ -23,6 +27,17 @@ import { useCallback } from "react";
 const OMIE_PICK = ["receita-total", "lucro-total", "margem"];
 const GHL_PICK = ["leads", "conversoes", "taxa-conversao"];
 const META_PICK = ["investimento", "cpl", "roas"];
+
+/* ── Leads Target ──────────────────────────────────────── */
+
+const LEADS_TARGET = 1500;
+const currentLeads = 1400;
+
+function getLeadsTone(current: number) {
+  if (current <= 1200) return "destructive";
+  if (current < 1500) return "warning";
+  return "success";
+}
 
 /* ── Map module KPI → dashboard KPI (for KPIStatCard) ── */
 
@@ -114,6 +129,10 @@ export default function DashboardPage() {
   const insightLoading = insightState.status === "loading";
   const insights = insightState.status === "success" ? insightState.data : [];
 
+  const { state: topItemsState } = useAsyncData<TopItem[]>(useCallback(() => getTopItems(), []));
+  const topItemsLoading = topItemsState.status === "loading";
+  const topItems = topItemsState.status === "success" ? topItemsState.data : [];
+
   return (
     <div className="flex flex-col gap-8">
       {/* ── Header ────────────────────────────────── */}
@@ -129,6 +148,60 @@ export default function DashboardPage() {
         loading={omieLoading}
         className="w-[1390px]"
       />
+
+      {/* ── Leads Target ──────────────────────────── */}
+      {(() => {
+        if (omieLoading) {
+          return <div className="frame-card animate-pulse h-[100px] w-[1390px]" />;
+        }
+        const leadsProgress = Math.min((currentLeads / LEADS_TARGET) * 100, 100);
+        const leadsDiff = LEADS_TARGET - currentLeads;
+        const leadsIsMet = leadsDiff <= 0;
+        const leadsTone = getLeadsTone(currentLeads);
+        const LeadsIcon = leadsTone === "success" ? CheckCircle2 : (leadsTone === "warning" ? AlertTriangle : AlertCircle);
+        const leadsTextColor = leadsTone === "destructive" ? "text-destructive" : leadsTone === "warning" ? "text-warning" : "text-success";
+        return (
+          <div className="frame-card flex flex-col justify-center gap-2 py-4 px-6 relative overflow-hidden w-[1390px]">
+            <div className="absolute bottom-0 left-0 h-1 bg-current opacity-20 transition-all duration-1000" style={{ width: `${leadsProgress}%`, color: 'currentColor' }} />
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Meta de Leads (Mês)
+                </span>
+                <div className="flex items-center gap-2 mt-1">
+                  <LeadsIcon className={cn("h-5 w-5", leadsTextColor)} />
+                  <h2 className={cn("text-xl font-bold font-serif tracking-tight", leadsTextColor)}>
+                    {leadsIsMet
+                      ? `Meta batida ✅ +${formatCompact(Math.abs(leadsDiff))} acima da meta`
+                      : `Faltam ${formatCompact(leadsDiff)} leads para bater a meta`
+                    }
+                  </h2>
+                </div>
+              </div>
+              <div className="text-right flex flex-col items-end">
+                <span className={cn("text-xs font-bold px-2 py-0.5 rounded-full bg-muted/50", leadsTextColor)}>
+                  {leadsTone === "success" ? "Excelente" : (leadsTone === "warning" ? "Em progresso" : "Atenção")}
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-sm text-muted-foreground mt-1">
+              <span>Atual: <strong className="text-foreground">{formatCompact(currentLeads)}</strong></span>
+              <span>Meta: <strong>{formatCompact(LEADS_TARGET)}</strong></span>
+            </div>
+            <div className="h-2 w-full bg-secondary rounded-full mt-2 overflow-hidden">
+              <div
+                className={cn(
+                  "h-full transition-all duration-1000 ease-out rounded-full",
+                  leadsTone === "destructive" && "bg-destructive",
+                  leadsTone === "warning" && "bg-warning",
+                  leadsTone === "success" && "bg-success"
+                )}
+                style={{ width: `${leadsProgress}%` }}
+              />
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── Omie Section (Financeiro) ───────────────── */}
       <div className="flex flex-col gap-3">
@@ -178,8 +251,8 @@ export default function DashboardPage() {
               ))}
           </div>
 
-          <SimpleFunnelChart
-            stages={pipeline}
+          <FunnelChart
+            stages={pipeline as FunnelStage[]}
             loading={pipelineLoading}
             className="h-full min-h-[400px]"
           />
@@ -213,6 +286,9 @@ export default function DashboardPage() {
           />
         </div>
       </div>
+
+      {/* ── Top 5 Procedimentos ─────────────────────── */}
+      <TopItemsTable items={topItems} loading={topItemsLoading} />
 
       {/* ── Insights ───────────────────────────────── */}
       <InsightsList insights={insights} loading={insightLoading} />
