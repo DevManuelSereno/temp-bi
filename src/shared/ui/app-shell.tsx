@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -70,9 +70,7 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
             <Separator className="bg-sidebar-border" />
             <div className="flex items-center gap-3 p-4">
                 <Avatar className="h-8 w-8 shrink-0">
-                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                        IC
-                    </AvatarFallback>
+                    <AvatarImage src="/icon.jpg" alt="Capone Club" className="object-cover" />
                 </Avatar>
                 {!collapsed && (
                     <div className="flex flex-col min-w-0">

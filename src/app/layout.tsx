@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { APP_DESCRIPTION, APP_NAME } from "@/shared/lib/constants";
 import { ThemeProvider } from "@/shared/theme/theme-provider";
 import { AppShell } from "@/shared/ui/app-shell";
-import { APP_NAME, APP_DESCRIPTION } from "@/shared/lib/constants";
+import type { Metadata } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
