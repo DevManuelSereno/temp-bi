@@ -1,16 +1,16 @@
 import {
-    MOCK_META_ADS_CAMPAIGNS,
-    MOCK_META_ADS_KPIS,
-    MOCK_META_ADS_LEAD_TYPES,
-    MOCK_META_ADS_SERIES,
-} from "@/modules/meta-ads/mock/data";
+    MOCK_CAMPANHAS_CAMPAIGNS,
+    MOCK_CAMPANHAS_KPIS,
+    MOCK_CAMPANHAS_LEAD_TYPES,
+    MOCK_CAMPANHAS_SERIES,
+} from "@/modules/campanhas/mock/data";
 import { MOCK_DELAY_MS } from "@/shared/lib/constants";
 import type {
-    MetaAdsCampaign,
-    MetaAdsKPI,
-    MetaAdsLeadTypeBreakdown,
-    MetaAdsTimePoint,
-} from "@/types/meta-ads";
+    CampanhasCampaign,
+    CampanhasKPI,
+    CampanhasLeadTypeBreakdown,
+    CampanhasTimePoint,
+} from "@/types/campanhas";
 
 /* ── Simulated async delay ─────────────────────────── */
 function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
@@ -18,27 +18,27 @@ function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
 }
 
 /* ══════════════════════════════════════════════════════
-   Meta Ads Service
+   Campanhas Service
    Today: reads from mock data
    Tomorrow: swap to API fetcher without changing interface
    ══════════════════════════════════════════════════════ */
 
-export async function getMetaAdsSummary(): Promise<MetaAdsKPI[]> {
+export async function getCampanhasSummary(): Promise<CampanhasKPI[]> {
     await delay();
-    return MOCK_META_ADS_KPIS;
+    return MOCK_CAMPANHAS_KPIS;
 }
 
-export async function getMetaAdsTimeSeries(): Promise<MetaAdsTimePoint[]> {
+export async function getCampanhasTimeSeries(): Promise<CampanhasTimePoint[]> {
     await delay();
-    return MOCK_META_ADS_SERIES;
+    return MOCK_CAMPANHAS_SERIES;
 }
 
-export async function getMetaAdsCampaigns(): Promise<MetaAdsCampaign[]> {
+export async function getCampanhasCampaigns(): Promise<CampanhasCampaign[]> {
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    return MOCK_META_ADS_CAMPAIGNS;
+    return MOCK_CAMPANHAS_CAMPAIGNS;
 }
 
-export async function getMetaAdsLeadTypes(): Promise<MetaAdsLeadTypeBreakdown[]> {
+export async function getCampanhasLeadTypes(): Promise<CampanhasLeadTypeBreakdown[]> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    return MOCK_META_ADS_LEAD_TYPES;
+    return MOCK_CAMPANHAS_LEAD_TYPES;
 }

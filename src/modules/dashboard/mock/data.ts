@@ -104,7 +104,7 @@ export const MOCK_ACQUISITION_SERIES: ChartSeries[] = [
     },
     {
         id: "meta",
-        name: "Meta Ads",
+        name: "Campanhas",
         data: [
             { date: "2025-01-01", value: 250 },
             { date: "2025-01-08", value: 280 },
@@ -286,9 +286,9 @@ const COMBO_WEIGHTS: ComboWeight[] = [
     { channel: "Google Ads", unit: "SP Centro", leadBase: 42, revPerConversion: 380, costRatio: 0.60 },
     { channel: "Google Ads", unit: "SP Sul", leadBase: 30, revPerConversion: 340, costRatio: 0.63 },
     { channel: "Google Ads", unit: "RJ Barra", leadBase: 36, revPerConversion: 360, costRatio: 0.61 },
-    { channel: "Meta Ads", unit: "SP Centro", leadBase: 38, revPerConversion: 350, costRatio: 0.65 },
-    { channel: "Meta Ads", unit: "RJ Barra", leadBase: 25, revPerConversion: 320, costRatio: 0.68 },
-    /* Meta Ads + SP Sul is absent → associative exclusion */
+    { channel: "Campanhas", unit: "SP Centro", leadBase: 38, revPerConversion: 350, costRatio: 0.65 },
+    { channel: "Campanhas", unit: "RJ Barra", leadBase: 25, revPerConversion: 320, costRatio: 0.68 },
+    /* Campanhas + SP Sul is absent → associative exclusion */
     { channel: "Orgânico", unit: "SP Centro", leadBase: 22, revPerConversion: 400, costRatio: 0.52 },
     { channel: "Orgânico", unit: "SP Sul", leadBase: 16, revPerConversion: 380, costRatio: 0.55 },
     { channel: "Orgânico", unit: "RJ Barra", leadBase: 18, revPerConversion: 390, costRatio: 0.54 },

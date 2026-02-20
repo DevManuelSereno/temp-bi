@@ -3,20 +3,20 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatDate } from "@/shared/lib/formatters";
-import type { OmieTransaction } from "@/types/omie";
+import type { ERPTransaction } from "@/types/erp";
 import { ArrowDownRight, ArrowUpRight } from "@phosphor-icons/react";
 
-interface OmieTransactionsTableProps {
-    transactions: OmieTransaction[];
+interface ERPTransactionsTableProps {
+    transactions: ERPTransaction[];
     loading?: boolean;
     className?: string;
 }
 
-export function OmieTransactionsTable({
+export function ERPTransactionsTable({
     transactions,
     loading,
     className,
-}: OmieTransactionsTableProps) {
+}: ERPTransactionsTableProps) {
     if (loading) {
         return (
             <div className={cn("frame-card", className)}>

@@ -7,15 +7,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { OmieExpensesChart } from "@/modules/omie/components/omie-expenses-chart";
-import { OmieRevenueChart } from "@/modules/omie/components/omie-revenue-chart";
-import { OmieTransactionsTable } from "@/modules/omie/components/omie-transactions-table";
+import { ERPExpensesChart } from "@/modules/erp/components/erp-expenses-chart";
+import { ERPRevenueChart } from "@/modules/erp/components/erp-revenue-chart";
+import { ERPTransactionsTable } from "@/modules/erp/components/erp-transactions-table";
 import {
-    getOmieExpensesByCategory,
-    getOmieMonthlySeries,
-    getOmieSummary,
-    getOmieTransactions,
-} from "@/modules/omie/services/omie-service";
+    getERPExpensesByCategory,
+    getERPMonthlySeries,
+    getERPSummary,
+    getERPTransactions,
+} from "@/modules/erp/services/erp-service";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import {
@@ -24,7 +24,7 @@ import {
     type PageFiltersState,
 } from "@/shared/ui/page-filters";
 import { SectionHeader } from "@/shared/ui/section-header";
-import type { OmieExpenseCategory, OmieKPI, OmieMonthlyPoint, OmieTransaction } from "@/types/omie";
+import type { ERPExpenseCategory, ERPKPI, ERPMonthlyPoint, ERPTransaction } from "@/types/erp";
 import { useCallback, useState } from "react";
 
 /* ── Mock options ─────────────────────────────────── */
@@ -44,15 +44,15 @@ const CATEGORIA_OPTIONS = [
     { label: "Outros", value: "outros" },
 ];
 
-export default function OmiePage() {
+export default function ERPPage() {
     const [filters, setFilters] = useState<PageFiltersState>(DEFAULT_FILTERS);
     const [status, setStatus] = useState("all");
     const [categoria, setCategoria] = useState("all");
 
-    const { state: kpiState } = useAsyncData<OmieKPI[]>(useCallback(() => getOmieSummary(), []));
-    const { state: seriesState } = useAsyncData<OmieMonthlyPoint[]>(useCallback(() => getOmieMonthlySeries(), []));
-    const { state: expensesState } = useAsyncData<OmieExpenseCategory[]>(useCallback(() => getOmieExpensesByCategory(), []));
-    const { state: txState } = useAsyncData<OmieTransaction[]>(useCallback(() => getOmieTransactions(), []));
+    const { state: kpiState } = useAsyncData<ERPKPI[]>(useCallback(() => getERPSummary(), []));
+    const { state: seriesState } = useAsyncData<ERPMonthlyPoint[]>(useCallback(() => getERPMonthlySeries(), []));
+    const { state: expensesState } = useAsyncData<ERPExpenseCategory[]>(useCallback(() => getERPExpensesByCategory(), []));
+    const { state: txState } = useAsyncData<ERPTransaction[]>(useCallback(() => getERPTransactions(), []));
 
     const kpiLoading = kpiState.status === "loading";
     const kpis = kpiState.status === "success" ? kpiState.data : [];
@@ -67,7 +67,7 @@ export default function OmiePage() {
         <div className="flex flex-col gap-6">
             {/* ── Header ────────────────────────────────── */}
             <SectionHeader
-                title="Omie — Financeiro"
+                title="ERP — Financeiro"
                 subtitle="Visão consolidada de receitas, despesas e resultados"
             />
 
@@ -133,12 +133,12 @@ export default function OmiePage() {
 
             {/* ── Charts ─────────────────────────────────── */}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <OmieRevenueChart data={series} loading={seriesLoading} />
-                <OmieExpensesChart data={expenses} loading={expensesLoading} />
+                <ERPRevenueChart data={series} loading={seriesLoading} />
+                <ERPExpensesChart data={expenses} loading={expensesLoading} />
             </div>
 
             {/* ── Transactions ───────────────────────────── */}
-            <OmieTransactionsTable
+            <ERPTransactionsTable
                 transactions={transactions}
                 loading={txLoading}
             />

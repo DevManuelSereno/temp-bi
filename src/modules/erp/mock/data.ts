@@ -1,18 +1,18 @@
 import { formatCompact, formatCurrency, formatPercent } from "@/shared/lib/formatters";
 import type {
-    OmieExpenseCategory,
-    OmieKPI,
-    OmieMonthlyPoint,
-    OmieTransaction,
-} from "@/types/omie";
+    ERPExpenseCategory,
+    ERPKPI,
+    ERPMonthlyPoint,
+    ERPTransaction,
+} from "@/types/erp";
 
 /* ══════════════════════════════════════════════════════
-   Omie — Mock Data
+   ERP — Mock Data
    ══════════════════════════════════════════════════════ */
 
 /* ── Monthly series ──────────────────────────────────── */
 
-export const MOCK_OMIE_MONTHLY: OmieMonthlyPoint[] = [
+export const MOCK_ERP_MONTHLY: ERPMonthlyPoint[] = [
     { month: "Set/24", receita: 142000, despesa: 98000, lucro: 44000 },
     { month: "Out/24", receita: 158000, despesa: 105000, lucro: 53000 },
     { month: "Nov/24", receita: 164000, despesa: 110000, lucro: 54000 },
@@ -25,7 +25,7 @@ export const MOCK_OMIE_MONTHLY: OmieMonthlyPoint[] = [
 
 const totalDespesa = 122000;
 
-export const MOCK_OMIE_EXPENSES: OmieExpenseCategory[] = [
+export const MOCK_ERP_EXPENSES: ERPExpenseCategory[] = [
     { id: "pessoal", label: "Pessoal", value: 48800, percent: Math.round((48800 / totalDespesa) * 100) },
     { id: "marketing", label: "Marketing", value: 24400, percent: Math.round((24400 / totalDespesa) * 100) },
     { id: "aluguel", label: "Aluguel", value: 18300, percent: Math.round((18300 / totalDespesa) * 100) },
@@ -36,8 +36,8 @@ export const MOCK_OMIE_EXPENSES: OmieExpenseCategory[] = [
 
 /* ── KPIs ─────────────────────────────────────────────── */
 
-const currentMonth = MOCK_OMIE_MONTHLY[MOCK_OMIE_MONTHLY.length - 1];
-const previousMonth = MOCK_OMIE_MONTHLY[MOCK_OMIE_MONTHLY.length - 2];
+const currentMonth = MOCK_ERP_MONTHLY[MOCK_ERP_MONTHLY.length - 1];
+const previousMonth = MOCK_ERP_MONTHLY[MOCK_ERP_MONTHLY.length - 2];
 
 function variation(curr: number, prev: number): number {
     if (prev === 0) return 0;
@@ -57,12 +57,12 @@ const margemCurr = currentMonth.receita > 0 ? (currentMonth.lucro / currentMonth
 const margemPrev = previousMonth.receita > 0 ? (previousMonth.lucro / previousMonth.receita) * 100 : 0;
 const margemVar = Math.round((margemCurr - margemPrev) * 10) / 10;
 
-const totalReceita = MOCK_OMIE_MONTHLY.reduce((s, m) => s + m.receita, 0);
-const totalDespesaAll = MOCK_OMIE_MONTHLY.reduce((s, m) => s + m.despesa, 0);
+const totalReceita = MOCK_ERP_MONTHLY.reduce((s, m) => s + m.receita, 0);
+const totalDespesaAll = MOCK_ERP_MONTHLY.reduce((s, m) => s + m.despesa, 0);
 const totalLucro = totalReceita - totalDespesaAll;
 const margemTotal = totalReceita > 0 ? (totalLucro / totalReceita) * 100 : 0;
 
-export const MOCK_OMIE_KPIS: OmieKPI[] = [
+export const MOCK_ERP_KPIS: ERPKPI[] = [
     {
         id: "receita-total",
         label: "Receita Total",
@@ -71,7 +71,7 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "currency",
         trend: trend(receitaVar),
         variationPercent: receitaVar,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) => m.receita),
+        sparklineData: MOCK_ERP_MONTHLY.map((m) => m.receita),
     },
     {
         id: "lucro-total",
@@ -81,7 +81,7 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "currency",
         trend: trend(lucroVar),
         variationPercent: lucroVar,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) => m.lucro),
+        sparklineData: MOCK_ERP_MONTHLY.map((m) => m.lucro),
     },
     {
         id: "margem",
@@ -92,7 +92,7 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "percent",
         trend: trend(margemVar),
         variationPercent: margemVar,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) =>
+        sparklineData: MOCK_ERP_MONTHLY.map((m) =>
             m.receita > 0 ? Math.round((m.lucro / m.receita) * 1000) / 10 : 0
         ),
     },
@@ -104,7 +104,7 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "currency",
         trend: despesaVar > 0 ? "down" : "up",
         variationPercent: despesaVar,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) => m.despesa),
+        sparklineData: MOCK_ERP_MONTHLY.map((m) => m.despesa),
     },
     {
         id: "resultado-mensal",
@@ -115,7 +115,7 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "currency",
         trend: trend(lucroVar),
         variationPercent: lucroVar,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) => m.lucro),
+        sparklineData: MOCK_ERP_MONTHLY.map((m) => m.lucro),
     },
     {
         id: "ticket-medio",
@@ -125,13 +125,13 @@ export const MOCK_OMIE_KPIS: OmieKPI[] = [
         unit: "number",
         trend: "stable",
         variationPercent: 1.2,
-        sparklineData: MOCK_OMIE_MONTHLY.map((m) => Math.round(m.receita / 30)),
+        sparklineData: MOCK_ERP_MONTHLY.map((m) => Math.round(m.receita / 30)),
     },
 ];
 
 /* ── Recent transactions ──────────────────────────────── */
 
-export const MOCK_OMIE_TRANSACTIONS: OmieTransaction[] = [
+export const MOCK_ERP_TRANSACTIONS: ERPTransaction[] = [
     { id: "t1", date: "2025-02-17", description: "Mensalidade Aluno — Premium", category: "Receita Operacional", value: 890, type: "receita" },
     { id: "t2", date: "2025-02-17", description: "Google Ads — Campanha Fev", category: "Marketing", value: 4200, type: "despesa" },
     { id: "t3", date: "2025-02-16", description: "Aluguel — Unidade SP Centro", category: "Aluguel", value: 8500, type: "despesa" },

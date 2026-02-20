@@ -1,55 +1,60 @@
 import { formatCompact, formatCurrency, formatPercent } from "@/shared/lib/formatters";
 import type {
-    MetaAdsCampaign,
-    MetaAdsKPI,
-    MetaAdsLeadTypeBreakdown,
-    MetaAdsTimePoint,
-} from "@/types/meta-ads";
+    CampanhasCampaign,
+    CampanhasKPI,
+    CampanhasLeadTypeBreakdown,
+    CampanhasTimePoint,
+} from "@/types/campanhas";
 
 /* ══════════════════════════════════════════════════════
-   Meta Ads — Mock Data
+   Campanhas — Mock Data (Meta + Google)
    ══════════════════════════════════════════════════════ */
 
 /* ── Time series (weekly) ────────────────────────────── */
 
-export const MOCK_META_ADS_SERIES: MetaAdsTimePoint[] = [
-    { date: "Sem 01", spend: 4200, leads: 68, impressions: 42000, clicks: 1260 },
-    { date: "Sem 02", spend: 4800, leads: 82, impressions: 48500, clicks: 1455 },
-    { date: "Sem 03", spend: 5100, leads: 76, impressions: 51200, clicks: 1536 },
-    { date: "Sem 04", spend: 5500, leads: 94, impressions: 55000, clicks: 1650 },
-    { date: "Sem 05", spend: 4900, leads: 85, impressions: 49800, clicks: 1494 },
-    { date: "Sem 06", spend: 5800, leads: 102, impressions: 58200, clicks: 1746 },
-    { date: "Sem 07", spend: 6200, leads: 110, impressions: 62500, clicks: 1875 },
-    { date: "Sem 08", spend: 5600, leads: 98, impressions: 56400, clicks: 1692 },
+export const MOCK_CAMPANHAS_SERIES: CampanhasTimePoint[] = [
+    { date: "Sem 01", spend: 6800, leads: 110, impressions: 84000, clicks: 2520 },
+    { date: "Sem 02", spend: 7400, leads: 125, impressions: 96500, clicks: 2895 },
+    { date: "Sem 03", spend: 8100, leads: 138, impressions: 105200, clicks: 3156 },
+    { date: "Sem 04", spend: 9200, leads: 165, impressions: 115000, clicks: 3450 },
+    { date: "Sem 05", spend: 7900, leads: 142, impressions: 102800, clicks: 3084 },
+    { date: "Sem 06", spend: 9500, leads: 175, impressions: 118200, clicks: 3546 },
+    { date: "Sem 07", spend: 10100, leads: 184, impressions: 128500, clicks: 3855 },
+    { date: "Sem 08", spend: 8900, leads: 162, impressions: 114400, clicks: 3432 },
 ];
 
 /* ── Lead Types ──────────────────────────────────────── */
 
-export const MOCK_META_ADS_LEAD_TYPES: MetaAdsLeadTypeBreakdown[] = [
+export const MOCK_CAMPANHAS_LEAD_TYPES: CampanhasLeadTypeBreakdown[] = [
     { type: "WhatsApp", leads: 850 },
+    { type: "Pesquisa Google", leads: 650 },
     { type: "Formulário Site", leads: 420 },
     { type: "Direct Instagram", leads: 230 },
-    { type: "Ligações", leads: 150 },
+    { type: "Ligações", leads: 180 },
     { type: "Messenger", leads: 80 },
+    { type: "YouTube Ads", leads: 60 },
 ];
 
 /* ── Campaigns ───────────────────────────────────────── */
 
-export const MOCK_META_ADS_CAMPAIGNS: MetaAdsCampaign[] = [
-    { id: "cm-01", name: "[Leads] Conversão - WhatsApp", status: "active", spend: 12500, leads: 450, cpl: 27.77, roas: 8.5 },
-    { id: "cm-02", name: "[Branding] Alcance - Institucional", status: "active", spend: 4200, leads: 50, cpl: 84.00, roas: 3.2 },
-    { id: "cm-03", name: "[Promo] Oferta Relâmpago", status: "paused", spend: 3100, leads: 85, cpl: 36.47, roas: 5.4 },
-    { id: "cm-04", name: "[Retargeting] Carrinho Abandonado", status: "learning", spend: 1800, leads: 42, cpl: 42.85, roas: 12.1 },
-    { id: "cm-05", name: "[Leads] Quiz Interativo", status: "paused", spend: 950, leads: 38, cpl: 25.00, roas: 4.1 },
-    { id: "cm-06", name: "[Video] Depoimentos Clientes", status: "active", spend: 2100, leads: 25, cpl: 84.00, roas: 2.8 },
+export const MOCK_CAMPANHAS_CAMPAIGNS: CampanhasCampaign[] = [
+    { id: "cm-01", name: "[Leads] Conversão - WhatsApp", platform: "Meta Ads", status: "active", spend: 12500, leads: 450, cpl: 27.77, roas: 8.5 },
+    { id: "cg-01", name: "[Search] Fundo de Funil - Palavras Chave", platform: "Google Ads", status: "active", spend: 8400, leads: 320, cpl: 26.25, roas: 9.2 },
+    { id: "cm-02", name: "[Branding] Alcance - Institucional", platform: "Meta Ads", status: "active", spend: 4200, leads: 50, cpl: 84.00, roas: 3.2 },
+    { id: "cg-02", name: "[Performance Max] PMax Conversão", platform: "Google Ads", status: "learning", spend: 3500, leads: 110, cpl: 31.81, roas: 6.8 },
+    { id: "cm-03", name: "[Promo] Oferta Relâmpago", platform: "Meta Ads", status: "paused", spend: 3100, leads: 85, cpl: 36.47, roas: 5.4 },
+    { id: "cm-04", name: "[Retargeting] Carrinho Abandonado", platform: "Meta Ads", status: "learning", spend: 1800, leads: 42, cpl: 42.85, roas: 12.1 },
+    { id: "cg-03", name: "[YouTube] Vídeo Instream - Awareness", platform: "Google Ads", status: "active", spend: 2800, leads: 35, cpl: 80.00, roas: 2.5 },
+    { id: "cm-05", name: "[Leads] Quiz Interativo", platform: "Meta Ads", status: "paused", spend: 950, leads: 38, cpl: 25.00, roas: 4.1 },
+    { id: "cm-06", name: "[Video] Depoimentos Clientes", platform: "Meta Ads", status: "active", spend: 2100, leads: 25, cpl: 84.00, roas: 2.8 },
 ];
 
 /* ── KPIs ─────────────────────────────────────────────── */
 
-const totalSpend = MOCK_META_ADS_SERIES.reduce((s, p) => s + p.spend, 0);
-const totalLeads = MOCK_META_ADS_SERIES.reduce((s, p) => s + p.leads, 0);
-const totalImpressions = MOCK_META_ADS_SERIES.reduce((s, p) => s + p.impressions, 0);
-const totalClicks = MOCK_META_ADS_SERIES.reduce((s, p) => s + p.clicks, 0);
+const totalSpend = MOCK_CAMPANHAS_SERIES.reduce((s, p) => s + p.spend, 0);
+const totalLeads = MOCK_CAMPANHAS_SERIES.reduce((s, p) => s + p.leads, 0);
+const totalImpressions = MOCK_CAMPANHAS_SERIES.reduce((s, p) => s + p.impressions, 0);
+const totalClicks = MOCK_CAMPANHAS_SERIES.reduce((s, p) => s + p.clicks, 0);
 const avgCPL = totalLeads > 0 ? totalSpend / totalLeads : 0;
 const avgCTR = totalImpressions > 0 ? (totalClicks / totalImpressions) * 100 : 0;
 const avgCPC = totalClicks > 0 ? totalSpend / totalClicks : 0;
@@ -69,8 +74,8 @@ function trend(v: number): "up" | "down" | "stable" {
     return "stable";
 }
 
-const lastWeek = MOCK_META_ADS_SERIES[MOCK_META_ADS_SERIES.length - 1];
-const prevWeek = MOCK_META_ADS_SERIES[MOCK_META_ADS_SERIES.length - 2];
+const lastWeek = MOCK_CAMPANHAS_SERIES[MOCK_CAMPANHAS_SERIES.length - 1];
+const prevWeek = MOCK_CAMPANHAS_SERIES[MOCK_CAMPANHAS_SERIES.length - 2];
 
 const spendVar = variation(lastWeek.spend, prevWeek.spend);
 const leadsVar = variation(lastWeek.leads, prevWeek.leads);
@@ -81,7 +86,7 @@ const ctrCurr = lastWeek.impressions > 0 ? (lastWeek.clicks / lastWeek.impressio
 const ctrPrev = prevWeek.impressions > 0 ? (prevWeek.clicks / prevWeek.impressions) * 100 : 0;
 const ctrVar = Math.round((ctrCurr - ctrPrev) * 100) / 100;
 
-export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
+export const MOCK_CAMPANHAS_KPIS: CampanhasKPI[] = [
     {
         id: "investimento",
         label: "Investimento",
@@ -90,18 +95,18 @@ export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
         unit: "currency",
         trend: trend(spendVar),
         variationPercent: spendVar,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) => p.spend),
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) => p.spend),
     },
     {
         id: "leads",
         label: "Leads",
         value: totalLeads,
         formattedValue: formatCompact(totalLeads),
-        target: 800,
+        target: 1500,
         unit: "number",
         trend: trend(leadsVar),
         variationPercent: leadsVar,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) => p.leads),
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) => p.leads),
     },
     {
         id: "cpl",
@@ -111,7 +116,7 @@ export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
         unit: "currency",
         trend: cplVar < 0 ? "up" : cplVar > 0 ? "down" : "stable",
         variationPercent: cplVar,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) =>
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) =>
             p.leads > 0 ? Math.round((p.spend / p.leads) * 100) / 100 : 0
         ),
     },
@@ -124,7 +129,7 @@ export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
         unit: "number",
         trend: "up",
         variationPercent: 5.2,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) =>
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) =>
             p.spend > 0 ? Math.round((p.leads * 450) / p.spend * 10) / 10 : 0
         ),
     },
@@ -136,7 +141,7 @@ export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
         unit: "percent",
         trend: trend(ctrVar),
         variationPercent: ctrVar,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) =>
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) =>
             p.impressions > 0 ? Math.round((p.clicks / p.impressions) * 10000) / 100 : 0
         ),
     },
@@ -148,7 +153,7 @@ export const MOCK_META_ADS_KPIS: MetaAdsKPI[] = [
         unit: "currency",
         trend: "stable",
         variationPercent: -0.5,
-        sparklineData: MOCK_META_ADS_SERIES.map((p) =>
+        sparklineData: MOCK_CAMPANHAS_SERIES.map((p) =>
             p.clicks > 0 ? Math.round((p.spend / p.clicks) * 100) / 100 : 0
         ),
     },

@@ -3,68 +3,51 @@
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { MetaAdsCampaign } from "@/types/meta-ads";
+import type { ERPMonthlyPoint } from "@/types/erp";
 import {
     Bar,
     BarChart,
     CartesianGrid,
-    Cell,
+    Legend,
     Tooltip as RechartsTooltip,
     ResponsiveContainer,
     XAxis,
     YAxis,
 } from "recharts";
 
-const BAR_COLORS = [
-    "var(--chart-1)",
-    "var(--chart-2)",
-    "var(--chart-3)",
-    "var(--chart-4)",
-    "var(--chart-5)",
-    "var(--chart-1)",
-];
-
-interface MetaAdsTopCampaignsChartProps {
-    campaigns: MetaAdsCampaign[];
+interface ERPRevenueChartProps {
+    data: ERPMonthlyPoint[];
     loading?: boolean;
     className?: string;
 }
 
-export function MetaAdsTopCampaignsChart({ campaigns, loading, className }: MetaAdsTopCampaignsChartProps) {
-    const sorted = [...campaigns].sort((a, b) => b.leads - a.leads);
-
+export function ERPRevenueChart({ data, loading, className }: ERPRevenueChartProps) {
     return (
         <ChartCard
-            title="Top Campanhas"
-            subtitle="Leads gerados por campanha"
+            title="Receita Mensal"
+            subtitle="Receita vs Despesa por mês"
             loading={loading}
             className={className}
+            actions={[{ label: "Exportar CSV", onClick: () => { } }]}
         >
             <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-                <BarChart
-                    data={sorted}
-                    layout="vertical"
-                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-                >
+                <BarChart data={data} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
                     <CartesianGrid
                         strokeDasharray="3 3"
                         stroke="var(--border)"
                         opacity={0.5}
-                        horizontal={false}
                     />
                     <XAxis
-                        type="number"
+                        dataKey="month"
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                        axisLine={false}
+                        axisLine={{ stroke: "var(--border)" }}
                         tickLine={false}
                     />
                     <YAxis
-                        type="category"
-                        dataKey="name"
-                        tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
+                        tickFormatter={(v) => formatCurrency(v as number).replace("R$\u00a0", "")}
+                        tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
-                        width={140}
                     />
                     <RechartsTooltip
                         contentStyle={{
@@ -74,16 +57,11 @@ export function MetaAdsTopCampaignsChart({ campaigns, loading, className }: Meta
                             fontSize: 12,
                             color: "var(--card-foreground)",
                         }}
-                        formatter={(value, _name, entry) => [
-                            `${value} leads · CPL ${formatCurrency(entry.payload.cpl)}`,
-                            "",
-                        ]}
+                        formatter={(value) => [formatCurrency(Number(value ?? 0)), ""]}
                     />
-                    <Bar dataKey="leads" name="Leads" radius={[0, 4, 4, 0]}>
-                        {sorted.map((_, i) => (
-                            <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />
-                        ))}
-                    </Bar>
+                    <Legend wrapperStyle={{ fontSize: 11, paddingTop: 8 }} />
+                    <Bar dataKey="receita" name="Receita" fill="var(--chart-1)" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="despesa" name="Despesa" fill="var(--chart-3)" radius={[4, 4, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>
         </ChartCard>

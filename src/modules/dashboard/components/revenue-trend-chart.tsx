@@ -3,7 +3,7 @@
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { formatCompact, formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { OmieMonthlyPoint } from "@/types/omie";
+import type { ERPMonthlyPoint } from "@/types/erp";
 import {
     Bar,
     BarChart,
@@ -16,7 +16,7 @@ import {
 } from "recharts";
 
 interface RevenueTrendChartProps {
-    data: OmieMonthlyPoint[];
+    data: ERPMonthlyPoint[];
     loading?: boolean;
     className?: string;
 }
@@ -25,7 +25,7 @@ export function RevenueTrendChart({ data, loading, className }: RevenueTrendChar
     return (
         <ChartCard
             title="Receita vs Despesa"
-            subtitle="Evolução financeira (Omie)"
+            subtitle="Evolução financeira (ERP)"
             loading={loading}
             className={className}
         >

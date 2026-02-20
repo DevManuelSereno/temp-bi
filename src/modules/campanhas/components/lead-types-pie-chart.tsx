@@ -3,7 +3,7 @@
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { formatCompact } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { MetaAdsLeadTypeBreakdown } from "@/types/meta-ads";
+import type { CampanhasLeadTypeBreakdown } from "@/types/campanhas";
 import { Cell, Legend, Pie, PieChart, Tooltip as RechartsTooltip, ResponsiveContainer } from "recharts";
 
 const COLORS = [
@@ -15,7 +15,7 @@ const COLORS = [
 ];
 
 interface LeadTypesPieChartProps {
-    data: MetaAdsLeadTypeBreakdown[];
+    data: CampanhasLeadTypeBreakdown[];
     loading?: boolean;
     className?: string;
 }
@@ -26,7 +26,7 @@ export function LeadTypesPieChart({ data, loading, className }: LeadTypesPieChar
     return (
         <ChartCard
             title="Tipos de Leads"
-            subtitle="Distribuição por origem (Meta Ads)"
+            subtitle="Distribuição por origem (Campanhas)"
             loading={loading}
             className={className}
             legend={

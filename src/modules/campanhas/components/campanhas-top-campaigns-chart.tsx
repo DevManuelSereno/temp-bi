@@ -3,7 +3,7 @@
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { OmieExpenseCategory } from "@/types/omie";
+import type { CampanhasCampaign } from "@/types/campanhas";
 import {
     Bar,
     BarChart,
@@ -24,24 +24,25 @@ const BAR_COLORS = [
     "var(--chart-1)",
 ];
 
-interface OmieExpensesChartProps {
-    data: OmieExpenseCategory[];
+interface CampanhasTopCampaignsChartProps {
+    campaigns: CampanhasCampaign[];
     loading?: boolean;
     className?: string;
 }
 
-export function OmieExpensesChart({ data, loading, className }: OmieExpensesChartProps) {
+export function CampanhasTopCampaignsChart({ campaigns, loading, className }: CampanhasTopCampaignsChartProps) {
+    const sorted = [...campaigns].sort((a, b) => b.leads - a.leads);
+
     return (
         <ChartCard
-            title="Despesas por Categoria"
-            subtitle="Distribuição do mês atual"
+            title="Top Campanhas"
+            subtitle="Leads gerados por campanha"
             loading={loading}
             className={className}
-            actions={[{ label: "Ver detalhes", onClick: () => { } }]}
         >
             <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
                 <BarChart
-                    data={data}
+                    data={sorted}
                     layout="vertical"
                     margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
                 >
@@ -53,18 +54,17 @@ export function OmieExpensesChart({ data, loading, className }: OmieExpensesChar
                     />
                     <XAxis
                         type="number"
-                        tickFormatter={(v) => formatCurrency(v as number).replace("R$\u00a0", "")}
                         tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
                     />
                     <YAxis
                         type="category"
-                        dataKey="label"
-                        tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+                        dataKey="name"
+                        tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
                         axisLine={false}
                         tickLine={false}
-                        width={90}
+                        width={140}
                     />
                     <RechartsTooltip
                         contentStyle={{
@@ -75,12 +75,12 @@ export function OmieExpensesChart({ data, loading, className }: OmieExpensesChar
                             color: "var(--card-foreground)",
                         }}
                         formatter={(value, _name, entry) => [
-                            `${formatCurrency(Number(value ?? 0))} (${entry.payload.percent}%)`,
+                            `${value} leads · CPL ${formatCurrency(entry.payload.cpl)}`,
                             "",
                         ]}
                     />
-                    <Bar dataKey="value" name="Valor" radius={[0, 4, 4, 0]}>
-                        {data.map((_, i) => (
+                    <Bar dataKey="leads" name="Leads" radius={[0, 4, 4, 0]}>
+                        {sorted.map((_, i) => (
                             <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />
                         ))}
                     </Bar>

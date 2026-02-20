@@ -3,31 +3,31 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/shared/lib/formatters";
-import type { MetaAdsCampaign } from "@/types/meta-ads";
+import type { CampanhasCampaign } from "@/types/campanhas";
 
-const STATUS_LABEL: Record<MetaAdsCampaign["status"], string> = {
+const STATUS_LABEL: Record<CampanhasCampaign["status"], string> = {
     active: "Ativa",
     paused: "Pausada",
     learning: "Aprendizado",
 };
 
-const STATUS_BADGE: Record<MetaAdsCampaign["status"], string> = {
+const STATUS_BADGE: Record<CampanhasCampaign["status"], string> = {
     active: "bg-emerald-500/10 text-emerald-500",
     paused: "bg-yellow-500/10 text-yellow-500",
     learning: "bg-blue-500/10 text-blue-500",
 };
 
-interface MetaAdsCampaignsTableProps {
-    campaigns: MetaAdsCampaign[];
+interface CampanhasCampaignsTableProps {
+    campaigns: CampanhasCampaign[];
     loading?: boolean;
     className?: string;
 }
 
-export function MetaAdsCampaignsTable({
+export function CampanhasCampaignsTable({
     campaigns,
     loading,
     className,
-}: MetaAdsCampaignsTableProps) {
+}: CampanhasCampaignsTableProps) {
     if (loading) {
         return (
             <div className={cn("frame-card", className)}>
@@ -54,11 +54,11 @@ export function MetaAdsCampaignsTable({
             {/* Header row */}
             <div className="hidden md:grid md:grid-cols-12 gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground border-b border-border/50 pb-2">
                 <span className="col-span-3">Campanha</span>
+                <span className="col-span-1">Plataforma</span>
                 <span className="col-span-1">Status</span>
                 <span className="col-span-2 text-right">Investido</span>
                 <span className="col-span-1 text-right">Leads</span>
                 <span className="col-span-2 text-right">CPL</span>
-                <span className="col-span-1 text-right">CTR</span>
                 <span className="col-span-2 text-right">ROAS</span>
             </div>
 
@@ -73,6 +73,16 @@ export function MetaAdsCampaignsTable({
                     >
                         <span className="col-span-2 md:col-span-3 text-sm font-medium text-card-foreground truncate">
                             {c.name}
+                        </span>
+                        <span className="md:col-span-1">
+                            <span
+                                className={cn(
+                                    "inline-flex rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider",
+                                    c.platform === "Google Ads" ? "bg-red-500/10 text-red-600 dark:text-red-400" : "bg-blue-600/10 text-blue-600 dark:text-blue-400"
+                                )}
+                            >
+                                {c.platform}
+                            </span>
                         </span>
                         <span className="md:col-span-1">
                             <span

@@ -6,10 +6,10 @@ import { InsightsList } from "@/modules/dashboard/components/insights-list";
 import { TopItemsTable } from "@/modules/dashboard/components/top-items-table";
 import { getInsights, getTopItems } from "@/modules/dashboard/services/dashboard-service";
 import { getCRMPipeline, getCRMSummary } from "@/modules/crm/services/crm-service";
-import { LeadTypesPieChart } from "@/modules/meta-ads/components/lead-types-pie-chart";
-import { getMetaAdsLeadTypes, getMetaAdsSummary } from "@/modules/meta-ads/services/meta-ads-service";
-import { OmieRevenueChart } from "@/modules/omie/components/omie-revenue-chart";
-import { getOmieMonthlySeries, getOmieSummary } from "@/modules/omie/services/omie-service";
+import { LeadTypesPieChart } from "@/modules/campanhas/components/lead-types-pie-chart";
+import { getCampanhasLeadTypes, getCampanhasSummary } from "@/modules/campanhas/services/campanhas-service";
+import { ERPRevenueChart } from "@/modules/erp/components/erp-revenue-chart";
+import { getERPMonthlySeries, getERPSummary } from "@/modules/erp/services/erp-service";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { formatCompact } from "@/shared/lib/formatters";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
@@ -17,14 +17,14 @@ import { RevenueTargetCounter } from "@/shared/ui/revenue-target-counter";
 import { SectionHeader } from "@/shared/ui/section-header";
 import type { FunnelStage, Insight, KPI, TopItem } from "@/types/dashboard";
 import type { CRMKPI, CRMPipelineStage } from "@/types/crm";
-import type { MetaAdsKPI, MetaAdsLeadTypeBreakdown } from "@/types/meta-ads";
-import type { OmieKPI, OmieMonthlyPoint } from "@/types/omie";
+import type { CampanhasKPI, CampanhasLeadTypeBreakdown } from "@/types/campanhas";
+import type { ERPKPI, ERPMonthlyPoint } from "@/types/erp";
 import { Info, Warning, CheckCircle } from "@phosphor-icons/react";
 import { useCallback } from "react";
 
 /* ── KPI IDs to pick from each source ────────────────── */
 
-const OMIE_PICK = ["receita-total", "lucro-total", "margem"];
+const ERP_PICK = ["receita-total", "lucro-total", "margem"];
 const CRM_PICK = ["leads", "conversoes", "taxa-conversao"];
 const META_PICK = ["investimento", "cpl", "roas"];
 
@@ -41,7 +41,7 @@ function getLeadsTone(current: number) {
 
 /* ── Map module KPI → dashboard KPI (for KPIStatCard) ── */
 
-function toKPI(src: OmieKPI | CRMKPI | MetaAdsKPI): KPI {
+function toKPI(src: ERPKPI | CRMKPI | CampanhasKPI): KPI {
   return {
     id: src.id,
     label: src.label,
@@ -93,19 +93,19 @@ function KPIGroup({
 
 export default function DashboardPage() {
   /* ── Data fetching ──────────────────────────────── */
-  const { state: omieKpiState } = useAsyncData<OmieKPI[]>(useCallback(() => getOmieSummary(), []));
+  const { state: erpKpiState } = useAsyncData<ERPKPI[]>(useCallback(() => getERPSummary(), []));
   const { state: crmKpiState } = useAsyncData<CRMKPI[]>(useCallback(() => getCRMSummary(), []));
-  const { state: metaKpiState } = useAsyncData<MetaAdsKPI[]>(useCallback(() => getMetaAdsSummary(), []));
-  const { state: seriesState } = useAsyncData<OmieMonthlyPoint[]>(useCallback(() => getOmieMonthlySeries(), []));
+  const { state: metaKpiState } = useAsyncData<CampanhasKPI[]>(useCallback(() => getCampanhasSummary(), []));
+  const { state: seriesState } = useAsyncData<ERPMonthlyPoint[]>(useCallback(() => getERPMonthlySeries(), []));
   const { state: pipelineState } = useAsyncData<CRMPipelineStage[]>(useCallback(() => getCRMPipeline(), []));
   const { state: insightState } = useAsyncData<Insight[]>(useCallback(() => getInsights(), []));
 
   /* ── Derive state ───────────────────────────────── */
   const isDefined = <T,>(v: T | undefined): v is T => v !== undefined;
 
-  const omieLoading = omieKpiState.status === "loading";
-  const omieKpis = omieKpiState.status === "success"
-    ? OMIE_PICK.map((id) => omieKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
+  const erpLoading = erpKpiState.status === "loading";
+  const erpKpis = erpKpiState.status === "success"
+    ? ERP_PICK.map((id) => erpKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
     : [];
 
   const crmLoading = crmKpiState.status === "loading";
@@ -118,7 +118,7 @@ export default function DashboardPage() {
     ? META_PICK.map((id) => metaKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
     : [];
 
-  const { state: metaLeadTypesState } = useAsyncData<MetaAdsLeadTypeBreakdown[]>(useCallback(() => getMetaAdsLeadTypes(), []));
+  const { state: metaLeadTypesState } = useAsyncData<CampanhasLeadTypeBreakdown[]>(useCallback(() => getCampanhasLeadTypes(), []));
 
   const seriesLoading = seriesState.status === "loading";
   const series = seriesState.status === "success" ? seriesState.data : [];
@@ -142,15 +142,15 @@ export default function DashboardPage() {
       />
 
       <RevenueTargetCounter
-        current={omieKpis.find(k => k.id === "receita-total")?.value ?? 0}
+        current={erpKpis.find(k => k.id === "receita-total")?.value ?? 0}
         target={400000}
-        loading={omieLoading}
+        loading={erpLoading}
         className="w-full"
       />
 
       {/* ── Leads Target ──────────────────────────── */}
       {(() => {
-        if (omieLoading) {
+        if (erpLoading) {
           return <div className="frame-card animate-pulse h-[100px] w-full" />;
         }
         const leadsProgress = Math.min((currentLeads / LEADS_TARGET) * 100, 100);
@@ -202,27 +202,27 @@ export default function DashboardPage() {
         );
       })()}
 
-      {/* ── Omie Section (Financeiro) ───────────────── */}
+      {/* ── ERP Section (Financeiro) ───────────────── */}
       <div className="flex flex-col gap-3">
         <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Financeiro · Omie
+          Financeiro · ERP
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
           <div className="grid grid-cols-1 gap-3 shrink-0">
-            {omieLoading
+            {erpLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="min-w-0 overflow-hidden">
                   <KPIStatCard loading className="h-full w-full" />
                 </div>
               ))
-              : omieKpis.map((kpi) => (
+              : erpKpis.map((kpi) => (
                 <div key={kpi.id} className="min-w-0 overflow-hidden">
                   <KPIStatCard kpi={kpi} className="h-full xl:w-[455px] w-full" />
                 </div>
               ))}
           </div>
 
-          <OmieRevenueChart
+          <ERPRevenueChart
             data={series}
             loading={seriesLoading}
             className="h-full min-h-[400px]"
@@ -258,10 +258,10 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Meta Ads Section (Mídia) ────────────────── */}
+      {/* ── Campanhas Section (Mídia) ────────────────── */}
       <div className="flex flex-col gap-3">
         <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Mídia · Meta Ads
+          Mídia · Campanhas
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
           <div className="grid grid-cols-1 gap-3 shrink-0">

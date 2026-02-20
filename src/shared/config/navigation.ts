@@ -23,10 +23,10 @@ export const NAV_ITEMS: NavItem[] = [
     },
 
     {
-        label: "Omie",
-        href: "/omie",
+        label: "ERP",
+        href: "/erp",
         icon: Wallet,
-        description: "Visão financeira e operacional do Omie",
+        description: "Visão financeira e operacional do ERP",
     },
     {
         label: "CRM",
@@ -35,8 +35,8 @@ export const NAV_ITEMS: NavItem[] = [
         description: "CRM, pipeline e performance comercial",
     },
     {
-        label: "Meta Ads",
-        href: "/meta-ads",
+        label: "Campanhas",
+        href: "/campanhas",
         icon: Megaphone,
         description: "Performance de mídia paga e campanhas",
     },

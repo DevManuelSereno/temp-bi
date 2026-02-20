@@ -3,7 +3,7 @@
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { formatCurrency } from "@/shared/lib/formatters";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { MetaAdsTimePoint } from "@/types/meta-ads";
+import type { CampanhasTimePoint } from "@/types/campanhas";
 import {
     CartesianGrid,
     Legend,
@@ -15,13 +15,13 @@ import {
     YAxis,
 } from "recharts";
 
-interface MetaAdsTimeSeriesChartProps {
-    data: MetaAdsTimePoint[];
+interface CampanhasTimeSeriesChartProps {
+    data: CampanhasTimePoint[];
     loading?: boolean;
     className?: string;
 }
 
-export function MetaAdsTimeSeriesChart({ data, loading, className }: MetaAdsTimeSeriesChartProps) {
+export function CampanhasTimeSeriesChart({ data, loading, className }: CampanhasTimeSeriesChartProps) {
     return (
         <ChartCard
             title="Investimento vs Resultados"

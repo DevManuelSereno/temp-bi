@@ -1,8 +1,8 @@
 /* ══════════════════════════════════════════════════════
-   Meta Ads — Type definitions
+   Campanhas — Type definitions
    ══════════════════════════════════════════════════════ */
 
-export interface MetaAdsKPI {
+export interface CampanhasKPI {
     id: string;
     label: string;
     value: number;
@@ -15,7 +15,7 @@ export interface MetaAdsKPI {
     sparklineData?: number[];
 }
 
-export interface MetaAdsTimePoint {
+export interface CampanhasTimePoint {
     date: string;
     spend: number;
     leads: number;
@@ -23,9 +23,10 @@ export interface MetaAdsTimePoint {
     clicks: number;
 }
 
-export interface MetaAdsCampaign {
+export interface CampanhasCampaign {
     id: string;
     name: string;
+    platform: "Meta Ads" | "Google Ads";
     leads: number;
     spend: number;
     cpl: number;
@@ -33,7 +34,7 @@ export interface MetaAdsCampaign {
     status: "active" | "learning" | "paused"; // simplified
 }
 
-export interface MetaAdsLeadTypeBreakdown {
+export interface CampanhasLeadTypeBreakdown {
     type: string;
     leads: number;
 }

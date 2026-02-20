@@ -1,16 +1,16 @@
 import {
-    MOCK_OMIE_EXPENSES,
-    MOCK_OMIE_KPIS,
-    MOCK_OMIE_MONTHLY,
-    MOCK_OMIE_TRANSACTIONS,
-} from "@/modules/omie/mock/data";
+    MOCK_ERP_EXPENSES,
+    MOCK_ERP_KPIS,
+    MOCK_ERP_MONTHLY,
+    MOCK_ERP_TRANSACTIONS,
+} from "@/modules/erp/mock/data";
 import { MOCK_DELAY_MS } from "@/shared/lib/constants";
 import type {
-    OmieExpenseCategory,
-    OmieKPI,
-    OmieMonthlyPoint,
-    OmieTransaction,
-} from "@/types/omie";
+    ERPExpenseCategory,
+    ERPKPI,
+    ERPMonthlyPoint,
+    ERPTransaction,
+} from "@/types/erp";
 
 /* ── Simulated async delay ─────────────────────────── */
 function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
@@ -18,27 +18,27 @@ function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
 }
 
 /* ══════════════════════════════════════════════════════
-   Omie Service
+   ERP Service
    Today: reads from mock data
    Tomorrow: swap to API fetcher without changing interface
    ══════════════════════════════════════════════════════ */
 
-export async function getOmieSummary(): Promise<OmieKPI[]> {
+export async function getERPSummary(): Promise<ERPKPI[]> {
     await delay();
-    return MOCK_OMIE_KPIS;
+    return MOCK_ERP_KPIS;
 }
 
-export async function getOmieMonthlySeries(): Promise<OmieMonthlyPoint[]> {
+export async function getERPMonthlySeries(): Promise<ERPMonthlyPoint[]> {
     await delay();
-    return MOCK_OMIE_MONTHLY;
+    return MOCK_ERP_MONTHLY;
 }
 
-export async function getOmieExpensesByCategory(): Promise<OmieExpenseCategory[]> {
+export async function getERPExpensesByCategory(): Promise<ERPExpenseCategory[]> {
     await delay();
-    return MOCK_OMIE_EXPENSES;
+    return MOCK_ERP_EXPENSES;
 }
 
-export async function getOmieTransactions(): Promise<OmieTransaction[]> {
+export async function getERPTransactions(): Promise<ERPTransaction[]> {
     await delay();
-    return MOCK_OMIE_TRANSACTIONS;
+    return MOCK_ERP_TRANSACTIONS;
 }

@@ -1,8 +1,8 @@
 /* ══════════════════════════════════════════════════════
-   Omie — Type definitions
+   ERP — Type definitions
    ══════════════════════════════════════════════════════ */
 
-export interface OmieKPI {
+export interface ERPKPI {
     id: string;
     label: string;
     value: number;
@@ -15,21 +15,21 @@ export interface OmieKPI {
     sparklineData?: number[];
 }
 
-export interface OmieMonthlyPoint {
+export interface ERPMonthlyPoint {
     month: string;
     receita: number;
     despesa: number;
     lucro: number;
 }
 
-export interface OmieExpenseCategory {
+export interface ERPExpenseCategory {
     id: string;
     label: string;
     value: number;
     percent: number;
 }
 
-export interface OmieTransaction {
+export interface ERPTransaction {
     id: string;
     date: string;
     description: string;
