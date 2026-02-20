@@ -32,7 +32,7 @@ export function TopItemsTable({ items, loading }: TopItemsTableProps) {
     return (
         <div className="frame-card">
             <h3 className="font-serif text-base font-semibold text-card-foreground mb-4">
-                Top 5 Procedimentos
+                Top 5 Estilos de Tatuagem
             </h3>
             <div className="flex flex-col">
                 {items.map((item, index) => (

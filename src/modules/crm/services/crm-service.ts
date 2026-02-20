@@ -1,16 +1,16 @@
 import {
-    MOCK_GHL_KPIS,
-    MOCK_GHL_OPPORTUNITIES,
-    MOCK_GHL_PIPELINE,
-    MOCK_GHL_WEEKLY,
-} from "@/modules/ghl/mock/data";
+    MOCK_CRM_KPIS,
+    MOCK_CRM_OPPORTUNITIES,
+    MOCK_CRM_PIPELINE,
+    MOCK_CRM_WEEKLY,
+} from "@/modules/crm/mock/data";
 import { MOCK_DELAY_MS } from "@/shared/lib/constants";
 import type {
-    GHLKPI,
-    GHLOpportunity,
-    GHLPipelineStage,
-    GHLWeeklyPoint,
-} from "@/types/ghl";
+    CRMKPI,
+    CRMOpportunity,
+    CRMPipelineStage,
+    CRMWeeklyPoint,
+} from "@/types/crm";
 
 /* ── Simulated async delay ─────────────────────────── */
 function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
@@ -18,27 +18,27 @@ function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
 }
 
 /* ══════════════════════════════════════════════════════
-   GHL Service
+   CRM Service
    Today: reads from mock data
    Tomorrow: swap to API fetcher without changing interface
    ══════════════════════════════════════════════════════ */
 
-export async function getGHLSummary(): Promise<GHLKPI[]> {
+export async function getCRMSummary(): Promise<CRMKPI[]> {
     await delay();
-    return MOCK_GHL_KPIS;
+    return MOCK_CRM_KPIS;
 }
 
-export async function getGHLPipeline(): Promise<GHLPipelineStage[]> {
+export async function getCRMPipeline(): Promise<CRMPipelineStage[]> {
     await delay();
-    return MOCK_GHL_PIPELINE;
+    return MOCK_CRM_PIPELINE;
 }
 
-export async function getGHLWeeklySeries(): Promise<GHLWeeklyPoint[]> {
+export async function getCRMWeeklySeries(): Promise<CRMWeeklyPoint[]> {
     await delay();
-    return MOCK_GHL_WEEKLY;
+    return MOCK_CRM_WEEKLY;
 }
 
-export async function getGHLOpportunities(): Promise<GHLOpportunity[]> {
+export async function getCRMOpportunities(): Promise<CRMOpportunity[]> {
     await delay();
-    return MOCK_GHL_OPPORTUNITIES;
+    return MOCK_CRM_OPPORTUNITIES;
 }

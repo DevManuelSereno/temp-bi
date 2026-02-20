@@ -2,7 +2,7 @@
 
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { GHLPipelineStage } from "@/types/ghl";
+import type { CRMPipelineStage } from "@/types/crm";
 import {
     Bar,
     BarChart,
@@ -22,13 +22,13 @@ const STAGE_COLORS = [
     "var(--chart-5)",
 ];
 
-interface GHLPipelineChartProps {
-    stages: GHLPipelineStage[];
+interface CRMPipelineChartProps {
+    stages: CRMPipelineStage[];
     loading?: boolean;
     className?: string;
 }
 
-export function GHLPipelineChart({ stages, loading, className }: GHLPipelineChartProps) {
+export function CRMPipelineChart({ stages, loading, className }: CRMPipelineChartProps) {
     return (
         <ChartCard
             title="Funil de Vendas"

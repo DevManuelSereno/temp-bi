@@ -2,7 +2,7 @@
 
 import { CHART_HEIGHT } from "@/shared/lib/constants";
 import { ChartCard } from "@/shared/ui/chart-card";
-import type { GHLWeeklyPoint } from "@/types/ghl";
+import type { CRMWeeklyPoint } from "@/types/crm";
 import {
     CartesianGrid,
     Legend,
@@ -14,13 +14,13 @@ import {
     YAxis,
 } from "recharts";
 
-interface GHLWeeklyChartProps {
-    data: GHLWeeklyPoint[];
+interface CRMWeeklyChartProps {
+    data: CRMWeeklyPoint[];
     loading?: boolean;
     className?: string;
 }
 
-export function GHLWeeklyChart({ data, loading, className }: GHLWeeklyChartProps) {
+export function CRMWeeklyChart({ data, loading, className }: CRMWeeklyChartProps) {
     return (
         <ChartCard
             title="Evolução Semanal"

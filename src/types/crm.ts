@@ -1,8 +1,8 @@
 /* ══════════════════════════════════════════════════════
-   GHL (GoHighLevel) — Type definitions
+   CRM — Type definitions
    ══════════════════════════════════════════════════════ */
 
-export interface GHLKPI {
+export interface CRMKPI {
     id: string;
     label: string;
     value: number;
@@ -15,14 +15,14 @@ export interface GHLKPI {
     sparklineData?: number[];
 }
 
-export interface GHLPipelineStage {
+export interface CRMPipelineStage {
     id: string;
     label: string;
     value: number;
     percent: number;
 }
 
-export interface GHLWeeklyPoint {
+export interface CRMWeeklyPoint {
     week: string;
     leads: number;
     qualified: number;
@@ -30,7 +30,7 @@ export interface GHLWeeklyPoint {
     conversions: number;
 }
 
-export interface GHLOpportunity {
+export interface CRMOpportunity {
     id: string;
     name: string;
     stage: string;

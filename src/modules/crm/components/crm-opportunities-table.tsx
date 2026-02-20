@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { formatCurrency, formatDate } from "@/shared/lib/formatters";
-import type { GHLOpportunity } from "@/types/ghl";
+import type { CRMOpportunity } from "@/types/crm";
 
 const STAGE_BADGE_COLORS: Record<string, string> = {
     Lead: "bg-muted text-muted-foreground",
@@ -13,17 +13,17 @@ const STAGE_BADGE_COLORS: Record<string, string> = {
     Convertido: "bg-chart-4/15 text-chart-4",
 };
 
-interface GHLOpportunitiesTableProps {
-    opportunities: GHLOpportunity[];
+interface CRMOpportunitiesTableProps {
+    opportunities: CRMOpportunity[];
     loading?: boolean;
     className?: string;
 }
 
-export function GHLOpportunitiesTable({
+export function CRMOpportunitiesTable({
     opportunities,
     loading,
     className,
-}: GHLOpportunitiesTableProps) {
+}: CRMOpportunitiesTableProps) {
     if (loading) {
         return (
             <div className={cn("frame-card", className)}>

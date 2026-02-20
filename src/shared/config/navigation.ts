@@ -29,8 +29,8 @@ export const NAV_ITEMS: NavItem[] = [
         description: "Visão financeira e operacional do Omie",
     },
     {
-        label: "GHL",
-        href: "/ghl",
+        label: "CRM",
+        href: "/crm",
         icon: Users,
         description: "CRM, pipeline e performance comercial",
     },

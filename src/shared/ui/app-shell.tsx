@@ -12,6 +12,8 @@ import { ThemeToggle } from "@/shared/theme/theme-toggle";
 import {
     Bell,
     PanelLeft,
+    PanelLeftClose,
+    PanelLeftOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -138,9 +140,9 @@ export function AppShell({ children }: AppShellProps) {
                     aria-label={collapsed ? "Expandir menu" : "Recolher menu"}
                 >
                     {collapsed ? (
-                        <PanelLeft className="h-3.5 w-3.5" />
+                        <PanelLeftOpen className="h-3.5 w-3.5" />
                     ) : (
-                        <PanelLeft className="h-3.5 w-3.5" />
+                        <PanelLeftClose className="h-3.5 w-3.5" />
                     )}
                 </Button>
             </div>

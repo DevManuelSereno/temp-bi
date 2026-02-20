@@ -1,18 +1,18 @@
 import { formatCompact, formatPercent } from "@/shared/lib/formatters";
 import type {
-    GHLKPI,
-    GHLOpportunity,
-    GHLPipelineStage,
-    GHLWeeklyPoint,
-} from "@/types/ghl";
+    CRMKPI,
+    CRMOpportunity,
+    CRMPipelineStage,
+    CRMWeeklyPoint,
+} from "@/types/crm";
 
 /* ══════════════════════════════════════════════════════
-   GHL — Mock Data
+   CRM — Mock Data
    ══════════════════════════════════════════════════════ */
 
 /* ── Weekly series ───────────────────────────────────── */
 
-export const MOCK_GHL_WEEKLY: GHLWeeklyPoint[] = [
+export const MOCK_CRM_WEEKLY: CRMWeeklyPoint[] = [
     { week: "Sem 01", leads: 142, qualified: 98, appointments: 64, conversions: 18 },
     { week: "Sem 02", leads: 168, qualified: 112, appointments: 72, conversions: 22 },
     { week: "Sem 03", leads: 155, qualified: 105, appointments: 68, conversions: 20 },
@@ -25,15 +25,15 @@ export const MOCK_GHL_WEEKLY: GHLWeeklyPoint[] = [
 
 /* ── Pipeline stages ─────────────────────────────────── */
 
-const totalLeads = MOCK_GHL_WEEKLY.reduce((s, w) => s + w.leads, 0);
-const totalQualified = MOCK_GHL_WEEKLY.reduce((s, w) => s + w.qualified, 0);
-const totalAppointments = MOCK_GHL_WEEKLY.reduce((s, w) => s + w.appointments, 0);
+const totalLeads = MOCK_CRM_WEEKLY.reduce((s, w) => s + w.leads, 0);
+const totalQualified = MOCK_CRM_WEEKLY.reduce((s, w) => s + w.qualified, 0);
+const totalAppointments = MOCK_CRM_WEEKLY.reduce((s, w) => s + w.appointments, 0);
 const totalShowed = Math.round(totalAppointments * 0.78);
-const totalConversions = MOCK_GHL_WEEKLY.reduce((s, w) => s + w.conversions, 0);
+const totalConversions = MOCK_CRM_WEEKLY.reduce((s, w) => s + w.conversions, 0);
 
 const pct = (v: number) => Math.round((v / totalLeads) * 1000) / 10;
 
-export const MOCK_GHL_PIPELINE: GHLPipelineStage[] = [
+export const MOCK_CRM_PIPELINE: CRMPipelineStage[] = [
     { id: "leads", label: "Leads", value: totalLeads, percent: 100 },
     { id: "qualified", label: "Qualificados", value: totalQualified, percent: pct(totalQualified) },
     { id: "appointments", label: "Agendados", value: totalAppointments, percent: pct(totalAppointments) },
@@ -54,8 +54,8 @@ function trend(v: number): "up" | "down" | "stable" {
     return "stable";
 }
 
-const lastWeek = MOCK_GHL_WEEKLY[MOCK_GHL_WEEKLY.length - 1];
-const prevWeek = MOCK_GHL_WEEKLY[MOCK_GHL_WEEKLY.length - 2];
+const lastWeek = MOCK_CRM_WEEKLY[MOCK_CRM_WEEKLY.length - 1];
+const prevWeek = MOCK_CRM_WEEKLY[MOCK_CRM_WEEKLY.length - 2];
 
 const leadsVar = variation(lastWeek.leads, prevWeek.leads);
 const qualVar = variation(lastWeek.qualified, prevWeek.qualified);
@@ -69,7 +69,7 @@ const showRateVar = Math.round((showRateCurr - showRatePrev) * 10) / 10;
 
 const conversionRate = totalLeads > 0 ? (totalConversions / totalLeads) * 100 : 0;
 
-export const MOCK_GHL_KPIS: GHLKPI[] = [
+export const MOCK_CRM_KPIS: CRMKPI[] = [
     {
         id: "leads",
         label: "Leads",
@@ -79,7 +79,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "number",
         trend: trend(leadsVar),
         variationPercent: leadsVar,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) => w.leads),
+        sparklineData: MOCK_CRM_WEEKLY.map((w) => w.leads),
     },
     {
         id: "qualificados",
@@ -89,7 +89,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "number",
         trend: trend(qualVar),
         variationPercent: qualVar,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) => w.qualified),
+        sparklineData: MOCK_CRM_WEEKLY.map((w) => w.qualified),
     },
     {
         id: "agendamentos",
@@ -99,7 +99,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "number",
         trend: trend(apptVar),
         variationPercent: apptVar,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) => w.appointments),
+        sparklineData: MOCK_CRM_WEEKLY.map((w) => w.appointments),
     },
     {
         id: "show-rate",
@@ -110,7 +110,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "percent",
         trend: trend(showRateVar),
         variationPercent: showRateVar,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) =>
+        sparklineData: MOCK_CRM_WEEKLY.map((w) =>
             w.appointments > 0 ? Math.round((Math.round(w.appointments * 0.78) / w.appointments) * 1000) / 10 : 0
         ),
     },
@@ -122,7 +122,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "number",
         trend: trend(convVar),
         variationPercent: convVar,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) => w.conversions),
+        sparklineData: MOCK_CRM_WEEKLY.map((w) => w.conversions),
     },
     {
         id: "taxa-conversao",
@@ -133,7 +133,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
         unit: "percent",
         trend: "up",
         variationPercent: 0.8,
-        sparklineData: MOCK_GHL_WEEKLY.map((w) =>
+        sparklineData: MOCK_CRM_WEEKLY.map((w) =>
             w.leads > 0 ? Math.round((w.conversions / w.leads) * 1000) / 10 : 0
         ),
     },
@@ -141,7 +141,7 @@ export const MOCK_GHL_KPIS: GHLKPI[] = [
 
 /* ── Opportunities ────────────────────────────────────── */
 
-export const MOCK_GHL_OPPORTUNITIES: GHLOpportunity[] = [
+export const MOCK_CRM_OPPORTUNITIES: CRMOpportunity[] = [
     { id: "op1", name: "João Silva", stage: "Qualificado", value: 2400, assignee: "Ana Costa", updatedAt: "2025-02-18" },
     { id: "op2", name: "Maria Oliveira", stage: "Agendado", value: 3600, assignee: "Pedro Lima", updatedAt: "2025-02-18" },
     { id: "op3", name: "Carlos Santos", stage: "Compareceu", value: 1800, assignee: "Ana Costa", updatedAt: "2025-02-17" },

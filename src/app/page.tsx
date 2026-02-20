@@ -5,7 +5,7 @@ import { FunnelChart } from "@/modules/dashboard/components/funnel-chart";
 import { InsightsList } from "@/modules/dashboard/components/insights-list";
 import { TopItemsTable } from "@/modules/dashboard/components/top-items-table";
 import { getInsights, getTopItems } from "@/modules/dashboard/services/dashboard-service";
-import { getGHLPipeline, getGHLSummary } from "@/modules/ghl/services/ghl-service";
+import { getCRMPipeline, getCRMSummary } from "@/modules/crm/services/crm-service";
 import { LeadTypesPieChart } from "@/modules/meta-ads/components/lead-types-pie-chart";
 import { getMetaAdsLeadTypes, getMetaAdsSummary } from "@/modules/meta-ads/services/meta-ads-service";
 import { OmieRevenueChart } from "@/modules/omie/components/omie-revenue-chart";
@@ -16,7 +16,7 @@ import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { RevenueTargetCounter } from "@/shared/ui/revenue-target-counter";
 import { SectionHeader } from "@/shared/ui/section-header";
 import type { FunnelStage, Insight, KPI, TopItem } from "@/types/dashboard";
-import type { GHLKPI, GHLPipelineStage } from "@/types/ghl";
+import type { CRMKPI, CRMPipelineStage } from "@/types/crm";
 import type { MetaAdsKPI, MetaAdsLeadTypeBreakdown } from "@/types/meta-ads";
 import type { OmieKPI, OmieMonthlyPoint } from "@/types/omie";
 import { AlertCircle, AlertTriangle, CheckCircle2 } from "lucide-react";
@@ -25,7 +25,7 @@ import { useCallback } from "react";
 /* ── KPI IDs to pick from each source ────────────────── */
 
 const OMIE_PICK = ["receita-total", "lucro-total", "margem"];
-const GHL_PICK = ["leads", "conversoes", "taxa-conversao"];
+const CRM_PICK = ["leads", "conversoes", "taxa-conversao"];
 const META_PICK = ["investimento", "cpl", "roas"];
 
 /* ── Leads Target ──────────────────────────────────────── */
@@ -41,7 +41,7 @@ function getLeadsTone(current: number) {
 
 /* ── Map module KPI → dashboard KPI (for KPIStatCard) ── */
 
-function toKPI(src: OmieKPI | GHLKPI | MetaAdsKPI): KPI {
+function toKPI(src: OmieKPI | CRMKPI | MetaAdsKPI): KPI {
   return {
     id: src.id,
     label: src.label,
@@ -94,10 +94,10 @@ function KPIGroup({
 export default function DashboardPage() {
   /* ── Data fetching ──────────────────────────────── */
   const { state: omieKpiState } = useAsyncData<OmieKPI[]>(useCallback(() => getOmieSummary(), []));
-  const { state: ghlKpiState } = useAsyncData<GHLKPI[]>(useCallback(() => getGHLSummary(), []));
+  const { state: crmKpiState } = useAsyncData<CRMKPI[]>(useCallback(() => getCRMSummary(), []));
   const { state: metaKpiState } = useAsyncData<MetaAdsKPI[]>(useCallback(() => getMetaAdsSummary(), []));
   const { state: seriesState } = useAsyncData<OmieMonthlyPoint[]>(useCallback(() => getOmieMonthlySeries(), []));
-  const { state: pipelineState } = useAsyncData<GHLPipelineStage[]>(useCallback(() => getGHLPipeline(), []));
+  const { state: pipelineState } = useAsyncData<CRMPipelineStage[]>(useCallback(() => getCRMPipeline(), []));
   const { state: insightState } = useAsyncData<Insight[]>(useCallback(() => getInsights(), []));
 
   /* ── Derive state ───────────────────────────────── */
@@ -108,9 +108,9 @@ export default function DashboardPage() {
     ? OMIE_PICK.map((id) => omieKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
     : [];
 
-  const ghlLoading = ghlKpiState.status === "loading";
-  const ghlKpis = ghlKpiState.status === "success"
-    ? GHL_PICK.map((id) => ghlKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
+  const crmLoading = crmKpiState.status === "loading";
+  const crmKpis = crmKpiState.status === "success"
+    ? CRM_PICK.map((id) => crmKpiState.data.find((k) => k.id === id)).filter(isDefined).map(toKPI)
     : [];
 
   const metaLoading = metaKpiState.status === "loading";
@@ -230,20 +230,20 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── GHL Section (Comercial) ─────────────────── */}
+      {/* ── CRM Section (Comercial) ─────────────────── */}
       <div className="flex flex-col gap-3">
         <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Comercial · GHL
+          Comercial · CRM
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
           <div className="grid grid-cols-1 gap-3 shrink-0">
-            {ghlLoading
+            {crmLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="min-w-0 overflow-hidden">
                   <KPIStatCard loading className="h-full w-full" />
                 </div>
               ))
-              : ghlKpis.map((kpi) => (
+              : crmKpis.map((kpi) => (
                 <div key={kpi.id} className="min-w-0 overflow-hidden">
                   <KPIStatCard kpi={kpi} className="h-full xl:w-[455px] w-full" />
                 </div>
@@ -286,7 +286,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Top 5 Procedimentos ─────────────────────── */}
+      {/* ── Top 5 Estilos de Tatuagem ─────────────────── */}
       <TopItemsTable items={topItems} loading={topItemsLoading} />
 
       {/* ── Insights ───────────────────────────────── */}

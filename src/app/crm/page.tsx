@@ -7,15 +7,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { GHLOpportunitiesTable } from "@/modules/ghl/components/ghl-opportunities-table";
-import { GHLPipelineChart } from "@/modules/ghl/components/ghl-pipeline-chart";
-import { GHLWeeklyChart } from "@/modules/ghl/components/ghl-weekly-chart";
+import { CRMOpportunitiesTable } from "@/modules/crm/components/crm-opportunities-table";
+import { CRMPipelineChart } from "@/modules/crm/components/crm-pipeline-chart";
+import { CRMWeeklyChart } from "@/modules/crm/components/crm-weekly-chart";
 import {
-    getGHLOpportunities,
-    getGHLPipeline,
-    getGHLSummary,
-    getGHLWeeklySeries,
-} from "@/modules/ghl/services/ghl-service";
+    getCRMOpportunities,
+    getCRMPipeline,
+    getCRMSummary,
+    getCRMWeeklySeries,
+} from "@/modules/crm/services/crm-service";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import {
@@ -24,7 +24,7 @@ import {
     type PageFiltersState,
 } from "@/shared/ui/page-filters";
 import { SectionHeader } from "@/shared/ui/section-header";
-import type { GHLKPI, GHLOpportunity, GHLPipelineStage, GHLWeeklyPoint } from "@/types/ghl";
+import type { CRMKPI, CRMOpportunity, CRMPipelineStage, CRMWeeklyPoint } from "@/types/crm";
 import { useCallback, useState } from "react";
 
 /* ── Mock options ─────────────────────────────────── */
@@ -46,15 +46,15 @@ const RESPONSAVEL_OPTIONS = [
     { label: "Marcos Vinicius", value: "marcos_vinicius" },
 ];
 
-export default function GHLPage() {
+export default function CRMPage() {
     const [filters, setFilters] = useState<PageFiltersState>(DEFAULT_FILTERS);
     const [statusLead, setStatusLead] = useState("all");
     const [responsavel, setResponsavel] = useState("all");
 
-    const { state: kpiState } = useAsyncData<GHLKPI[]>(useCallback(() => getGHLSummary(), []));
-    const { state: pipelineState } = useAsyncData<GHLPipelineStage[]>(useCallback(() => getGHLPipeline(), []));
-    const { state: weeklyState } = useAsyncData<GHLWeeklyPoint[]>(useCallback(() => getGHLWeeklySeries(), []));
-    const { state: opState } = useAsyncData<GHLOpportunity[]>(useCallback(() => getGHLOpportunities(), []));
+    const { state: kpiState } = useAsyncData<CRMKPI[]>(useCallback(() => getCRMSummary(), []));
+    const { state: pipelineState } = useAsyncData<CRMPipelineStage[]>(useCallback(() => getCRMPipeline(), []));
+    const { state: weeklyState } = useAsyncData<CRMWeeklyPoint[]>(useCallback(() => getCRMWeeklySeries(), []));
+    const { state: opState } = useAsyncData<CRMOpportunity[]>(useCallback(() => getCRMOpportunities(), []));
 
     const kpiLoading = kpiState.status === "loading";
     const kpis = kpiState.status === "success" ? kpiState.data : [];
@@ -69,7 +69,7 @@ export default function GHLPage() {
         <div className="flex flex-col gap-6">
             {/* ── Header ────────────────────────────────── */}
             <SectionHeader
-                title="GHL — Pipeline Comercial"
+                title="CRM — Pipeline Comercial"
                 subtitle="CRM, funil de vendas e performance da equipe"
             />
 
@@ -135,12 +135,12 @@ export default function GHLPage() {
 
             {/* ── Charts ─────────────────────────────────── */}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <GHLPipelineChart stages={pipeline} loading={pipelineLoading} />
-                <GHLWeeklyChart data={weekly} loading={weeklyLoading} />
+                <CRMPipelineChart stages={pipeline} loading={pipelineLoading} />
+                <CRMWeeklyChart data={weekly} loading={weeklyLoading} />
             </div>
 
             {/* ── Opportunities ──────────────────────────── */}
-            <GHLOpportunitiesTable
+            <CRMOpportunitiesTable
                 opportunities={opportunities}
                 loading={opLoading}
             />
