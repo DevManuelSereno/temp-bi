@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 import { SPARKLINE_HEIGHT, SPARKLINE_WIDTH } from "@/shared/lib/constants";
 import { formatPercent, formatVariation } from "@/shared/lib/formatters";
 import type { KPI } from "@/types/dashboard";
-import { Minus, TrendingDown, TrendingUp } from "lucide-react";
+import { ArrowDown, ArrowUp, Minus, TrendingDown, TrendingUp } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type KPIStatCardProps = {
     className?: string;
@@ -19,6 +20,21 @@ type KPIStatCardProps = {
         | { kpi: KPI; loading?: false }
         | { kpi?: undefined; loading: true }
     );
+
+/* ── Narrow screen hook (< 450px) ───────────────────── */
+function useIsNarrow(breakpoint = 450) {
+    const [isNarrow, setIsNarrow] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+        setIsNarrow(mq.matches);
+        const handler = (e: MediaQueryListEvent) => setIsNarrow(e.matches);
+        mq.addEventListener("change", handler);
+        return () => mq.removeEventListener("change", handler);
+    }, [breakpoint]);
+
+    return isNarrow;
+}
 
 /* ── Mini Sparkline (SVG) ───────────────────────────── */
 function Sparkline({
@@ -74,6 +90,17 @@ function Sparkline({
     );
 }
 
+/* ── Trend Arrow (mobile substitute for sparkline) ──── */
+function TrendArrow({ trend }: { trend: KPI["trend"] }) {
+    if (trend === "up") {
+        return <ArrowUp className="h-4 w-4 text-success" aria-hidden="true" />;
+    }
+    if (trend === "down") {
+        return <ArrowDown className="h-4 w-4 text-destructive" aria-hidden="true" />;
+    }
+    return <Minus className="h-4 w-4 text-muted-foreground" aria-hidden="true" />;
+}
+
 /* ── Trend Icon ─────────────────────────────────────── */
 function TrendIcon({ trend }: { trend: KPI["trend"] }) {
     const Icon =
@@ -115,6 +142,8 @@ export function KPIStatCard({
     className,
     onClick,
 }: KPIStatCardProps) {
+    const isNarrow = useIsNarrow();
+
     if (loading) return <KPIStatCardSkeleton className={className} />;
 
     const targetText =
@@ -128,7 +157,7 @@ export function KPIStatCard({
         <button
             type="button"
             className={cn(
-                "frame-card group flex flex-col gap-2 text-left transition-all cursor-pointer",
+                "frame-card group flex flex-col gap-2 text-left transition-all cursor-pointer min-w-0",
                 "focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2",
                 className
             )}
@@ -141,12 +170,14 @@ export function KPIStatCard({
                     {kpi.label}
                 </span>
                 {kpi.sparklineData && (
-                    <Sparkline data={kpi.sparklineData} trend={kpi.trend} />
+                    isNarrow
+                        ? <TrendArrow trend={kpi.trend} />
+                        : <Sparkline data={kpi.sparklineData} trend={kpi.trend} />
                 )}
             </div>
 
             {/* Value */}
-            <span className="font-serif text-2xl font-bold tracking-tight text-card-foreground">
+            <span className="font-serif text-2xl font-bold tracking-tight text-card-foreground min-w-0 max-sm:text-xl">
                 {kpi.formattedValue}
             </span>
 

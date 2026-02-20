@@ -55,15 +55,15 @@ export function RevenueTargetCounter({
                 style={{ width: `${progress}%`, color: 'currentColor' }}
             />
 
-            <div className="flex items-start justify-between">
-                <div>
+            <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
                     <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
                         Meta de Faturamento (Mês)
                     </span>
 
                     <div className="flex items-center gap-2 mt-1">
                         <Icon className={cn("h-5 w-5", textColor)} />
-                        <h2 className={cn("text-xl font-bold font-serif tracking-tight", textColor)}>
+                        <h2 className={cn("text-xl font-bold font-serif tracking-tight max-sm:text-base break-words", textColor)}>
                             {isMet
                                 ? `Meta batida! +${formatCurrency(Math.abs(diff))} acima`
                                 : `Faltam ${formatCurrency(diff)} para bater a meta`
@@ -72,7 +72,7 @@ export function RevenueTargetCounter({
                     </div>
                 </div>
 
-                <div className="text-right flex flex-col items-end">
+                <div className="text-right flex flex-col items-end shrink-0">
                     <span className={cn("text-xs font-bold px-2 py-0.5 rounded-full bg-muted/50", textColor)}>
                         {current >= 400000 ? "Excelente" : (current >= 300000 ? "Em progresso" : "Atenção")}
                     </span>

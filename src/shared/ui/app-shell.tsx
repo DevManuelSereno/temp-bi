@@ -1,23 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {
-    PanelLeft,
-    ChevronLeft,
-    ChevronRight,
-    Bell,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import { ThemeToggle } from "@/shared/theme/theme-toggle";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/shared/config/navigation";
 import { SIDEBAR_NAME } from "@/shared/lib/constants";
+import { ThemeToggle } from "@/shared/theme/theme-toggle";
+import {
+    Bell,
+    PanelLeft,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -99,7 +97,7 @@ function Topbar({ onMobileMenuOpen }: { onMobileMenuOpen: () => void }) {
                 onClick={onMobileMenuOpen}
                 aria-label="Abrir menu"
             >
-                <ChevronRight className="h-5 w-5" />
+                <PanelLeft className="h-5 w-5" />
             </Button>
 
             <div className="flex-1" />

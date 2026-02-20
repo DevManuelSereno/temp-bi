@@ -141,18 +141,17 @@ export default function DashboardPage() {
         subtitle="Visão consolidada — Financeiro, Comercial e Mídia"
       />
 
-      {/* ── Revenue Target ────────────────────────── */}
       <RevenueTargetCounter
         current={omieKpis.find(k => k.id === "receita-total")?.value ?? 0}
         target={400000}
         loading={omieLoading}
-        className="w-[1390px]"
+        className="w-full"
       />
 
       {/* ── Leads Target ──────────────────────────── */}
       {(() => {
         if (omieLoading) {
-          return <div className="frame-card animate-pulse h-[100px] w-[1390px]" />;
+          return <div className="frame-card animate-pulse h-[100px] w-full" />;
         }
         const leadsProgress = Math.min((currentLeads / LEADS_TARGET) * 100, 100);
         const leadsDiff = LEADS_TARGET - currentLeads;
@@ -161,7 +160,7 @@ export default function DashboardPage() {
         const LeadsIcon = leadsTone === "success" ? CheckCircle2 : (leadsTone === "warning" ? AlertTriangle : AlertCircle);
         const leadsTextColor = leadsTone === "destructive" ? "text-destructive" : leadsTone === "warning" ? "text-warning" : "text-success";
         return (
-          <div className="frame-card flex flex-col justify-center gap-2 py-4 px-6 relative overflow-hidden w-[1390px]">
+          <div className="frame-card flex flex-col justify-center gap-2 py-4 px-6 relative overflow-hidden w-full">
             <div className="absolute bottom-0 left-0 h-1 bg-current opacity-20 transition-all duration-1000" style={{ width: `${leadsProgress}%`, color: 'currentColor' }} />
             <div className="flex items-start justify-between">
               <div>
@@ -170,7 +169,7 @@ export default function DashboardPage() {
                 </span>
                 <div className="flex items-center gap-2 mt-1">
                   <LeadsIcon className={cn("h-5 w-5", leadsTextColor)} />
-                  <h2 className={cn("text-xl font-bold font-serif tracking-tight", leadsTextColor)}>
+                  <h2 className={cn("text-xl font-bold font-serif tracking-tight max-sm:text-base break-words", leadsTextColor)}>
                     {leadsIsMet
                       ? `Meta batida ✅ +${formatCompact(Math.abs(leadsDiff))} acima da meta`
                       : `Faltam ${formatCompact(leadsDiff)} leads para bater a meta`
@@ -209,16 +208,16 @@ export default function DashboardPage() {
           Financeiro · Omie
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 gap-3 shrink-0">
+          <div className="grid grid-cols-1 gap-3 shrink-0">
             {omieLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="min-w-0 overflow-hidden">
-                  <KPIStatCard loading className="h-full w-[455px]" />
+                  <KPIStatCard loading className="h-full w-full" />
                 </div>
               ))
               : omieKpis.map((kpi) => (
                 <div key={kpi.id} className="min-w-0 overflow-hidden">
-                  <KPIStatCard kpi={kpi} className="h-full w-[455px]" />
+                  <KPIStatCard kpi={kpi} className="h-full xl:w-[455px] w-full" />
                 </div>
               ))}
           </div>
@@ -237,16 +236,16 @@ export default function DashboardPage() {
           Comercial · GHL
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 gap-3 shrink-0">
+          <div className="grid grid-cols-1 gap-3 shrink-0">
             {ghlLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="min-w-0 overflow-hidden">
-                  <KPIStatCard loading className="h-full w-[455px]" />
+                  <KPIStatCard loading className="h-full w-full" />
                 </div>
               ))
               : ghlKpis.map((kpi) => (
                 <div key={kpi.id} className="min-w-0 overflow-hidden">
-                  <KPIStatCard kpi={kpi} className="h-full w-[455px]" />
+                  <KPIStatCard kpi={kpi} className="h-full xl:w-[455px] w-full" />
                 </div>
               ))}
           </div>
@@ -265,16 +264,16 @@ export default function DashboardPage() {
           Mídia · Meta Ads
         </span>
         <div className="grid grid-cols-1 xl:grid-cols-[auto_1fr] gap-6 items-start">
-          <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-1 gap-3 shrink-0">
+          <div className="grid grid-cols-1 gap-3 shrink-0">
             {metaLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="min-w-0 overflow-hidden">
-                  <KPIStatCard loading className="h-full w-[455px]" />
+                  <KPIStatCard loading className="h-full w-full" />
                 </div>
               ))
               : metaKpis.map((kpi) => (
                 <div key={kpi.id} className="min-w-0 overflow-hidden">
-                  <KPIStatCard kpi={kpi} className="h-full w-[455px]" />
+                  <KPIStatCard kpi={kpi} className="h-full xl:w-[455px] w-full" />
                 </div>
               ))}
           </div>
