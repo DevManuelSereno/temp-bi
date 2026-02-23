@@ -56,6 +56,7 @@ export default function ERPPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageFilters
+        showDateFilters={false}
         filters={filters}
         onFiltersChange={setFilters}
         extra={

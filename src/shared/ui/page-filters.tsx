@@ -39,9 +39,10 @@ interface PageFiltersProps {
   onFiltersChange: (next: PageFiltersState) => void;
   extra?: ReactNode;
   className?: string;
+  showDateFilters?: boolean;
 }
 
-export function PageFilters({ filters, onFiltersChange, extra, className }: PageFiltersProps) {
+export function PageFilters({ filters, onFiltersChange, extra, className, showDateFilters = true }: PageFiltersProps) {
   const handlePreset = (v: PeriodDays) => {
     onFiltersChange({ ...filters, periodPreset: v, dateRange: undefined });
   };
@@ -55,33 +56,44 @@ export function PageFilters({ filters, onFiltersChange, extra, className }: Page
   };
 
   const isCustom = filters.periodPreset === "custom";
+  const isCompact = !showDateFilters;
 
   return (
-    <div className={cn("frame-card flex flex-wrap items-center gap-2 py-3 px-4", className)}>
-      <div className="flex flex-wrap items-center gap-1.5 shrink-0">
-        <span className="text-xs font-medium text-muted-foreground whitespace-nowrap mr-1">Periodo:</span>
-        {PERIOD_OPTIONS.map((opt) => (
-          <Button
-            key={opt.value}
-            type={!isCustom && filters.periodPreset === opt.value ? "primary" : "default"}
-            size="small"
-            className={cn(
-              "!h-7 !px-3 !text-xs !font-medium !shadow-none",
-              !isCustom && filters.periodPreset === opt.value ? "" : "!text-muted-foreground",
-            )}
-            onClick={() => handlePreset(opt.value)}
-          >
-            {opt.label}
-          </Button>
-        ))}
-        <DatePickerWithRange
-          value={isCustom ? filters.dateRange : undefined}
-          onChange={handleDateRange}
-          className={cn(isCustom && "!border-primary")}
-        />
-      </div>
+    <div
+      className={cn(
+        "frame-card flex flex-wrap items-center gap-2 py-3 px-4",
+        isCompact && "w-fit max-w-full self-start max-sm:w-full max-sm:self-stretch",
+        className,
+      )}
+    >
+      {showDateFilters && (
+        <>
+          <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+            <span className="text-xs font-medium text-muted-foreground whitespace-nowrap mr-1">Periodo:</span>
+            {PERIOD_OPTIONS.map((opt) => (
+              <Button
+                key={opt.value}
+                type={!isCustom && filters.periodPreset === opt.value ? "primary" : "default"}
+                size="small"
+                className={cn(
+                  "!h-7 !px-3 !text-xs !font-medium !shadow-none",
+                  !isCustom && filters.periodPreset === opt.value ? "" : "!text-muted-foreground",
+                )}
+                onClick={() => handlePreset(opt.value)}
+              >
+                {opt.label}
+              </Button>
+            ))}
+            <DatePickerWithRange
+              value={isCustom ? filters.dateRange : undefined}
+              onChange={handleDateRange}
+              className={cn(isCustom && "!border-primary")}
+            />
+          </div>
 
-      <div className="h-5 w-px bg-border hidden sm:block" />
+          <div className="h-5 w-px bg-border hidden sm:block" />
+        </>
+      )}
 
       <Select
         value={filters.channel}

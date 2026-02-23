@@ -4,8 +4,9 @@ import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/shared/config/navigation";
 import { SIDEBAR_NAME } from "@/shared/lib/constants";
 import { ThemeToggle } from "@/shared/theme/theme-toggle";
+import { DatePickerWithRange, type DateRangeValue } from "@/shared/ui/date-picker-with-range";
 import { ArrowFatLineLeft, ArrowFatLineRight, Bell, List } from "@phosphor-icons/react";
-import { Avatar, Drawer, Tooltip } from "antd";
+import { Avatar, Button as AntButton, Drawer, Tooltip } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -13,6 +14,14 @@ import { useState } from "react";
 interface AppShellProps {
   children: React.ReactNode;
 }
+
+const TOPBAR_PERIOD_OPTIONS = [
+  { label: "7 dias", value: 7 },
+  { label: "15 dias", value: 15 },
+  { label: "30 dias", value: 30 },
+] as const;
+
+type TopbarPeriod = (typeof TOPBAR_PERIOD_OPTIONS)[number]["value"] | "custom";
 
 function SidebarContent({ collapsed }: { collapsed: boolean }) {
   const pathname = usePathname();
@@ -161,12 +170,17 @@ function Topbar({
   onMobileMenuOpen: () => void;
 }) {
   const pathname = usePathname();
+  const [topbarPeriod, setTopbarPeriod] = useState<TopbarPeriod>(30);
+  const [topbarDateRange, setTopbarDateRange] = useState<DateRangeValue | undefined>(undefined);
   const activeItem =
     NAV_ITEMS.find((item) => item.href === pathname) ??
     NAV_ITEMS.find((item) => item.href && item.href !== "/" && pathname.startsWith(`${item.href}/`)) ??
     NAV_ITEMS.find((item) => item.href === "/");
   const topbarTitle = activeItem?.headerTitle ?? "Resumo Executivo";
   const topbarSubtitle = activeItem?.headerSubtitle ?? "Visao consolidada - Financeiro, Comercial e Midia";
+  const showTopbarDateFilters = ["/campanhas", "/crm", "/erp"].some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  );
 
   return (
     <header className="sticky top-0 z-30 bg-background/80 px-4 py-2 backdrop-blur-md lg:px-6">
@@ -192,9 +206,42 @@ function Topbar({
         </div>
 
         <div className="min-w-0 flex-1 px-3 lg:px-4">
-          <div className="flex min-h-[3rem] flex-col justify-center pt-2">
-            <h1 className="m-0 truncate font-serif text-base font-semibold leading-tight text-card-foreground">{topbarTitle}</h1>
-            <p className="m-0 truncate text-sm leading-tight text-muted-foreground">{topbarSubtitle}</p>
+          <div className="flex min-h-[3rem] items-center justify-between gap-3 pt-2">
+            <div className="min-w-0">
+              <h1 className="m-0 truncate font-serif text-base font-semibold leading-tight text-card-foreground">{topbarTitle}</h1>
+              <p className="m-0 truncate text-sm leading-tight text-muted-foreground">{topbarSubtitle}</p>
+            </div>
+
+            {showTopbarDateFilters && (
+              <div className="hidden shrink-0 items-center gap-2.5 rounded-[15px] border border-border bg-card px-2 py-2 lg:flex">
+                <span className="mr-0.5 whitespace-nowrap text-[11px] font-medium text-muted-foreground">Periodo:</span>
+                {TOPBAR_PERIOD_OPTIONS.map((option) => (
+                  <AntButton
+                    key={option.value}
+                    type={topbarPeriod === option.value ? "primary" : "default"}
+                    size="small"
+                    className={cn(
+                      "!h-7 !px-2 !text-xs !font-medium !shadow-none",
+                      topbarPeriod === option.value ? "" : "!text-muted-foreground",
+                    )}
+                    onClick={() => {
+                      setTopbarPeriod(option.value);
+                      setTopbarDateRange(undefined);
+                    }}
+                  >
+                    {option.label}
+                  </AntButton>
+                ))}
+                <DatePickerWithRange
+                  value={topbarPeriod === "custom" ? topbarDateRange : undefined}
+                  onChange={(value) => {
+                    setTopbarPeriod("custom");
+                    setTopbarDateRange(value);
+                  }}
+                  className={cn("!h-7 !w-[230px]", topbarPeriod === "custom" && "!border-primary")}
+                />
+              </div>
+            )}
           </div>
         </div>
 
