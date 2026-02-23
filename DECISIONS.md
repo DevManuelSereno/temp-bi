@@ -1,57 +1,54 @@
-# Decisões de Arquitetura e Design
+# Decisoes de Arquitetura e Design
 
 ## Identidade Visual
 
-### Tema Claro — MicroRealismo
-- Background `#F4F4EF` (papel/off-white) evita o branco puro, reduzindo fadiga visual.
-- Primary `#902828` (bordô) como cor de ação — contraste com o fundo quente.
-- Secondary `#BFAE8A` (gold suave) como accent complementar.
-- Radius `14px` — arredondamento premium sem ser infantil.
+### Tema Claro - MicroRealismo
+- Background `#F4F4EF` (papel/off-white) para reduzir fadiga visual.
+- Primary `#902828` (bordo) como cor principal de acao.
+- Secondary `#BFAE8A` (gold suave) como acento complementar.
+- Radius `14px` para linguagem premium.
 
-### Tema Escuro — CriativosADS
-- Background `#121212` com cards `#1E1F22` — contraste sutil entre superfícies.
-- Primary `#B89050` (gold) — premium e legível contra fundo escuro.
-- Glow `rgba(184,144,80,.25)` nos CTAs — efeito sutil de destaque.
-- Secondary `#381820` (bordô profundo) — complementar sem competir com o gold.
+### Tema Escuro - CriativosADS
+- Background `#121212` e cards `#1E1F22` para contraste sutil.
+- Primary `#B89050` (gold) para destaque em fundo escuro.
+- Glow `rgba(184,144,80,.25)` em CTAs.
+- Secondary `#381820` (bordo profundo).
 
 ### Tipografia
-- **Headings**: Playfair Display (serif) — editorial, sofisticação.
-- **Body**: Inter (sans) — legibilidade, neutralidade.
+- Headings: Playfair Display (serif).
+- Body: Inter (sans).
 
 ## Arquitetura
 
 ### Modular por Feature
-Optamos por `modules/dashboard/` com sub-pastas (components, hooks, services, mock) ao invés de pastas globais (`components/`, `hooks/`), porque:
-1. Colocation: cada feature agrupa tudo que precisa.
-2. Boundaries: módulos não importam de outros módulos diretamente.
-3. Escalabilidade: adicionar `modules/reports/` ou `modules/marketing/` é trivial.
+Optamos por `modules/<feature>/` com subpastas (components, services, mock) para:
+1. Colocation da feature.
+2. Limites claros entre dominios.
+3. Escalabilidade para novas areas.
 
 ### Shared vs Modules
-- `shared/ui/` contém componentes reutilizáveis (KPIStatCard, ChartCard, etc.).
-- `modules/*/components/` contém componentes específicos do domínio (AcquisitionChart).
-- Regra: se dois módulos precisam do mesmo componente → promove para `shared/`.
+- `shared/ui/` contem componentes reutilizaveis.
+- `modules/*/components/` contem componentes de dominio.
+- Regra: se dois modulos precisam, promover para `shared/`.
 
 ### Data Layer
-- `modules/dashboard/services/` expõe funções async (`getKPIs()`, `getFunnelStages()`, etc.).
-- Hoje lêem de `mock/data.ts`. Amanhã trocar para `httpClient.get("/api/kpis")`.
-- Interface não muda → zero refactor nos componentes consumer.
+- `modules/*/services/` expoe funcoes async tipadas.
+- Hoje le de mocks.
+- Amanhã pode trocar por API sem alterar consumo.
 
-### Async State Management
-- `useAsyncData<T>` genérico: loading → success | error → refetch.
-- Sem biblioteca externa (React Query, SWR) — propositalmente mínimo para MVP.
-- Fácil migrar para React Query quando a complexidade justificar.
+### Async State
+- Hook principal: `useAsyncData<T>`.
+- Sem bibliotecas externas de estado assinc.
 
-## Tailwind CSS v4
-- Tokens definidos como CSS variables em `globals.css` `:root` e `.dark`.
-- `@theme inline` mapeia variáveis para Tailwind colors.
-- Brand utilities (`frame-card`, `cta-pill`, `divider-soft`) em `@layer components`.
+## UI e Estilo
 
-## shadcn/ui
-- Estilo `new-york`, base color `stone`.
-- Variáveis CSS ativadas — todos os componentes shadcn respeitam os tokens de tema.
-- Componentes não modificados diretamente; wrappers em `shared/ui/` quando necessário.
+- Biblioteca de componentes: **Ant Design**.
+- Tema global via `ConfigProvider` com tokens alinhados aos temas light/dark.
+- Tailwind segue responsavel por layout, espacamento e utilitarios visuais de marca.
+- Cartoes e superficies usam classe `frame-card`.
 
-## Recharts
-- Leve (~45KB gzip), boa DX com React.
-- Tooltips estilizados com CSS variables para consistência de tema.
-- CSS colors (`var(--chart-1)`) ao invés de hex hardcoded.
+## Graficos
+
+- Recharts para visualizacoes.
+- Cores por CSS variables (`var(--chart-N)`).
+- Tooltips e eixos padronizados para consistencia entre temas.

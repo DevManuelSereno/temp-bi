@@ -1,39 +1,43 @@
 "use client";
 
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { Moon, Sun } from "@phosphor-icons/react";
-import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import { useSyncExternalStore } from "react";
 
 export function ThemeToggle() {
     const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
+    const hydrated = useSyncExternalStore(
+        () => () => undefined,
+        () => true,
+        () => false
+    );
 
-    useEffect(() => setMounted(true), []);
+    const isDark = hydrated && theme === "dark";
 
-    if (!mounted) {
+    if (!hydrated) {
         return (
-            <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Alternar tema">
-                <Sun weight="bold" className="h-4 w-4" />
-            </Button>
+            <button
+                type="button"
+                className="flex h-9 w-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent"
+                aria-label="Alternar tema"
+            >
+                <Sun size={20} weight="bold" className="transition-transform duration-300" />
+            </button>
         );
     }
 
-    const isDark = theme === "dark";
-
     return (
-        <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 transition-transform hover:scale-105 cursor-pointer"
+        <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent"
             onClick={() => setTheme(isDark ? "light" : "dark")}
             aria-label={isDark ? "Mudar para tema claro" : "Mudar para tema escuro"}
         >
             {isDark ? (
-                <Sun weight="bold" className="h-4 w-4 text-primary transition-transform duration-300" />
+                <Sun size={20} weight="bold" className="text-primary transition-transform duration-300" />
             ) : (
-                <Moon weight="bold" className="h-4 w-4 transition-transform duration-300" />
+                <Moon size={20} weight="bold" className="transition-transform duration-300" />
             )}
-        </Button>
+        </button>
     );
 }

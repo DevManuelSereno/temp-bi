@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAssociativeFilters } from "@/shared/engine/hooks";
 import { AssociativeFilter } from "@/shared/ui/associative-filter";
 import { Funnel, X } from "@phosphor-icons/react";
+import { Button } from "antd";
 
 interface FilterBarProps {
     className?: string;
@@ -39,10 +39,9 @@ export function FilterBar({ className }: FilterBarProps) {
 
             {hasActiveFilters && (
                 <Button
-                    variant="ghost"
-                    size="sm"
+                    type="text"
                     onClick={clearAll}
-                    className="ml-auto h-7 gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+                    className="!ml-auto !h-7 !px-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
                     aria-label="Limpar todos os filtros"
                 >
                     <X weight="bold" className="h-3.5 w-3.5" aria-hidden="true" />

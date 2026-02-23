@@ -1,23 +1,23 @@
-# Painel Premium — Dashboard de BI
+# Painel Premium - Dashboard de BI
 
-Dashboard premium frontend-only com **Next.js 15** (App Router), **TypeScript**, **Tailwind CSS v4**, **shadcn/ui** e **Recharts**.
+Dashboard premium frontend-only com **Next.js 16** (App Router), **TypeScript**, **Tailwind CSS v4**, **Ant Design** e **Recharts**.
 
 ## Stack
 
 | Camada | Tecnologia |
 |---|---|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Linguagem | TypeScript (strict) |
 | Estilos | Tailwind CSS v4 + CSS Variables |
-| Componentes | shadcn/ui (new-york) |
-| Gráficos | Recharts |
+| Componentes | Ant Design |
+| Graficos | Recharts |
 | Tema | next-themes |
-| Ícones | Lucide React |
+| Icones | Phosphor Icons |
 
-## Início Rápido
+## Inicio Rapido
 
 ```bash
-# Instalar dependências
+# Instalar dependencias
 npm install
 
 # Dev server
@@ -30,41 +30,35 @@ npm run build
 npm run lint
 ```
 
-Acesse `http://localhost:3000` após `npm run dev`.
+Acesse `http://localhost:3000` apos `npm run dev`.
 
-## Páginas
+## Paginas
 
-| Rota | Descrição |
+| Rota | Descricao |
 |---|---|
-| `/` | Visão Geral — resumo executivo com 4 KPIs + 2 gráficos |
-| `/visual` | Painel Visual — dashboard completo com 6 KPIs, 3 gráficos, funil, top 5, alertas |
-| `/settings` | Configurações — troca de tema + preferências de visualização |
+| `/` | Visao Geral - resumo executivo com KPIs e graficos |
+| `/visual` | Painel Visual - dashboard completo |
+| `/settings` | Configuracoes - troca de tema e preferencias de visualizacao |
+| `/campanhas` | Performance de campanhas |
+| `/crm` | Pipeline comercial |
+| `/erp` | Visao financeira |
 
 ## Temas
 
-- **MicroRealismo** (claro): fundo off-white `#F4F4EF`, bordô `#902828`, gold suave `#BFAE8A`
-- **CriativosADS** (escuro): fundo charcoal `#121212`, gold `#B89050`, bordô profundo `#381820`, glow em CTAs
+- **MicroRealismo** (claro): fundo off-white `#F4F4EF`, bordo `#902828`, gold suave `#BFAE8A`
+- **CriativosADS** (escuro): fundo charcoal `#121212`, gold `#B89050`, bordo profundo `#381820`
 
 ## Arquitetura
 
 ```
 src/
-├── app/                  # Next.js App Router (rotas, layout)
-├── components/ui/        # Componentes shadcn/ui base  
-├── modules/dashboard/    # Feature module
-│   ├── components/       # Charts, tables, insights list
-│   ├── hooks/            # useAsyncData
-│   ├── services/         # Data access (mock → API)
-│   └── mock/             # Dados mockados
-├── shared/
-│   ├── ui/               # AppShell, KPIStatCard, ChartCard, FilterBar, etc.
-│   ├── lib/              # Utils, formatters, constants
-│   ├── theme/            # ThemeProvider, ThemeToggle
-│   └── config/           # Navegação, rotas
-├── services/http/        # HTTP client abstraction
-└── types/                # Tipos globais (KPI, SeriesPoint, etc.)
+|-- app/                 # Next.js App Router (rotas, layout)
+|-- modules/             # Modulos por feature
+|-- shared/              # UI reutilizavel, hooks, engine, config
+|-- services/http/       # HTTP client abstraction
+`-- types/               # Tipos globais
 ```
 
 ## Dados
 
-Todos os dados são **mock** (arquivos TS). A camada de serviço (`modules/dashboard/services/`) usa interfaces async — swap direto para API quando disponível.
+Todos os dados sao mockados em arquivos TS. A camada de servico segue interface async para troca direta por API quando necessario.

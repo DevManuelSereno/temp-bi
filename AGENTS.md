@@ -21,7 +21,7 @@ Use it to implement new features with maximum consistency, minimum risk, and tot
 | UI Library | React | 19.x | No class components — functions only |
 | Language | TypeScript | 5.x | Strict mode enabled |
 | Styling | Tailwind CSS | 4.x | `@theme inline` with CSS variables |
-| Component Kit | shadcn/ui | `new-york` style, base `stone` | Installed via `shadcn` CLI, CSS variables enabled |
+| Component Kit | Ant Design | `new-york` style, base `stone` | Installed via `Ant Design` CLI, CSS variables enabled |
 | Icons | Lucide React | latest | Only icon library allowed |
 | Charts | Recharts | 3.x | CSS variable colors, `ResponsiveContainer` always |
 | Theming | next-themes | 0.4.x | `attribute="class"`, `defaultTheme="light"` |
@@ -86,7 +86,7 @@ src/
 │   └── theme/                    # Theme provider and toggle
 │
 ├── components/
-│   └── ui/                       # shadcn/ui primitives (auto-generated)
+│   └── ui/                       # Ant Design primitives (auto-generated)
 │
 ├── services/
 │   └── http/
@@ -105,7 +105,7 @@ src/
 - **Modular by feature.** Each feature lives inside `modules/<feature>/` with its own `components/`, `services/`, and `mock/` sub-folders.
 - **Modules never import from other modules.** Cross-module code goes to `shared/`.
 - **Shared promotion rule.** If two modules need the same component or hook → move it to `shared/ui/` or `shared/hooks/`.
-- **`components/ui/` is reserved for shadcn/ui.** Never place custom components there. Never modify shadcn files directly — create wrappers in `shared/ui/` instead.
+- **`components/ui/` is reserved for Ant Design.** Never place custom components there. Never modify Ant Design files directly — create wrappers in `shared/ui/` instead.
 - **Shared hooks live in `shared/hooks/`.** The generic `useAsyncData<T>` hook is in `shared/hooks/use-async-data.ts`.
 - **Types live in `src/types/`.** One file per domain (e.g., `dashboard.ts`, `associative.ts`).
 - **Path alias `@/*`** maps to `./src/*`. Always use `@/` imports.
@@ -246,7 +246,7 @@ Structure:
 2. If `loading`, render manual skeleton with `animate-pulse` divs inside `frame-card`.
 3. Render items as a list of `div` rows inside `frame-card`, using `border-b border-border/50` as row dividers (skip last row).
 4. Use `cn()` for conditional classes.
-5. Use `Badge` from shadcn for badges and change indicators.
+5. Use `Badge` from Ant Design for badges and change indicators.
 6. Use `formatVariation()` from `@/shared/lib/formatters` for formatted values.
 7. Use Lucide icons (`TrendingUp`, `TrendingDown`, `Minus`) for trends.
 
@@ -266,7 +266,7 @@ The project does **not** currently use react-hook-form or Zod.
 
 ### Current form-like patterns
 
-Forms use standard React state with shadcn/ui primitives:
+Forms use standard React state with Ant Design primitives:
 
 - `Select` + `SelectTrigger` + `SelectContent` + `SelectItem` for dropdowns (used in Settings page).
 - `Button` for actions.
@@ -286,7 +286,7 @@ Internally it calls `useAssociativeFilters()` and renders `AssociativeFilter` ch
 ### If you need to add a form
 
 - Use `useState` for form state.
-- Use shadcn/ui form primitives (`Select`, `Button`, `Dialog`, etc.).
+- Use Ant Design form primitives (`Select`, `Button`, `Dialog`, etc.).
 - Define the state type in `@/types/<domain>.ts`.
 - Do NOT install react-hook-form or Zod unless explicitly asked.
 
@@ -307,7 +307,7 @@ The project does **not** use any i18n library. All UI text is **hardcoded in Bra
 
 ---
 
-## 9. Styling Pattern (Tailwind + shadcn)
+## 9. Styling Pattern (Tailwind + Ant Design)
 
 ### Design Identity
 
@@ -381,16 +381,16 @@ Tokens are exposed to Tailwind via `@theme inline` block.
 | Associative associated | `var(--state-associated)` (white/card) |
 | Associative excluded | `var(--state-excluded)` (gray/muted) |
 
-### shadcn/ui decisions
+### Ant Design decisions
 
 - Style: `new-york`. Base color: `stone`.
-- CSS variables: **enabled** — all shadcn components respect theme tokens automatically.
+- CSS variables: **enabled** — all Ant Design components respect theme tokens automatically.
 - Component path: `@/components/ui/`.
 - Utility path: `@/lib/utils` (`cn()`).
 - Icon library: `lucide`.
 - **Components are never modified directly.** When customization is needed, create wrappers in `shared/ui/`.
 
-### Installed shadcn components
+### Installed Ant Design components
 
 `avatar`, `badge`, `button`, `card`, `dialog`, `dropdown-menu`, `scroll-area`, `select`, `separator`, `sheet`, `skeleton`, `tooltip`.
 
@@ -404,7 +404,7 @@ Tokens are exposed to Tailwind via `@theme inline` block.
 
 - Always use `cn()` from `@/lib/utils` for conditional/merged class names.
 - Always use CSS variable colors — never hardcode hex values in components.
-- Always use `frame-card` for card containers, not raw `Card` from shadcn.
+- Always use `frame-card` for card containers, not raw `Card` from Ant Design.
 - Always use `var(--chart-N)` for Recharts colors.
 - Use `rounded-xl` (matches `--radius: 14px`).
 - Border radius tiers: `--radius-sm` through `--radius-4xl`.
@@ -558,7 +558,7 @@ function DashboardContent() {
 - Use `frame-card` class for all card containers.
 - Use `font-serif` for headings (automatically applied via `@layer base`).
 - Use CSS variables (`var(--chart-1)`, `var(--primary)`, etc.) for colors.
-- Use `Skeleton` from shadcn for loading states (or `animate-pulse` divs for custom skeletons).
+- Use `Skeleton` from Ant Design for loading states (or `animate-pulse` divs for custom skeletons).
 - Use named exports for all components and functions.
 - Use `as const` for constant arrays/objects.
 - Use formatters from `@/shared/lib/formatters` (`formatCurrency`, `formatCompact`, `formatPercent`, `formatVariation`, `formatDate`, `formatRelativeTime`).
@@ -581,15 +581,15 @@ function DashboardContent() {
 - Don't install table libraries (TanStack Table) unless explicitly asked.
 - Don't install i18n libraries unless explicitly asked.
 - Don't use `axios` — use `httpClient` from `@/services/http/client.ts`.
-- Don't modify files in `src/components/ui/` — those are shadcn auto-generated.
+- Don't modify files in `src/components/ui/` — those are Ant Design auto-generated.
 - Don't import between modules (`modules/a/` must not import from `modules/b/`).
 - Don't use `export default` for components or services (use named exports).
 - Don't hardcode hex colors in components — use CSS variables or Tailwind tokens.
 - Don't skip loading/skeleton states.
 - Don't use `useEffect` for data fetching directly — use `useAsyncData` or the associative engine.
 - Don't put `useAsyncData` or feature-specific hooks inside `modules/*/hooks/` — use `shared/hooks/`.
-- Don't create global `components/` files outside shadcn's `ui/` — use `shared/ui/` instead.
-- Don't use `Card` from shadcn directly — use `frame-card` class.
+- Don't create global `components/` files outside Ant Design's `ui/` — use `shared/ui/` instead.
+- Don't use `Card` from Ant Design directly — use `frame-card` class.
 - Don't write UI text in English — use pt-BR.
 - Don't use CSS Modules, Styled Components, or Emotion.
 - Don't use `React.FC` — use plain function declarations with typed props.
@@ -637,11 +637,11 @@ function DashboardContent() {
 4. Accept `loading?: boolean` prop, render skeleton when true.
 5. Use `frame-card` for card wrappers.
 6. Use Lucide icons only.
-7. Use shadcn primitives from `@/components/ui/`.
+7. Use Ant Design primitives from `@/components/ui/`.
 
-### Adding a new shadcn component
+### Adding a new Ant Design component
 
-Run: `npx shadcn@latest add <component-name>`
+Run: `npx Ant Design@latest add <component-name>`
 
 This auto-generates the file in `src/components/ui/`. Do not edit it afterward.
 
@@ -659,7 +659,7 @@ Every agent output MUST comply with this contract:
 | All type imports use `import type` | Separate from value imports |
 | All components use named exports | `export function X()`, not `export default` |
 | All client components have `"use client"` | At the top of the file |
-| All cards use `frame-card` class | Not raw `<Card>` from shadcn |
+| All cards use `frame-card` class | Not raw `<Card>` from Ant Design |
 | All colors use CSS variables | No hardcoded hex in component files |
 | Loading states implemented | Skeleton or `animate-pulse` for every async data component |
 | i18n: text in pt-BR | All user-facing strings |

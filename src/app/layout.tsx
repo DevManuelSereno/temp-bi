@@ -1,9 +1,10 @@
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { APP_DESCRIPTION, APP_NAME } from "@/shared/lib/constants";
+import { AntdThemeProvider } from "@/shared/theme/antd-theme-provider";
 import { ThemeProvider } from "@/shared/theme/theme-provider";
 import { AppShell } from "@/shared/ui/app-shell";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import "antd/dist/reset.css";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,9 +33,9 @@ export default function RootLayout({
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} min-h-screen`}>
         <ThemeProvider>
-          <TooltipProvider delayDuration={300}>
+          <AntdThemeProvider>
             <AppShell>{children}</AppShell>
-          </TooltipProvider>
+          </AntdThemeProvider>
         </ThemeProvider>
       </body>
     </html>

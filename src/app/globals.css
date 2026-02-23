@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -301,4 +299,20 @@
     opacity: 0.6;
     cursor: default;
   }
+}
+
+/* Antd harmonization with project typography/tokens */
+.ant-btn,
+.ant-select,
+.ant-dropdown,
+.ant-tooltip,
+.ant-picker,
+.ant-tag {
+  font-family: var(--font-sans);
+}
+
+.ant-picker,
+.ant-select-selector,
+.ant-btn-default {
+  border-color: var(--border) !important;
 }
