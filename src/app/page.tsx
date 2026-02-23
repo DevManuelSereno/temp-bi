@@ -20,6 +20,7 @@ import type { CRMKPI, CRMPipelineStage } from "@/types/crm";
 import type { CampanhasKPI, CampanhasLeadTypeBreakdown } from "@/types/campanhas";
 import type { ERPKPI, ERPMonthlyPoint } from "@/types/erp";
 import { Info, Warning, CheckCircle } from "@phosphor-icons/react";
+import { Skeleton } from "antd";
 import { useCallback } from "react";
 
 /* ── KPI IDs to pick from each source ────────────────── */
@@ -151,7 +152,22 @@ export default function DashboardPage() {
       {/* ── Leads Target ──────────────────────────── */}
       {(() => {
         if (erpLoading) {
-          return <div className="frame-card animate-pulse h-[100px] w-full" />;
+          return (
+            <div className="frame-card flex h-[100px] w-full flex-col gap-2 px-6 py-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex w-full max-w-[72%] flex-col gap-2">
+                  <Skeleton.Input active size="small" style={{ width: 130, height: 12 }} />
+                  <Skeleton.Input active size="small" style={{ width: 300, height: 20 }} />
+                </div>
+                <Skeleton.Input active size="small" style={{ width: 78, height: 20 }} />
+              </div>
+              <div className="flex items-center justify-between">
+                <Skeleton.Input active size="small" style={{ width: 120, height: 14 }} />
+                <Skeleton.Input active size="small" style={{ width: 110, height: 14 }} />
+              </div>
+              <Skeleton.Input active size="small" block style={{ height: 8 }} />
+            </div>
+          );
         }
         const leadsProgress = Math.min((currentLeads / LEADS_TARGET) * 100, 100);
         const leadsDiff = LEADS_TARGET - currentLeads;

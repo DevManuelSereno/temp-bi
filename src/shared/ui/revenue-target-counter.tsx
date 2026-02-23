@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/shared/lib/formatters";
 import { Info, Warning, CheckCircle } from "@phosphor-icons/react";
+import { Skeleton } from "antd";
 
 interface RevenueTargetCounterProps {
     current: number;
@@ -19,7 +20,20 @@ export function RevenueTargetCounter({
 }: RevenueTargetCounterProps) {
     if (loading) {
         return (
-            <div className={cn("frame-card animate-pulse h-[100px]", className)} />
+            <div className={cn("frame-card flex flex-col gap-2 py-4 px-6 h-[100px]", className)}>
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-col gap-2 w-full max-w-[72%]">
+                        <Skeleton.Input active size="small" style={{ width: 170, height: 12 }} />
+                        <Skeleton.Input active size="small" style={{ width: 260, height: 20 }} />
+                    </div>
+                    <Skeleton.Input active size="small" style={{ width: 72, height: 20 }} />
+                </div>
+                <div className="flex items-center justify-between">
+                    <Skeleton.Input active size="small" style={{ width: 140, height: 14 }} />
+                    <Skeleton.Input active size="small" style={{ width: 120, height: 14 }} />
+                </div>
+                <Skeleton.Input active size="small" block style={{ height: 8 }} />
+            </div>
         );
     }
 

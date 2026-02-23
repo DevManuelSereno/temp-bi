@@ -106,15 +106,15 @@ function TrendIcon({ trend }: { trend: KPI["trend"] }) {
 
 function KPIStatCardSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn("frame-card flex flex-col gap-3", className)}>
-      <div className="flex items-center justify-between">
-        <Skeleton.Input active size="small" style={{ width: 96 }} />
-        <Skeleton.Input active size="small" style={{ width: 64 }} />
+    <div className={cn("frame-card flex flex-col gap-3 overflow-hidden", className)}>
+      <div className="flex items-center justify-between gap-2">
+        <Skeleton.Input active size="small" style={{ width: "54%", maxWidth: 96, height: 14 }} />
+        <Skeleton.Input active size="small" style={{ width: "24%", maxWidth: 40, height: 14 }} />
       </div>
-      <Skeleton.Input active style={{ width: 128, height: 32 }} />
+      <Skeleton.Input active style={{ width: "70%", maxWidth: 126, height: 26 }} />
       <div className="flex items-center gap-2">
-        <Skeleton.Input active size="small" style={{ width: 48 }} />
-        <Skeleton.Input active size="small" style={{ width: 80 }} />
+        <Skeleton.Input active size="small" style={{ width: "30%", maxWidth: 46, height: 12 }} />
+        <Skeleton.Input active size="small" style={{ width: "40%", maxWidth: 66, height: 12 }} />
       </div>
     </div>
   );

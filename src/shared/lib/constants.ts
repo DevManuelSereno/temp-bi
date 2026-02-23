@@ -2,8 +2,8 @@ import type { DimensionDefinition } from "@/types/associative";
 
 /* ── App-wide constants ──────────────────────────────── */
 
-export const APP_NAME = "Capone Club - Intel Hub";
-export const SIDEBAR_NAME = "Intel Hub";
+export const APP_NAME = "Capone Club - Hartt.io";
+export const SIDEBAR_NAME = "Hartt.io";
 export const APP_DESCRIPTION = "Dashboard de Business Intelligence da Capone Club";
 
 /** Simulated fetch delay in ms */
