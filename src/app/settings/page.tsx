@@ -32,11 +32,6 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col gap-8 max-w-2xl">
-      <div>
-        <h1 className="font-serif text-2xl font-bold tracking-tight">Configuracoes</h1>
-        <p className="text-sm text-muted-foreground mt-1">Personalize a aparencia e preferencias do painel</p>
-      </div>
-
       <section className="frame-card flex flex-col gap-5">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">

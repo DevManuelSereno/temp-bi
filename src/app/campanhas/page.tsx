@@ -13,7 +13,6 @@ import { getAcquisitionSeries } from "@/modules/dashboard/services/dashboard-ser
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { DEFAULT_FILTERS, PageFilters, type PageFiltersState } from "@/shared/ui/page-filters";
-import { SectionHeader } from "@/shared/ui/section-header";
 import type { ChartSeries } from "@/types/dashboard";
 import type { CampanhasCampaign, CampanhasKPI, CampanhasTimePoint } from "@/types/campanhas";
 import { Select } from "antd";
@@ -44,8 +43,6 @@ export default function CampanhasPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <SectionHeader title="Campanhas - Performance" subtitle="Investimento, leads e metricas de midia paga" />
-
       <PageFilters
         filters={filters}
         onFiltersChange={setFilters}

@@ -9,7 +9,6 @@ import { useFilteredKPIs } from "@/shared/engine/hooks";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { DataFreshnessBadge } from "@/shared/ui/data-freshness-badge";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
-import { SectionHeader } from "@/shared/ui/section-header";
 import type { DataFreshness as DataFreshnessType } from "@/types/dashboard";
 import { useCallback } from "react";
 
@@ -25,11 +24,11 @@ function VisualContent() {
     return (
         <div className="flex flex-col gap-6">
             {/* ── Header ────────────────────────────────── */}
-            <SectionHeader
-                title="Dashboard Visual"
-                subtitle="KPIs com filtros associativos"
-                badge={freshness ? <DataFreshnessBadge freshness={freshness} /> : undefined}
-            />
+            {freshness ? (
+                <div className="flex justify-end">
+                    <DataFreshnessBadge freshness={freshness} />
+                </div>
+            ) : null}
 
             {/* ── KPI Cards ──────────────────────────────── */}
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-6">

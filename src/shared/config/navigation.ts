@@ -16,26 +16,34 @@ export interface NavItem {
   icon: Icon;
   disabled?: boolean;
   description?: string;
+  headerTitle?: string;
+  headerSubtitle?: string;
 }
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    label: "Visao Geral",
+    label: "Visão Geral",
     href: "/",
     icon: SquaresFour,
     description: "Resumo executivo e KPIs principais",
+    headerTitle: "Resumo Executivo",
+    headerSubtitle: "Visão consolidada — Financeiro, Comercial e Mídia",
   },
   {
     label: "Campanhas",
     href: "/campanhas",
     icon: Megaphone,
     description: "Performance de midia paga e campanhas",
+    headerTitle: "Campanhas - Performance",
+    headerSubtitle: "Investimento, leads e métricas de mídia paga",
   },
   {
     label: "Clientes",
     href: "/crm",
     icon: Users,
     description: "Relacionamento e base de clientes",
+    headerTitle: "CRM - Pipeline Comercial",
+    headerSubtitle: "CRM, funil de vendas e performance da equipe",
   },
   {
     label: "Funil",
@@ -49,12 +57,16 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/erp",
     icon: Wallet,
     description: "Resultado financeiro consolidado",
+    headerTitle: "ERP - Financeiro",
+    headerSubtitle: "Visão consolidada de receitas, despesas e resultados",
   },
   {
-    label: "Inteligencia",
+    label: "Inteligência",
     href: "/visual",
     icon: Lightbulb,
     description: "Analises e insights do negocio",
+    headerTitle: "Dashboard Visual",
+    headerSubtitle: "KPIs com filtros associativos",
   },
   {
     label: "Agentes IA",
@@ -71,9 +83,11 @@ export const NAV_ITEMS: NavItem[] = [
     description: "Documentacao e playbooks",
   },
   {
-    label: "Configuracoes",
+    label: "Configurações",
     href: "/settings",
     icon: Gear,
     description: "Tema e preferencias do painel",
+    headerTitle: "Configurações",
+    headerSubtitle: "Personalize a aparência e preferências do painel",
   },
 ];

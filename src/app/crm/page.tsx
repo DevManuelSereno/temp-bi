@@ -12,7 +12,6 @@ import {
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { DEFAULT_FILTERS, PageFilters, type PageFiltersState } from "@/shared/ui/page-filters";
-import { SectionHeader } from "@/shared/ui/section-header";
 import type { CRMKPI, CRMOpportunity, CRMPipelineStage, CRMWeeklyPoint } from "@/types/crm";
 import { Select } from "antd";
 import { useCallback, useState } from "react";
@@ -56,8 +55,6 @@ export default function CRMPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <SectionHeader title="CRM - Pipeline Comercial" subtitle="CRM, funil de vendas e performance da equipe" />
-
       <PageFilters
         filters={filters}
         onFiltersChange={setFilters}

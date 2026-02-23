@@ -14,7 +14,6 @@ import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { formatCompact } from "@/shared/lib/formatters";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { RevenueTargetCounter } from "@/shared/ui/revenue-target-counter";
-import { SectionHeader } from "@/shared/ui/section-header";
 import type { FunnelStage, Insight, KPI, TopItem } from "@/types/dashboard";
 import type { CRMKPI, CRMPipelineStage } from "@/types/crm";
 import type { CampanhasKPI, CampanhasLeadTypeBreakdown } from "@/types/campanhas";
@@ -136,12 +135,6 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* ── Header ────────────────────────────────── */}
-      <SectionHeader
-        title="Resumo Executivo"
-        subtitle="Visão consolidada — Financeiro, Comercial e Mídia"
-      />
-
       <RevenueTargetCounter
         current={erpKpis.find(k => k.id === "receita-total")?.value ?? 0}
         target={400000}
