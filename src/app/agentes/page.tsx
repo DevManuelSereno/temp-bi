@@ -3,35 +3,19 @@
 import { AgentesConversationPanel } from "@/modules/agentes/components/agentes-conversation-panel";
 import { AgentesInsightsBoard } from "@/modules/agentes/components/agentes-insights-board";
 import { AgentesLoadingState } from "@/modules/agentes/components/agentes-loading-state";
-import {
-  MOCK_AGENTES_CONVERSA,
-  MOCK_AGENTES_INSIGHTS,
-  MOCK_SUGESTOES_RAPIDAS,
-} from "@/modules/agentes/mock/data";
-import { AGENTES_PAGE_LOADER_MS } from "@/shared/lib/constants";
-import { useEffect, useState } from "react";
+import { getAgentesData } from "@/modules/agentes/services/agentes-service";
+import { useAsyncData } from "@/shared/hooks/use-async-data";
+import { ErrorState } from "@/shared/ui/states";
+import type { AgentesDataSnapshot } from "@/types/agentes";
+import { useCallback, useState } from "react";
 
 export default function AgentesPage() {
-  const [mostrarLoader, setMostrarLoader] = useState(true);
+  const { state, refetch } = useAsyncData<AgentesDataSnapshot>(useCallback(() => getAgentesData(), []));
   const [pergunta, setPergunta] = useState("");
-  const [agenteAtivo, setAgenteAtivo] = useState(MOCK_AGENTES_CONVERSA.agenteAtivo);
-  const [mensagemConversa, setMensagemConversa] = useState(MOCK_AGENTES_CONVERSA.mensagem);
+  const [agenteAtivo, setAgenteAtivo] = useState<string | null>(null);
+  const [mensagemConversa, setMensagemConversa] = useState<string | null>(null);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => setMostrarLoader(false), AGENTES_PAGE_LOADER_MS);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, []);
-
-  const conversa = {
-    ...MOCK_AGENTES_CONVERSA,
-    agenteAtivo,
-    mensagem: mensagemConversa,
-  };
-
-  if (mostrarLoader) {
+  if (state.status === "loading") {
     return (
       <div className="flex flex-col gap-6">
         <AgentesLoadingState />
@@ -39,13 +23,33 @@ export default function AgentesPage() {
     );
   }
 
+  if (state.status === "error") {
+    return (
+      <ErrorState
+        title="Erro ao carregar agentes"
+        description={state.error}
+        onRetry={refetch}
+      />
+    );
+  }
+
+  if (state.status !== "success") {
+    return null;
+  }
+
+  const conversa = {
+    ...state.data.conversa,
+    agenteAtivo: agenteAtivo ?? state.data.conversa.agenteAtivo,
+    mensagem: mensagemConversa ?? state.data.conversa.mensagem,
+  };
+
   return (
     <div className="flex flex-col gap-6">
-      <AgentesInsightsBoard columns={MOCK_AGENTES_INSIGHTS} />
+      <AgentesInsightsBoard columns={state.data.insightsColumns} />
 
       <AgentesConversationPanel
         conversa={conversa}
-        sugestoes={MOCK_SUGESTOES_RAPIDAS}
+        sugestoes={state.data.sugestoes}
         pergunta={pergunta}
         onPerguntaChange={setPergunta}
         onAgenteAtivoChange={setAgenteAtivo}

@@ -26,3 +26,9 @@ export interface SugestaoRapida {
   id: string;
   label: string;
 }
+
+export interface AgentesDataSnapshot {
+  insightsColumns: AgenteInsightColumn[];
+  conversa: AgenteConversa;
+  sugestoes: SugestaoRapida[];
+}

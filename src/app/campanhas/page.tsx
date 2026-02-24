@@ -3,13 +3,13 @@
 import { CampanhasCampaignsTable } from "@/modules/campanhas/components/campanhas-campaigns-table";
 import { CampanhasTimeSeriesChart } from "@/modules/campanhas/components/campanhas-time-series-chart";
 import { CampanhasTopCampaignsChart } from "@/modules/campanhas/components/campanhas-top-campaigns-chart";
+import { CampanhasAcquisitionChart } from "@/modules/campanhas/components/campanhas-acquisition-chart";
 import {
+  getCampanhasAcquisitionSeries,
   getCampanhasCampaigns,
   getCampanhasSummary,
   getCampanhasTimeSeries,
 } from "@/modules/campanhas/services/campanhas-service";
-import { AcquisitionChart } from "@/modules/dashboard/components/acquisition-chart";
-import { getAcquisitionSeries } from "@/modules/dashboard/services/dashboard-service";
 import { useAsyncData } from "@/shared/hooks/use-async-data";
 import { KPIStatCard } from "@/shared/ui/kpi-stat-card";
 import { DEFAULT_FILTERS, PageFilters, type PageFiltersState } from "@/shared/ui/page-filters";
@@ -25,7 +25,9 @@ export default function CampanhasPage() {
   const { state: kpiState } = useAsyncData<CampanhasKPI[]>(useCallback(() => getCampanhasSummary(), []));
   const { state: seriesState } = useAsyncData<CampanhasTimePoint[]>(useCallback(() => getCampanhasTimeSeries(), []));
   const { state: campaignsState } = useAsyncData<CampanhasCampaign[]>(useCallback(() => getCampanhasCampaigns(), []));
-  const { state: acquisitionState } = useAsyncData<ChartSeries[]>(useCallback(() => getAcquisitionSeries(), []));
+  const { state: acquisitionState } = useAsyncData<ChartSeries[]>(
+    useCallback(() => getCampanhasAcquisitionSeries(), []),
+  );
 
   const kpiLoading = kpiState.status === "loading";
   const kpis = kpiState.status === "success" ? kpiState.data : [];
@@ -86,7 +88,7 @@ export default function CampanhasPage() {
         <CampanhasTopCampaignsChart campaigns={campaigns} loading={campaignsLoading} />
       </div>
 
-      <AcquisitionChart series={acquisitionSeries} loading={acquisitionLoading} />
+      <CampanhasAcquisitionChart series={acquisitionSeries} loading={acquisitionLoading} />
 
       <CampanhasCampaignsTable campaigns={campaigns} loading={campaignsLoading} />
     </div>

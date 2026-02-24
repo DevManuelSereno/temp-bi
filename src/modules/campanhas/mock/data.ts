@@ -5,6 +5,7 @@ import type {
     CampanhasLeadTypeBreakdown,
     CampanhasTimePoint,
 } from "@/types/campanhas";
+import type { ChartSeries } from "@/types/dashboard";
 
 /* ══════════════════════════════════════════════════════
    Campanhas — Mock Data (Meta + Google)
@@ -21,6 +22,48 @@ export const MOCK_CAMPANHAS_SERIES: CampanhasTimePoint[] = [
     { date: "Sem 06", spend: 9500, leads: 175, impressions: 118200, clicks: 3546 },
     { date: "Sem 07", spend: 10100, leads: 184, impressions: 128500, clicks: 3855 },
     { date: "Sem 08", spend: 8900, leads: 162, impressions: 114400, clicks: 3432 },
+];
+
+export const MOCK_CAMPANHAS_ACQUISITION_SERIES: ChartSeries[] = [
+    {
+        id: "meta",
+        name: "Meta Ads",
+        data: [
+            { date: "2025-01-01", value: 250 },
+            { date: "2025-01-08", value: 280 },
+            { date: "2025-01-15", value: 310 },
+            { date: "2025-01-22", value: 290 },
+            { date: "2025-01-29", value: 340 },
+            { date: "2025-02-05", value: 360 },
+            { date: "2025-02-12", value: 395 },
+        ],
+    },
+    {
+        id: "google",
+        name: "Google Ads",
+        data: [
+            { date: "2025-01-01", value: 320 },
+            { date: "2025-01-08", value: 380 },
+            { date: "2025-01-15", value: 410 },
+            { date: "2025-01-22", value: 390 },
+            { date: "2025-01-29", value: 450 },
+            { date: "2025-02-05", value: 480 },
+            { date: "2025-02-12", value: 520 },
+        ],
+    },
+    {
+        id: "organico",
+        name: "Orgânico",
+        data: [
+            { date: "2025-01-01", value: 180 },
+            { date: "2025-01-08", value: 190 },
+            { date: "2025-01-15", value: 200 },
+            { date: "2025-01-22", value: 210 },
+            { date: "2025-01-29", value: 220 },
+            { date: "2025-02-05", value: 235 },
+            { date: "2025-02-12", value: 250 },
+        ],
+    },
 ];
 
 /* ── Lead Types ──────────────────────────────────────── */

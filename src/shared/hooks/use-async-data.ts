@@ -20,7 +20,13 @@ export function useAsyncData<T>(fetcher: () => Promise<T>) {
     }, [fetcher]);
 
     useEffect(() => {
-        refetch();
+        const timeoutId = window.setTimeout(() => {
+            refetch();
+        }, 0);
+
+        return () => {
+            window.clearTimeout(timeoutId);
+        };
     }, [refetch]);
 
     return { state, refetch } as const;

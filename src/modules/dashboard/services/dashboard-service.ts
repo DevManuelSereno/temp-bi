@@ -1,5 +1,4 @@
 import {
-    MOCK_ACQUISITION_SERIES,
     MOCK_DATA_RECORDS,
     MOCK_FINANCIAL_SERIES,
     MOCK_FRESHNESS,
@@ -33,11 +32,6 @@ function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
 export async function getKPIs(): Promise<KPI[]> {
     await delay();
     return MOCK_KPIS;
-}
-
-export async function getAcquisitionSeries(): Promise<ChartSeries[]> {
-    await delay();
-    return MOCK_ACQUISITION_SERIES;
 }
 
 export async function getFunnelStages(): Promise<FunnelStage[]> {

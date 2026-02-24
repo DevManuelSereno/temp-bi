@@ -65,11 +65,15 @@ export function LeadTypesPieChart({ data, loading, className }: LeadTypesPieChar
                             color: "var(--card-foreground)",
                         }}
                         itemStyle={{ color: "var(--card-foreground)" }}
-                        formatter={(value: any, name: any, props: any) => {
-                            const val = typeof value === 'number' ? value : 0;
-                            const percent = ((val / total) * 100).toFixed(1).replace('.', ',');
-                            // props.payload contains the data item
-                            return [`${val} (${percent}%)`, props.payload.type];
+                        formatter={(value, _name, props) => {
+                            const parsed = typeof value === "number" ? value : Number(value ?? 0);
+                            const val = Number.isFinite(parsed) ? parsed : 0;
+                            const percent = total > 0 ? ((val / total) * 100).toFixed(1).replace(".", ",") : "0,0";
+                            const type =
+                                props && typeof props === "object" && "payload" in props && props.payload && typeof props.payload === "object" && "type" in props.payload
+                                    ? String(props.payload.type)
+                                    : "";
+                            return [`${val} (${percent}%)`, type];
                         }}
                     />
                     <Legend
@@ -82,7 +86,7 @@ export function LeadTypesPieChart({ data, loading, className }: LeadTypesPieChar
                             const { payload } = props;
                             return (
                                 <ul className="flex flex-col gap-1 text-[11px] text-muted-foreground ml-4">
-                                    {payload?.map((entry: any, index: number) => (
+                                    {payload?.map((entry, index: number) => (
                                         <li key={`item-${index}`} className="flex items-center gap-2">
                                             <span
                                                 className="h-2 w-2 rounded-full shrink-0"

@@ -87,49 +87,6 @@ export const MOCK_KPIS: KPI[] = [
     },
 ];
 
-/* ── Aquisição (timeseries) ────────────────────────── */
-export const MOCK_ACQUISITION_SERIES: ChartSeries[] = [
-    {
-        id: "google",
-        name: "Google Ads",
-        data: [
-            { date: "2025-01-01", value: 320 },
-            { date: "2025-01-08", value: 380 },
-            { date: "2025-01-15", value: 410 },
-            { date: "2025-01-22", value: 390 },
-            { date: "2025-01-29", value: 450 },
-            { date: "2025-02-05", value: 480 },
-            { date: "2025-02-12", value: 520 },
-        ],
-    },
-    {
-        id: "meta",
-        name: "Campanhas",
-        data: [
-            { date: "2025-01-01", value: 250 },
-            { date: "2025-01-08", value: 280 },
-            { date: "2025-01-15", value: 310 },
-            { date: "2025-01-22", value: 290 },
-            { date: "2025-01-29", value: 340 },
-            { date: "2025-02-05", value: 360 },
-            { date: "2025-02-12", value: 395 },
-        ],
-    },
-    {
-        id: "organic",
-        name: "Orgânico",
-        data: [
-            { date: "2025-01-01", value: 180 },
-            { date: "2025-01-08", value: 190 },
-            { date: "2025-01-15", value: 200 },
-            { date: "2025-01-22", value: 210 },
-            { date: "2025-01-29", value: 220 },
-            { date: "2025-02-05", value: 235 },
-            { date: "2025-02-12", value: 250 },
-        ],
-    },
-];
-
 /* ── Funil ─────────────────────────────────────────── */
 export const MOCK_FUNNEL_STAGES: FunnelStage[] = [
     { id: "leads", label: "Leads", value: 1847, percent: 100 },

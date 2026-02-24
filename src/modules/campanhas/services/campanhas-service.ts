@@ -1,4 +1,5 @@
 import {
+    MOCK_CAMPANHAS_ACQUISITION_SERIES,
     MOCK_CAMPANHAS_CAMPAIGNS,
     MOCK_CAMPANHAS_KPIS,
     MOCK_CAMPANHAS_LEAD_TYPES,
@@ -11,6 +12,7 @@ import type {
     CampanhasLeadTypeBreakdown,
     CampanhasTimePoint,
 } from "@/types/campanhas";
+import type { ChartSeries } from "@/types/dashboard";
 
 /* ── Simulated async delay ─────────────────────────── */
 function delay(ms: number = MOCK_DELAY_MS): Promise<void> {
@@ -41,4 +43,9 @@ export async function getCampanhasCampaigns(): Promise<CampanhasCampaign[]> {
 export async function getCampanhasLeadTypes(): Promise<CampanhasLeadTypeBreakdown[]> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return MOCK_CAMPANHAS_LEAD_TYPES;
+}
+
+export async function getCampanhasAcquisitionSeries(): Promise<ChartSeries[]> {
+    await delay();
+    return MOCK_CAMPANHAS_ACQUISITION_SERIES;
 }

@@ -55,7 +55,7 @@ export function RevenueTrendChart({ data, loading, className }: RevenueTrendChar
                             color: "var(--card-foreground)",
                         }}
                         itemStyle={{ color: "var(--card-foreground)" }}
-                        formatter={(val: any) => formatCurrency(Number(val ?? 0))}
+                        formatter={(val) => formatCurrency(Number(val ?? 0))}
                     />
                     <Legend verticalAlign="top" height={36} wrapperStyle={{ fontSize: 12 }} />
                     <Bar

@@ -56,39 +56,6 @@ function toKPI(src: ERPKPI | CRMKPI | CampanhasKPI): KPI {
   };
 }
 
-/* ── KPI Group ───────────────────────────────────────── */
-
-function KPIGroup({
-  title,
-  kpis,
-  loading,
-}: {
-  title: string;
-  kpis: KPI[];
-  loading: boolean;
-}) {
-  return (
-    <div className="flex flex-col gap-3">
-      <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        {title}
-      </span>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        {loading
-          ? Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="min-w-0 overflow-hidden">
-              <KPIStatCard loading className="h-full w-[455px]" />
-            </div>
-          ))
-          : kpis.map((kpi) => (
-            <div key={kpi.id} className="min-w-0 overflow-hidden">
-              <KPIStatCard kpi={kpi} className="h-full w-[455px]" />
-            </div>
-          ))}
-      </div>
-    </div>
-  );
-}
-
 /* ── Page ─────────────────────────────────────────────── */
 
 export default function DashboardPage() {
