@@ -70,10 +70,11 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     label: "Agentes IA",
-    href: null,
-    disabled: true,
+    href: "/agentes",
     icon: Info,
     description: "Automacoes e agentes inteligentes",
+    headerTitle: "Agentes IA",
+    headerSubtitle: "Visao executiva + interface conversacional",
   },
   {
     label: "Base de Conhecimento",

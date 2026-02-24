@@ -28,7 +28,7 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
   const footerChips = ["PRIVACIDADE", "DADOS", "COOKIES"] as const;
 
   return (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col overflow-y-auto bg-sidebar text-sidebar-foreground [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
       <div className="flex h-14 items-center px-4">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground font-serif text-sm font-bold">
@@ -55,7 +55,7 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-2 py-3 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+      <div className="px-2 py-3">
         <nav className="grid gap-1">
           {NAV_ITEMS.map((item, index) => {
             const isDisabled = item.disabled || !item.href;
@@ -107,23 +107,25 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
         </nav>
       </div>
 
-      <div className="border-t border-sidebar-border p-3">
+      <div className="p-3 max-[1600px]:-translate-y-2 max-[1600px]:px-2.5 max-[1600px]:pt-2.5 max-[1600px]:pb-4 max-[1280px]:p-2.5 max-[1120px]:p-2">
         {!collapsed && (
-          <div className="frame-card relative overflow-hidden !p-3">
-            <div className="absolute left-0 top-2 bottom-2 w-1.5 rounded-l-xl bg-primary" />
-            <div className="pl-3">
-              <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-success" />
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">Status da sincronizacao</span>
+          <div className="frame-card relative overflow-hidden !p-3 max-[1600px]:!p-2.5 max-[1280px]:!p-2.5 max-[1120px]:!p-2">
+            <div className="absolute left-0 top-2 bottom-2 w-1.5 rounded-l-xl bg-primary max-[1280px]:top-1.5 max-[1280px]:bottom-1.5 max-[1280px]:w-1" />
+            <div className="pl-3 max-[1600px]:pl-2.5 max-[1280px]:pl-2.5 max-[1120px]:pl-2">
+              <div className="flex items-center justify-between gap-2 max-[1600px]:gap-1.5 max-[1280px]:gap-1.5">
+                <div className="flex items-center gap-2 max-[1600px]:gap-1.5 max-[1280px]:gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-success max-[1600px]:h-2 max-[1600px]:w-2 max-[1280px]:h-2 max-[1280px]:w-2" />
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground max-[1600px]:text-[9px] max-[1280px]:text-[9px]">
+                    Status da sincronizacao
+                  </span>
                 </div>
-                <span className="text-xs font-medium text-success">sucesso</span>
+                <span className="text-xs font-medium text-success max-[1600px]:text-[11px] max-[1280px]:text-[11px]">sucesso</span>
               </div>
-              <p className="mt-2 text-xs font-semibold text-card-foreground">20/02, 19:27</p>
-              <p className="mt-1 text-[11px] text-muted-foreground">Tempo real: ativo (1440 min)</p>
+              <p className="mt-2 text-xs font-semibold text-card-foreground max-[1600px]:mt-1.5 max-[1600px]:text-[11px] max-[1280px]:mt-1.5 max-[1280px]:text-[11px]">20/02, 19:27</p>
+              <p className="mt-1 text-[11px] text-muted-foreground max-[1600px]:text-[10px] max-[1280px]:text-[10px]">Tempo real: ativo (1440 min)</p>
               <button
                 type="button"
-                className="mt-3 w-full rounded-[5px] border border-sidebar-border bg-sidebar-accent px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-sidebar-foreground transition-colors hover:bg-sidebar-accent/80"
+                className="mt-3 w-full rounded-[5px] border border-sidebar-border bg-sidebar-accent px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-sidebar-foreground transition-colors hover:bg-sidebar-accent/80 max-[1600px]:mt-2.5 max-[1600px]:py-1 max-[1600px]:text-[9px] max-[1280px]:mt-2.5 max-[1280px]:py-1 max-[1280px]:text-[9px]"
               >
                 Rodar sincronizacao
               </button>
@@ -132,24 +134,24 @@ function SidebarContent({ collapsed }: { collapsed: boolean }) {
         )}
 
         {!collapsed && (
-          <div className="mt-3">
-            <div className="flex flex-nowrap items-center justify-center gap-0.5 overflow-hidden">
+          <div className="mt-3 max-[1600px]:mt-2.5 max-[1280px]:mt-2.5">
+            <div className="flex flex-nowrap items-center justify-center gap-0.5 overflow-hidden max-[1600px]:gap-0 max-[1280px]:gap-0">
               {footerChips.map((label) => (
                 <button
                   key={label}
                   type="button"
-                  className="inline-flex h-3 items-center whitespace-nowrap rounded-full border border-sidebar-border px-1 text-muted-foreground transition-colors hover:text-foreground"
+                  className="inline-flex h-3 items-center whitespace-nowrap rounded-full border border-sidebar-border px-1 text-muted-foreground transition-colors hover:text-foreground max-[1600px]:h-2.5 max-[1600px]:px-0.5 max-[1280px]:h-2.5 max-[1280px]:px-0.5"
                 >
-                  <span className="origin-center scale-[1] text-[8px] font-medium uppercase leading-none tracking-[0.01em]">
+                  <span className="origin-center scale-[1] text-[8px] font-medium uppercase leading-none tracking-[0.01em] max-[1600px]:text-[7px] max-[1280px]:text-[7px]">
                     {label}
                   </span>
                 </button>
               ))}
             </div>
-            <div className="mt-1.5 flex items-center justify-center gap-1">
-              <span className="text-[11px] font-semibold uppercase tracking-[0.07em] text-muted-foreground">HARTT.IO</span>
-              <span className="text-[10px] text-muted-foreground">|</span>
-              <span className="inline-flex h-4 items-center rounded-full border border-success/40 bg-success/15 px-1.5 text-[8px] font-medium uppercase leading-none tracking-[0.05em] text-success">
+            <div className="mt-1.5 flex items-center justify-center gap-1 max-[1600px]:mt-1 max-[1600px]:gap-0.5 max-[1280px]:mt-1 max-[1280px]:gap-0.5">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.07em] text-muted-foreground max-[1600px]:text-[10px] max-[1280px]:text-[10px]">HARTT.IO</span>
+              <span className="text-[10px] text-muted-foreground max-[1600px]:text-[9px] max-[1280px]:text-[9px]">|</span>
+              <span className="inline-flex h-4 items-center rounded-full border border-success/40 bg-success/15 px-1.5 text-[8px] font-medium uppercase leading-none tracking-[0.05em] text-success max-[1600px]:h-3.5 max-[1600px]:px-1 max-[1600px]:text-[7px] max-[1280px]:h-3.5 max-[1280px]:px-1 max-[1280px]:text-[7px]">
                 v0.1.0-BETA.1
               </span>
             </div>
@@ -178,7 +180,7 @@ function Topbar({
     NAV_ITEMS.find((item) => item.href === "/");
   const topbarTitle = activeItem?.headerTitle ?? "Resumo Executivo";
   const topbarSubtitle = activeItem?.headerSubtitle ?? "Visao consolidada - Financeiro, Comercial e Midia";
-  const showTopbarDateFilters = ["/campanhas", "/crm", "/erp"].some(
+  const showTopbarDateFilters = ["/campanhas", "/crm", "/erp", "/agentes"].some(
     (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
 
