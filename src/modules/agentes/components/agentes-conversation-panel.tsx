@@ -89,12 +89,12 @@ export function AgentesConversationPanel({
 
       <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-[1fr_176px]">
         <Input.TextArea
-          rows={3}
+          autoSize={{ minRows: 3, maxRows: 10 }}
           value={pergunta}
           onChange={(event) => onPerguntaChange(event.target.value)}
           placeholder="Digite sua pergunta para o agente ativo..."
           aria-label="Mensagem para agentes"
-          className="!rounded-xl"
+          className="!rounded-xl [textarea]:!resize-none"
         />
         <Button type="primary" className="!h-auto !min-h-12 !text-xs !font-semibold !tracking-[0.08em]" aria-label="Enviar mensagem">
           ENVIAR
