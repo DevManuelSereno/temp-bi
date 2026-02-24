@@ -8,6 +8,7 @@ export const APP_DESCRIPTION = "Dashboard de Business Intelligence da Capone Clu
 
 /** Simulated fetch delay in ms */
 export const MOCK_DELAY_MS = 600;
+export const AGENTES_PAGE_LOADER_MS = 3000;
 
 /** Currency formatting */
 export const CURRENCY_LOCALE = "pt-BR";
